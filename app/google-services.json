@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "201332861865",
+    "project_id": "movie-series-data-center",
+    "storage_bucket": "movie-series-data-center.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201332861865:android:21138ea851a6855b71b2b8",
+        "android_client_info": {
+          "package_name": "com.example.msdc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "201332861865-9k1ddi12lscrnohfnfshttlig3dok5mf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.msdc",
+            "certificate_hash": "16e5dc37e0d217ce1ba0026896e8660ff56da57c"
+          }
+        },
+        {
+          "client_id": "201332861865-9kq5b09clj5akdbqfqdr57ph5v0v3qup.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM1rG5N_QuXWS-cMps_53XSid4h54XeLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "201332861865-9kq5b09clj5akdbqfqdr57ph5v0v3qup.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
