@@ -5,17 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:gravity="bottom"
     android:background="@drawable/background_main"
     android:statusBarColor ="@android:color/transparent"
     android:alpha="0.80"
     tools:context=".LoginActivity">
+
+    <!-- RelativeLayout : Toolbar / Header -->
+    <RelativeLayout
+        android:id="@+id/toolbarRl"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/black">
+
+        <!-- TextView : Title -->
+        <TextView
+            android:id="@+id/label1Tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif"
+            android:text="@string/login_title"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
 
     <!-- RelativeLayout : Login Content -->
     <RelativeLayout
         android:id="@+id/containerLoginContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
@@ -28,7 +50,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:text="@string/input_email"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -62,7 +84,7 @@
             android:layout_below="@+id/emailTil"
             android:fontFamily="sans-serif"
             android:text="@string/input_password"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -99,7 +121,7 @@
             android:layout_marginVertical="5dp"
             android:fontFamily="sans-serif"
             android:text="@string/forget_password_description"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold"/>
 
         <!-- Button : Login Button -->
@@ -135,7 +157,7 @@
             android:layout_marginBottom="5dp"
             android:fontFamily="sans-serif"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             android:text="@string/register_description" />
@@ -146,7 +168,7 @@
             android:layout_height="1dp"
             android:layout_below="@+id/noAccountTv"
             android:layout_marginVertical="10dp"
-            android:background="@android:color/white" />
+            android:background="@android:color/black" />
 
         <TextView
             android:id="@+id/loginWithGoogle"
@@ -156,7 +178,7 @@
             android:layout_below="@+id/divider"
             android:fontFamily="sans-serif"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             android:text="@string/google_login_description" />

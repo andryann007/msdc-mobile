@@ -8,7 +8,7 @@
     <string name="button_login">Login</string>
     <string name="reset_button">Reset</string>
     <string name="register_description">Don\'t have any account ? Register Here</string>
-    <string name="google_login_description">OR Login With :</string>
+    <string name="google_login_description">OR</string>
     <string name="back_button">Back Button</string>
     <string name="register_title">Register Menu</string>
     <string name="input_name">Input Name :</string>
@@ -33,4 +33,6 @@
     <string name="no_results">No Results</string>
     <string name="something_wrong">Something Wrong with The Connection</string>
     <string name="search_movie_or_tvshows">Search Movie or TV Shows</string>
+    <string name="forget_password_title">Forget Password</string>
+    <string name="login_title">Login Menu</string>
 </resources>

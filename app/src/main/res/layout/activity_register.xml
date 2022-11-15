@@ -14,7 +14,8 @@
         android:id="@+id/toolbarRl"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@android:color/transparent">
+        android:layout_alignParentTop="true"
+        android:background="@android:color/black">
 
         <!-- ImageButton : Back Button -->
         <ImageButton
@@ -35,7 +36,6 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="10dp"
             android:fontFamily="sans-serif"
             android:text="@string/register_title"
             android:textColor="@color/white"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:text="@string/input_name"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -91,7 +91,7 @@
             android:layout_below="@+id/nameTil"
             android:fontFamily="sans-serif"
             android:text="@string/input_email"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -125,7 +125,7 @@
             android:layout_below="@+id/emailTil"
             android:fontFamily="sans-serif"
             android:text="@string/input_password"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -160,7 +160,7 @@
             android:layout_below="@+id/passwordTil"
             android:fontFamily="sans-serif"
             android:text="@string/confirmation_password"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -217,7 +217,7 @@
             android:layout_height="1dp"
             android:layout_below="@+id/registerBtn"
             android:layout_marginVertical="10dp"
-            android:background="@android:color/white" />
+            android:background="@android:color/black" />
 
         <TextView
             android:id="@+id/loginWithGoogle"
@@ -227,7 +227,7 @@
             android:layout_below="@+id/divider"
             android:fontFamily="sans-serif"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             android:text="@string/google_login_description" />
