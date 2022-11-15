@@ -1,3 +1,36 @@
 <resources>
-    <string name="app_name">MSDC</string>
+    <string name="app_name">Movies Series Data Center</string>
+    <string name="input_email">Input Email :</string>
+    <string name="email_instruction">Email</string>
+    <string name="input_password">Input Password :</string>
+    <string name="password_instruction">Password</string>
+    <string name="forget_password_description">Forget Password ?</string>
+    <string name="button_login">Login</string>
+    <string name="reset_button">Reset</string>
+    <string name="register_description">Don\'t have any account ? Register Here</string>
+    <string name="google_login_description">OR Login With :</string>
+    <string name="back_button">Back Button</string>
+    <string name="register_title">Register Menu</string>
+    <string name="input_name">Input Name :</string>
+    <string name="name_instruction">Name</string>
+    <string name="confirmation_password">Re-Input Password :</string>
+    <string name="confirmation_password_instruction">Confirmation Password</string>
+    <string name="register_button">Register</string>
+    <string name="forget_password_instruction1">Forget Password ?</string>
+    <string name="forget_password_instruction2">We will send you message via email</string>
+    <string name="submit_button">Submit</string>
+    <string name="movies">Movies</string>
+    <string name="most_popular_movies">Most Popular Movies</string>
+    <string name="now_playing_movies">Now Playing Movies</string>
+    <string name="upcoming_movies">Upcoming Movies</string>
+    <string name="top_rated_movies">Top Rated Movies</string>
+    <string name="tv_shows">TV Shows</string>
+    <string name="most_popular_tv_shows">Most Popular TV Shows</string>
+    <string name="top_rated_tv_shows">Top Rated TV Shows</string>
+    <string name="on_the_air_tv_shows">On The Air TV Shows</string>
+    <string name="text_info">\u00A9 MSDC 2022</string>
+    <string name="enter_keyword">Enter Keyword</string>
+    <string name="no_results">No Results</string>
+    <string name="something_wrong">Something Wrong with The Connection</string>
+    <string name="search_movie_or_tvshows">Search Movie or TV Shows</string>
 </resources>
