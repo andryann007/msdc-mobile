@@ -9,36 +9,36 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/moviesTitle"
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:background="@drawable/bg_text_title"
             android:fontFamily="sans-serif"
-            android:text="@string/movies"
+            android:text="@string/tv_shows"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"/>
 
         <RelativeLayout
-            android:id="@+id/containerMoviePopular"
+            android:id="@+id/containerTVPopular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/moviesTitle"
+            android:layout_below="@+id/tvTitle"
             android:layout_marginVertical="10dp">
 
             <TextView
-                android:id="@+id/textMoviePopular"
+                android:id="@+id/textTVPopular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/most_popular_movies"
+                android:text="@string/most_popular_tv_shows"
                 android:fontFamily="sans-serif"
                 android:textColor="@color/black"
                 android:textSize="24sp"/>
 
             <ProgressBar
-                android:id="@+id/loadingMoviePopular"
+                android:id="@+id/loadingTVPopular"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginHorizontal="10dp"
@@ -46,33 +46,33 @@
                 android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMoviePopular"
+                android:id="@+id/rvTVPopular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textMoviePopular"
+                android:layout_below="@+id/textTVPopular"
                 android:layout_marginTop="10dp"
                 android:scrollbars="horizontal"/>
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/containerMovieNowPlaying"
+            android:id="@+id/containerTVTopRated"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/containerMoviePopular"
+            android:layout_below="@+id/containerTVPopular"
             android:layout_marginVertical="10dp">
 
             <TextView
-                android:id="@+id/textMovieNowPlaying"
+                android:id="@+id/textTVTopRated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/now_playing_movies"
+                android:text="@string/top_rated_tv_shows"
                 android:fontFamily="sans-serif"
                 android:textColor="@color/black"
                 android:textSize="24sp"/>
 
             <ProgressBar
-                android:id="@+id/loadingMovieNowPlaying"
+                android:id="@+id/loadingTVTopRated"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginHorizontal="10dp"
@@ -80,33 +80,33 @@
                 android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMovieNowPlaying"
+                android:id="@+id/rvTVTopRated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textMovieNowPlaying"
+                android:layout_below="@+id/textTVTopRated"
                 android:layout_marginTop="10dp"
                 android:scrollbars="horizontal"/>
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/containerUpcomingMovie"
+            android:id="@+id/containerTVOnAir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/containerMovieNowPlaying"
+            android:layout_below="@+id/containerTVTopRated"
             android:layout_marginVertical="10dp">
 
             <TextView
-                android:id="@+id/textUpcomingMovie"
+                android:id="@+id/textTVOnAir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/upcoming_movies"
+                android:text="@string/on_the_air_tv_shows"
                 android:fontFamily="sans-serif"
                 android:textColor="@color/black"
                 android:textSize="24sp"/>
 
             <ProgressBar
-                android:id="@+id/loadingUpcomingMovie"
+                android:id="@+id/loadingTVOnAir"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginHorizontal="10dp"
@@ -114,44 +114,10 @@
                 android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvUpcomingMovie"
+                android:id="@+id/rvTVOnAir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textUpcomingMovie"
-                android:layout_marginTop="10dp"
-                android:scrollbars="horizontal"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/containerMovieTopRated"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/containerUpcomingMovie"
-            android:layout_marginVertical="10dp">
-
-            <TextView
-                android:id="@+id/textMovieTopRated"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/top_rated_movies"
-                android:fontFamily="sans-serif"
-                android:textColor="@color/black"
-                android:textSize="24sp"/>
-
-            <ProgressBar
-                android:id="@+id/loadingMovieTopRated"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_alignParentEnd="true"
-                android:visibility="gone"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMovieTopRated"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textMovieTopRated"
+                android:layout_below="@+id/textTVOnAir"
                 android:layout_marginTop="10dp"
                 android:scrollbars="horizontal"/>
 
