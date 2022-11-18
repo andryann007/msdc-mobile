@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".DetailActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="@color/black">
+        <RelativeLayout
+            android:id="@+id/containerToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textAppTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="sans-serif"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/imageBackDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginHorizontal="10dp"
+                android:src="@drawable/ic_back"
+                android:padding="2dp"
+                android:contentDescription="@string/app_name"/>
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:alpha="0.1">
+
+        <ImageView
+            android:id="@+id/imagePosterBack"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imageBackdrop"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_margin="1dp"
+                app:riv_corner_radius="3dp"
+                android:background="#a9a9a9"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imagePoster"
+                android:layout_width="150dp"
+                android:layout_height="220dp"
+                android:layout_margin="1dp"
+                app:riv_corner_radius="3dp"
+                android:background="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/imageBackdrop"
+                app:layout_constraintTop_toBottomOf="@+id/imageBackdrop"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_view_gradient"
+                app:layout_constraintStart_toEndOf="@+id/imagePoster"
+                app:layout_constraintTop_toTopOf="@+id/imagePoster"
+                app:layout_constraintBottom_toBottomOf="@+id/imagePoster"/>
+
+            <LinearLayout
+                android:id="@+id/layoutMainDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagePoster"
+                app:layout_constraintTop_toBottomOf="@+id/imageBackdrop">
+
+                <TextView
+                    android:id="@+id/textTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/textRunTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textReleaseDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutOtherDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutMainDetails">
+
+                <TextView
+                    android:id="@+id/textOverview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.6"
+                    android:includeFontPadding="false"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/textLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textBudgetOrSeasons"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textRevenueOrEpisodes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textPopularity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textTagline"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textVoteCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textVoteAverage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/textHomePage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/loadingDetails"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>
