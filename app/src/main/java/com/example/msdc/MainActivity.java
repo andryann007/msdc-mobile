@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private int currentPageTVPopular = 1, currentPageTVTopRated = 1, currentPageTVOnAir = 1;
     private int totalPagesTVPopular = 1, totalPagesTVTopRated = 1, totalPagesTVOnAir = 1;
 
-    public static final String MYAPI_KEY = "";
+    public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
     public static final String LANGUAGE = "en-US";
 
