@@ -5,11 +5,13 @@
     android:gravity="center">
 
     <RelativeLayout
+        android:id="@+id/containerSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
+        android:background="#a9a9a9"
         android:padding="10dp">
-        
+
         <TextView
             android:id="@+id/textSearch"
             android:layout_width="wrap_content"
@@ -19,7 +21,72 @@
             android:fontFamily="sans-serif"
             android:textColor="@color/black"
             android:textSize="20sp"/>
-        
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textSearch"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButtonMovie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:text="@string/movies"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+
+            <RadioButton
+                android:id="@+id/radioButtonTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:text="@string/tv_shows"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+
+        </RadioGroup>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroup"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp">
+            <EditText
+                android:id="@+id/inputSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:importantForAutofill="no"
+                android:imeOptions="actionGo"
+                android:hint="@string/enter_keyword"
+                android:inputType="text"
+                android:padding="5dp"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
+
+            <ImageView
+                android:id="@+id/imageDoSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_oval"
+                android:contentDescription="@string/app_name"
+                android:padding="2dp"
+                android:src="@drawable/ic_search" />
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>
