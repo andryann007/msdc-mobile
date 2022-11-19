@@ -3,11 +3,20 @@ package com.example.msdc;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
-import com.example.msdc.databinding.ActivityDetailBinding;
 import com.example.msdc.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -71,6 +80,51 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void dialogSearch() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View v = inflater.inflate(R.layout.dialog_search, null);
+        EditText inputSearch = v.findViewById(R.id.inputSearch);
+        ImageView imageDoSearch = v.findViewById(R.id.imageDoSearch);
+        RadioGroup radioGroup = v.findViewById(R.id.radioGroup);
+        RadioButton radioButtonMovie = v.findViewById(R.id.radioButtonMovie);
+        RadioButton radioButtonTV = v.findViewById(R.id.radioButtonTV);
+
+        builder.setView(v);
+        AlertDialog dialogSearch = builder.create();
+        if(dialogSearch.getWindow() != null){
+            dialogSearch.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+            radioGroup.setOnCheckedChangeListener((group, checkedid) -> {
+                if(checkedid == R.id.radioButtonMovie){
+                    searchType = radioButtonMovie.getText().toString();
+                } else {
+                    searchType = radioButtonTV.getText().toString();
+                }
+            });
+            imageDoSearch.setOnClickListener(view -> doSearch(inputSearch.getText().toString()));
+
+            inputSearch.setOnEditorActionListener((v1, actionid, event) -> {
+                if(actionid == EditorInfo.IME_ACTION_GO){
+                    doSearch(inputSearch.getText().toString());
+                }
+                return false;
+            });
+        }
+    }
+
+    private void doSearch(String query) {
+        if(query.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Tidak ada inputan!!!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(searchType == null){
+            Toast.makeText(getApplicationContext(),"Harap pilih tipe search!!!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent i = new Intent(MainActivity.this, SearchActivity.class);
+        i.putExtra("tipe", searchType);
+        i.putExtra("searchFor", query);
+        startActivity(i);
     }
 
     private void setOnAirTV() {
