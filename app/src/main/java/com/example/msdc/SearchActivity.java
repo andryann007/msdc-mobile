@@ -111,7 +111,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchForTV() {
-        Call<TVRespon> call = apiService.searchMovie(MainActivity.MYAPI_KEY, MainActivity.LANGUAGE, query, currentPage);
+        Call<TVRespon> call = apiService.searchTv(MainActivity.MYAPI_KEY, MainActivity.LANGUAGE, query, currentPage);
         call.enqueue(new Callback<TVRespon>() {
             @Override
             public void onResponse(Call<TVRespon> call, Response<TVRespon> response) {
