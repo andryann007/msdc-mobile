@@ -1,10 +1,6 @@
 package com.example.msdc;
 
-import android.graphics.Movie;
-
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -21,9 +17,6 @@ public interface ApiService {
 
     @GET("movie/top_rated")
     Call<MovieRespon> getTopRatedMovies(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
-
-    @GET("search/movie")
-    Call<MovieRespon> searchMovie(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
     @GET("movie/{movie_id}")
     Call<MovieDetails> getMovieDetails(@Path("movie_id") String id, @Query("api_key") String apiKey);

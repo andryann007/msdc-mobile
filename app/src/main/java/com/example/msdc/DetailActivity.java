@@ -1,18 +1,14 @@
 package com.example.msdc;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.msdc.databinding.ActivityDetailBinding;
-import com.example.msdc.databinding.ActivitySearchBinding;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -23,10 +19,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class DetailActivity extends AppCompatActivity {
-    private RoundedImageView imagePoster, imageBackdrop;
-    private ImageView imagePosterBack;
-    private ProgressBar loadingResult;
-    private NestedScrollView scrollView;
     private int id;
     private ApiService apiService;
     private ActivityDetailBinding binding;
@@ -40,15 +32,15 @@ public class DetailActivity extends AppCompatActivity {
         Retrofit retrofit = ApiClient.getClient();
         apiService = retrofit.create(ApiService.class);
 
-        id = getIntent().getIntExtra("id", 0);
-
         String tipe = getIntent().getStringExtra("tipe");
         switch (tipe){
             case "movie":
+                id = getIntent().getIntExtra("id", 0);
                 setMovieDetails();
                 break;
 
             case "tv":
+                id = getIntent().getIntExtra("id", 0);
                 setTVDetails();
                 break;
         }
@@ -62,7 +54,7 @@ public class DetailActivity extends AppCompatActivity {
 
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response) {
+            public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
                 if(response.body() != null){
                     binding.loadingDetails.setVisibility(View.GONE);
                     binding.scrollView.setVisibility(View.VISIBLE);
@@ -95,7 +87,7 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<MovieDetails> call, Throwable t) {
+            public void onFailure(@NonNull Call<MovieDetails> call, @NonNull Throwable t) {
                 binding.loadingDetails.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), "Terjadi kesalahan saat memuat halaman detail!!!", Toast.LENGTH_SHORT).show();
             }
@@ -109,7 +101,7 @@ public class DetailActivity extends AppCompatActivity {
 
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<TVDetails> call, Response<TVDetails> response) {
+            public void onResponse(@NonNull Call<TVDetails> call, @NonNull Response<TVDetails> response) {
                 if(response.body() != null){
                     binding.loadingDetails.setVisibility(View.GONE);
                     binding.scrollView.setVisibility(View.VISIBLE);
@@ -119,7 +111,7 @@ public class DetailActivity extends AppCompatActivity {
                     ImageAdapter.setPosterURL(binding.imageBackdrop, response.body().getBackdropPath());
                     ImageAdapter.setPosterURL(binding.imagePoster, response.body().getPosterPath());
                     binding.textTitle.setText(response.body().getName());
-                    binding.textRunTime.setText("Episode Runtime : " + response.body().episodeRuntime);
+                    binding.textRunTime.setText("Episode Runtime : " + response.body().getEpisodeRuntime());
                     binding.textReleaseDate.setText("From : " + response.body().getFirstAirDate() + " Until : "
                             + response.body().getLastAirDate());
                     binding.textOverview.setText(response.body().getOverview());
@@ -137,7 +129,7 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<TVDetails> call, Throwable t) {
+            public void onFailure(@NonNull Call<TVDetails> call, @NonNull Throwable t) {
                 binding.loadingDetails.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), "Terjadi kesalahan saat memuat halaman detail!!!", Toast.LENGTH_SHORT).show();
             }

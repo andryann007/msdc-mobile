@@ -50,18 +50,18 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TvViewHolder>{
             textItemName = itemView.findViewById(R.id.textItemName);
         }
 
-        void bindItem(TVResult TVResult, Context context){
-            if(!TextUtils.isEmpty(TVResult.getPosterPath())){
-                ImageAdapter.setPosterURL(imageItemPoster, TVResult.getPosterPath());
+        void bindItem(TVResult tvResult, Context context){
+            if(!TextUtils.isEmpty(tvResult.getPosterPath())){
+                ImageAdapter.setPosterURL(imageItemPoster, tvResult.getPosterPath());
             } else {
                 imageItemPoster.setImageResource(R.drawable.ic_android);
             }
-            textItemName.setText(TVResult.getName());
+            textItemName.setText(tvResult.getName());
 
             itemView.setOnClickListener(v -> {
                 Intent i = new Intent(context, DetailActivity.class);
                 i.putExtra("tipe", "tv");
-                i.putExtra("id", TVResult.getId());
+                i.putExtra("id", tvResult.getId());
                 context.startActivity(i);
             });
         }
