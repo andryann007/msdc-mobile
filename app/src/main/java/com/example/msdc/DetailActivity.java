@@ -20,6 +20,7 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class DetailActivity extends AppCompatActivity {
     private RoundedImageView imagePoster, imageBackdrop;
@@ -35,6 +36,11 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Retrofit retrofit = ApiClient.getClient();
+        apiService = retrofit.create(ApiService.class);
+
+        id = getIntent().getIntExtra("id", 0);
 
         String tipe = getIntent().getStringExtra("tipe");
         switch (tipe){

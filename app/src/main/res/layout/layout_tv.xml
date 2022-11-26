@@ -17,22 +17,21 @@
         android:textColor="@color/black"
         android:textSize="20sp"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/containerTVPopular"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textTVPopular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/most_popular_tv_shows"
             android:fontFamily="sans-serif"
+            android:text="@string/most_popular_tv_shows"
             android:textColor="@color/black"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/rvTVPopular"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:textSize="24sp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTVPopular"
@@ -59,13 +58,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/rvTVPopular"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/containerTVTopRated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp">
+        android:layout_marginVertical="10dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textTVTopRated"
@@ -74,10 +74,7 @@
             android:text="@string/top_rated_tv_shows"
             android:fontFamily="sans-serif"
             android:textColor="@color/black"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/rvTVTopRated"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:textSize="24sp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTVTopRated"
@@ -102,25 +99,26 @@
             app:layout_constraintBottom_toBottomOf="@+id/rvTVTopRated"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/rvTVTopRated"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/containerTVOnAir"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp">
+        android:layout_height="240dp"
+        android:layout_marginVertical="10dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textTVOnAir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/on_the_air_tv_shows"
             android:fontFamily="sans-serif"
+            android:text="@string/on_the_air_tv_shows"
             android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@+id/rvTVOnAir"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTVOnAir"
@@ -128,23 +126,23 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textTVOnAir"
             android:layout_marginTop="10dp"
-            android:scrollbars="horizontal"
             android:orientation="horizontal"
+            android:scrollbars="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTVOnAir"
-            tools:listitem="@layout/item_container"/>
+            tools:listitem="@layout/item_container" />
 
         <ProgressBar
             android:id="@+id/loadingTVOnAir"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginHorizontal="10dp"
             android:layout_alignParentEnd="true"
+            android:layout_marginHorizontal="10dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/rvTVOnAir"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/rvTVOnAir"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="@id/rvTVOnAir" />
+    </LinearLayout>
 
 </LinearLayout>

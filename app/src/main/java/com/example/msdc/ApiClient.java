@@ -9,7 +9,7 @@ public class ApiClient {
     public static Retrofit getClient(){
         if(retrofit == null){
             retrofit = new Retrofit.Builder()
-                    .baseUrl("https://api.themoviedb.org/3")
+                    .baseUrl("https://api.themoviedb.org/3/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
