@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                         loadingMovieTopRated.setVisibility(View.GONE);
                         int oldCount = movieTopRatedResults.size();
                         movieTopRatedResults.addAll(response.body().getResult());
-                        movieUpcomingAdapter.notifyItemChanged(oldCount, movieTopRatedResults.size());
+                        movieTopRatedAdapter.notifyItemChanged(oldCount, movieTopRatedResults.size());
                     }
                 }
             }
