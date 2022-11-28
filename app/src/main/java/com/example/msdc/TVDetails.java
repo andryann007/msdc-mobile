@@ -3,7 +3,7 @@ package com.example.msdc;
 import com.google.gson.annotations.SerializedName;
 
 public class TVDetails {
-    @SerializedName("name")
+    @SerializedName("original_name")
     String name;
 
     @SerializedName("poster_path")

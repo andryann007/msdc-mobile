@@ -19,7 +19,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class DetailActivity extends AppCompatActivity {
-    private int id;
+    private int movie_id;
+    private int tv_id;
     private ApiService apiService;
     private ActivityDetailBinding binding;
 
@@ -35,12 +36,12 @@ public class DetailActivity extends AppCompatActivity {
         String tipe = getIntent().getStringExtra("tipe");
         switch (tipe){
             case "movie":
-                id = getIntent().getIntExtra("id", 0);
+                movie_id = getIntent().getIntExtra("movie_id", 0);
                 setMovieDetails();
                 break;
 
             case "tv":
-                id = getIntent().getIntExtra("id", 0);
+                tv_id = getIntent().getIntExtra("tv_id", 0);
                 setTVDetails();
                 break;
         }
@@ -49,7 +50,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setMovieDetails(){
         binding.loadingDetails.setVisibility(View.VISIBLE);
-        Call<MovieDetails> call = apiService.getMovieDetails(String.valueOf(id), MainActivity.MYAPI_KEY);
+        Call<MovieDetails> call = apiService.getMovieDetails(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
         call.enqueue(new Callback<MovieDetails>(){
 
             @SuppressLint("SetTextI18n")
@@ -96,7 +97,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setTVDetails(){
         binding.loadingDetails.setVisibility(View.VISIBLE);
-        Call<TVDetails> call = apiService.getTvDetails(String.valueOf(id), MainActivity.MYAPI_KEY);
+        Call<TVDetails> call = apiService.getTvDetails(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
         call.enqueue(new Callback<TVDetails>(){
 
             @SuppressLint("SetTextI18n")
@@ -112,8 +113,7 @@ public class DetailActivity extends AppCompatActivity {
                     ImageAdapter.setPosterURL(binding.imagePoster, response.body().getPosterPath());
                     binding.textTitle.setText(response.body().getName());
                     binding.textRunTime.setText("Episode Runtime : " + response.body().getEpisodeRuntime());
-                    binding.textReleaseDate.setText("From : " + response.body().getFirstAirDate() + " Until : "
-                            + response.body().getLastAirDate());
+                    binding.textReleaseDate.setText(response.body().getFirstAirDate());
                     binding.textOverview.setText(response.body().getOverview());
                     binding.textLanguage.setText("Language : " + response.body().getOriginalLanguage());
                     binding.textStatus.setText("Status : " + response.body().getStatus());
