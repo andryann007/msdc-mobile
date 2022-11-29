@@ -34,9 +34,11 @@ public class DetailActivity extends AppCompatActivity {
     private int movie_id;
     private int tv_id;
     private ActivityDetailBinding binding;
-    private MovieAdapter movieRecommendationsAdapter;
+    private MovieAdapter movieRecommendationsAdapter, movieSimilarAdapter;
     private final List<MovieResult> movieRecommendationsResult = new ArrayList<>();
     private int totalPagesMovieRecommendations = 1;
+    private final List<MovieResult> movieSimilarResult = new ArrayList<>();
+    private int totalPagesMovieSimilar = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +102,7 @@ public class DetailActivity extends AppCompatActivity {
                     binding.textHomePage.setText("Homepage : " + response.body().getHomepage());
 
                     setRecommendationsMovie();
+                    setSimilarMovie();
                 }
             }
 
@@ -128,6 +131,33 @@ public class DetailActivity extends AppCompatActivity {
                     int oldCount = movieRecommendationsResult.size();
                     movieRecommendationsResult.addAll(response.body().getResult());
                     movieRecommendationsAdapter.notifyItemChanged(oldCount, movieRecommendationsResult.size());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieRespon> call, Throwable t) {
+            }
+        });
+    }
+
+    private void setSimilarMovie(){
+        movieSimilarAdapter = new MovieAdapter(movieSimilarResult, this);
+
+        getSimilarMovie();
+        binding.rvMovieSimilar.setAdapter(movieSimilarAdapter);
+    }
+
+    private void getSimilarMovie(){
+        Call<MovieRespon> call = apiService.getMovieSimilar(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<MovieRespon>() {
+            @Override
+            public void onResponse(Call<MovieRespon> call, Response<MovieRespon> response) {
+                assert response.body() != null;
+                totalPagesMovieSimilar = response.body().getTotalPages();
+                if(response.body().getResult()!=null){
+                    int oldCount = movieSimilarResult.size();
+                    movieSimilarResult.addAll(response.body().getResult());
+                    movieSimilarAdapter.notifyItemChanged(oldCount, movieSimilarResult.size());
                 }
             }
 

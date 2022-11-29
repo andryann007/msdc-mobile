@@ -248,7 +248,7 @@
                     android:id="@+id/textMovieRecommendations"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:includeFontPadding="false"
                     android:text="@string/movie_recommendations"
                     android:fontFamily="sans-serif"
@@ -260,13 +260,34 @@
                     android:id="@+id/rvMovieRecommendations"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal"
                     android:scrollbars="horizontal"
                     android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textMoviePopular"
+                    tools:listitem="@layout/item_container"/>
+
+                <TextView
+                    android:id="@+id/textMovieSimilar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/similar_movies"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMovieSimilar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_container"/>
 
             </LinearLayout>
