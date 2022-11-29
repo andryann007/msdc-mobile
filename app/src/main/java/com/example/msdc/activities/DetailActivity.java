@@ -10,19 +10,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.msdc.adapter.ImageAdapter;
 import com.example.msdc.adapter.MovieAdapter;
+import com.example.msdc.api.ApiClient;
+import com.example.msdc.api.ApiService;
 import com.example.msdc.api.MovieDetails;
 import com.example.msdc.api.MovieRespon;
 import com.example.msdc.api.MovieResult;
 import com.example.msdc.api.TVDetails;
-import com.example.msdc.api.ApiClient;
-import com.example.msdc.api.ApiService;
-import com.example.msdc.api.TVResult;
 import com.example.msdc.databinding.ActivityDetailBinding;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,17 +50,14 @@ public class DetailActivity extends AppCompatActivity {
         apiService = retrofit.create(ApiService.class);
 
         String tipe = getIntent().getStringExtra("tipe");
-        switch (tipe){
-            case "movie":
-                movie_id = getIntent().getIntExtra("movie_id", 0);
-                setMovieDetails();
-                break;
-
-            case "tv":
-                tv_id = getIntent().getIntExtra("tv_id", 0);
-                setTVDetails();
-                break;
+        if(Objects.equals(tipe, "movie")){
+            movie_id = getIntent().getIntExtra("movie_id", 0);
+            setMovieDetails();
+        } else if(Objects.equals(tipe, "tv")){
+            tv_id = getIntent().getIntExtra("tv_id", 0);
+            setTVDetails();
         }
+
         binding.imageBackDetails.setOnClickListener(v-> onBackPressed());
     }
 
