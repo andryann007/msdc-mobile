@@ -13,7 +13,7 @@ public class TVDetails {
     String backdropPath;
 
     @SerializedName("episode_run_time")
-    String episodeRuntime;
+    int episodeRuntime;
 
     @SerializedName("first_air_date")
     String firstAirDate;
@@ -22,10 +22,10 @@ public class TVDetails {
     String lastAirDate;
 
     @SerializedName("number_of_episodes")
-    String numberOfEpisodes;
+    int numberOfEpisodes;
 
     @SerializedName("number_of_seasons")
-    String numberOfSeasons;
+    int numberOfSeasons;
 
     @SerializedName("original_language")
     String originalLanguage;
@@ -63,7 +63,7 @@ public class TVDetails {
         return backdropPath;
     }
 
-    public String getEpisodeRuntime() {
+    public int getEpisodeRuntime() {
         return episodeRuntime;
     }
 
@@ -75,11 +75,11 @@ public class TVDetails {
         return lastAirDate;
     }
 
-    public String getNumberOfEpisodes() {
+    public int getNumberOfEpisodes() {
         return numberOfEpisodes;
     }
 
-    public String getNumberOfSeasons() {
+    public int getNumberOfSeasons() {
         return numberOfSeasons;
     }
 

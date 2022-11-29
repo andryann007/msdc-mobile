@@ -44,4 +44,10 @@ public interface ApiService {
 
     @GET("movie/{movie_id}/similar")
     Call<MovieRespon> getMovieSimilar(@Path("movie_id") String id, @Query("api_key") String apiKey);
+
+    @GET("tv/{tv_id}/recommendations")
+    Call<TVRespon> getTVRecommendations(@Path("tv_id") String id, @Query("api_key") String apiKey);
+
+    @GET("tv/{tv_id}/similar")
+    Call<TVRespon> getTVSimilar(@Path("tv_id") String id, @Query("api_key") String apiKey);
 }
