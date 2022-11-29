@@ -1,4 +1,4 @@
-package com.example.msdc;
+package com.example.msdc.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +17,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.msdc.adapter.MovieAdapter;
+import com.example.msdc.api.MovieRespon;
+import com.example.msdc.api.MovieResult;
+import com.example.msdc.R;
+import com.example.msdc.adapter.TVAdapter;
+import com.example.msdc.api.TVRespon;
+import com.example.msdc.api.TVResult;
+import com.example.msdc.api.ApiClient;
+import com.example.msdc.api.ApiService;
 import com.example.msdc.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.msdc;
+package com.example.msdc.adapter;
 
 import android.widget.ImageView;
 

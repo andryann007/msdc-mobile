@@ -1,4 +1,4 @@
-package com.example.msdc;
+package com.example.msdc.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.msdc.api.MovieResult;
+import com.example.msdc.R;
+import com.example.msdc.activities.DetailActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;

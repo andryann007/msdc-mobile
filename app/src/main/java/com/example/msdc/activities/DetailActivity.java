@@ -1,4 +1,4 @@
-package com.example.msdc;
+package com.example.msdc.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -8,6 +8,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.msdc.adapter.ImageAdapter;
+import com.example.msdc.api.MovieDetails;
+import com.example.msdc.api.TVDetails;
+import com.example.msdc.api.ApiClient;
+import com.example.msdc.api.ApiService;
 import com.example.msdc.databinding.ActivityDetailBinding;
 
 import java.text.NumberFormat;

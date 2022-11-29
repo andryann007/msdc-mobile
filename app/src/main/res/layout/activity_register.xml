@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:background="@drawable/background"
     android:alpha="0.80"
-    tools:context=".RegisterActivity">
+    tools:context=".activities.RegisterActivity">
 
     <!-- RelativeLayout : Toolbar / Header -->
     <RelativeLayout

@@ -1,20 +1,20 @@
-package com.example.msdc;
+package com.example.msdc.api;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TVResult {
+public class MovieResult {
     @SerializedName("id")
     int id;
 
     @SerializedName("poster_path")
     String posterPath;
 
-    @SerializedName("original_name")
-    String name;
+    @SerializedName("title")
+    String title;
 
     public int getId(){ return id; }
 
     public String getPosterPath(){ return posterPath; }
 
-    public String getName(){ return name; }
+    public String getTitle(){ return title; }
 }

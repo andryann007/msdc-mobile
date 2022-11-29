@@ -1,4 +1,4 @@
-package com.example.msdc;
+package com.example.msdc.api;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,4 +1,4 @@
-package com.example.msdc;
+package com.example.msdc.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
@@ -11,7 +11,14 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.msdc.databinding.ActivityRegisterBinding;
+import com.example.msdc.api.MovieRespon;
+import com.example.msdc.api.MovieResult;
+import com.example.msdc.adapter.MovieSearchAdapter;
+import com.example.msdc.R;
+import com.example.msdc.api.TVRespon;
+import com.example.msdc.adapter.TVSearchAdapter;
+import com.example.msdc.api.ApiClient;
+import com.example.msdc.api.ApiService;
 import com.example.msdc.databinding.ActivitySearchBinding;
 
 import java.util.ArrayList;
@@ -23,7 +30,7 @@ import retrofit2.Response;
 
 public class SearchActivity extends AppCompatActivity {
     private final List<MovieResult> movieResult = new ArrayList<>();
-    private final List<TVResult> TVResult = new ArrayList<>();
+    private final List<com.example.msdc.api.TVResult> TVResult = new ArrayList<>();
     private String query, tipe;
     private RecyclerView rvSearch;
     private MovieSearchAdapter movieSearchAdapter;

@@ -1,4 +1,4 @@
-package com.example.msdc;
+package com.example.msdc.api;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

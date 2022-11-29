@@ -1,4 +1,4 @@
-package com.example.msdc;
+package com.example.msdc.activities;
 
 import static android.content.ContentValues.TAG;
 

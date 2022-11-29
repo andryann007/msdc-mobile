@@ -8,7 +8,7 @@
     android:background="@drawable/background"
     android:statusBarColor ="@android:color/transparent"
     android:alpha="0.80"
-    tools:context=".LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <!-- RelativeLayout : Toolbar / Header -->
     <RelativeLayout
