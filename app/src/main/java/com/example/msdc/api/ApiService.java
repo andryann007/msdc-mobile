@@ -38,4 +38,7 @@ public interface ApiService {
 
     @GET("search/tv")
     Call<TVRespon> searchTv(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") int page);
+
+    @GET("movie/{movie_id}/recommendations")
+    Call<MovieRespon> getMovieRecommendations(@Path("movie_id") String id, @Query("api_key") String apiKey);
 }

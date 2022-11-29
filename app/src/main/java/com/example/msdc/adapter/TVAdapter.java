@@ -19,11 +19,11 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.List;
 
 public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TvViewHolder>{
-    private final List<TVResult> TVResults;
+    private final List<TVResult> tvResults;
     private final Context context;
 
-    public TVAdapter(List<TVResult> TVResults, Context context){
-        this.TVResults = TVResults;
+    public TVAdapter(List<TVResult> tvResults, Context context){
+        this.tvResults = tvResults;
         this.context = context;
     }
 
@@ -36,11 +36,11 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TvViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull TvViewHolder holder, int position){
-        holder.bindItem(TVResults.get(position), context);
+        holder.bindItem(tvResults.get(position), context);
     }
 
     @Override
-    public int getItemCount(){ return TVResults.size();}
+    public int getItemCount(){ return tvResults.size();}
 
     static class TvViewHolder extends RecyclerView.ViewHolder{
         private final RoundedImageView imageItemPoster;
