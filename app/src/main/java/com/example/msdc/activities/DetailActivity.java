@@ -23,6 +23,7 @@ import com.example.msdc.databinding.ActivityDetailBinding;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -190,7 +191,7 @@ public class DetailActivity extends AppCompatActivity {
                     ImageAdapter.setPosterURL(binding.imageBackdrop, response.body().getBackdropPath());
                     ImageAdapter.setPosterURL(binding.imagePoster, response.body().getPosterPath());
                     binding.textTitle.setText("Name : " + response.body().getName());
-                    binding.textRunTime.setText("Episode Runtime : " + response.body().getEpisodeRuntime());
+                    binding.textRunTime.setText("Episode Runtime : " + Arrays.toString(response.body().getEpisodeRuntime()) + "Episodes");
                     binding.textReleaseDate.setText("From : " + response.body().getFirstAirDate() + " - " + response.body().getLastAirDate());
                     binding.textOverview.setText(response.body().getOverview());
                     binding.textLanguage.setText("Language : " + response.body().getOriginalLanguage());

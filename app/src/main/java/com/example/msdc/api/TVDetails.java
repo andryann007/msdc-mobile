@@ -13,7 +13,7 @@ public class TVDetails {
     String backdropPath;
 
     @SerializedName("episode_run_time")
-    int episodeRuntime;
+    int[] episodeRuntime;
 
     @SerializedName("first_air_date")
     String firstAirDate;
@@ -63,7 +63,7 @@ public class TVDetails {
         return backdropPath;
     }
 
-    public int getEpisodeRuntime() {
+    public int[] getEpisodeRuntime() {
         return episodeRuntime;
     }
 
