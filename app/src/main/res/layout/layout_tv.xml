@@ -18,6 +18,47 @@
         android:textSize="20sp"/>
 
     <LinearLayout
+        android:id="@+id/containerTVAiringToday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textTVAiring"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/tv_airing_today"
+            android:textColor="@color/black"
+            android:textSize="24sp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTVAiring"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:scrollbars="horizontal"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textTVPopular"
+            tools:listitem="@layout/item_container"/>
+
+        <ProgressBar
+            android:id="@+id/loadingTVAiring"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginHorizontal="10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/rvTVPopular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rvTVPopular"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/containerTVPopular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

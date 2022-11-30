@@ -50,14 +50,15 @@ public class MainActivity extends AppCompatActivity {
     private int totalPagesMoviePopular = 1, totalPagesMovieNowPlaying = 1,
             totalPagesMovieTopRated = 1, totalPagesUpcomingMovie = 1;
 
-    private RecyclerView rvTvPopular, rvTvTopRated, rvTvOnAir;
-    private ProgressBar loadingTvPopular, loadingTvTopRated, loadingTvOnAir;
-    private TVAdapter tvPopularAdapter, tvTopRatedAdapter, tvOnAirAdapter;
+    private RecyclerView rvTvPopular, rvTvTopRated, rvTvOnAir, rvTvAiringToday;
+    private ProgressBar loadingTvPopular, loadingTvTopRated, loadingTvOnAir, loadingTvAiringToday;
+    private TVAdapter tvPopularAdapter, tvTopRatedAdapter, tvOnAirAdapter, tvAiringTodayAdapter;
     private final List<TVResult> tvPopularResults = new ArrayList<>();
     private final List<TVResult> tvTopRatedResults = new ArrayList<>();
     private final List<TVResult> tvOnAirResults = new ArrayList<>();
-    private int currentPageTVPopular = 1, currentPageTVTopRated = 1, currentPageTVOnAir = 1;
-    private int totalPagesTVPopular = 1, totalPagesTVTopRated = 1, totalPagesTVOnAir = 1;
+    private final List<TVResult> tvAiringTodayResults = new ArrayList<>();
+    private int currentPageTVPopular = 1, currentPageTVTopRated = 1, currentPageTVOnAir = 1, currentPageTVAiringToday = 1;
+    private int totalPagesTVPopular = 1, totalPagesTVTopRated = 1, totalPagesTVOnAir = 1, totalPagesTVAiringToday = 1;
 
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         setPopularTV();
         setTopRatedTV();
         setOnAirTV();
+        setOnAiringTV();
 
         binding.imageSearch.setOnClickListener(v -> dialogSearch());
     }
@@ -231,6 +233,37 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<TVRespon> call, Throwable t) {
 
+            }
+        });
+    }
+
+    private void setOnAiringTV() {
+        rvTvAiringToday = findViewById(R.id.rvTVAiring);
+        tvAiringTodayAdapter = new TVAdapter(tvAiringTodayResults, this);
+        loadingTvAiringToday = findViewById(R.id.loadingTVAiring);
+
+        getOnAiringTV();
+        rvTvAiringToday.setAdapter(tvAiringTodayAdapter);
+    }
+
+    private void getOnAiringTV(){
+        Call<TVRespon> call = apiService.getTvAiringToday(MYAPI_KEY, LANGUAGE, currentPageTVPopular);
+        call.enqueue(new Callback<TVRespon>(){
+            @Override
+            public void onResponse(Call<TVRespon> call, Response<TVRespon> response) {
+                if(response.body() != null){
+                    totalPagesTVAiringToday = response.body().getTotalPages();
+                    if(response.body().getResult()!=null){
+                        loadingTvAiringToday.setVisibility(View.GONE);
+                        int oldCount = tvAiringTodayResults.size();
+                        tvAiringTodayResults.addAll(response.body().getResult());
+                        tvAiringTodayAdapter.notifyItemChanged(oldCount, tvAiringTodayResults.size());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TVRespon> call, Throwable t) {
             }
         });
     }

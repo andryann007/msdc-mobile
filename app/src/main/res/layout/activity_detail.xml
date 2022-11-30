@@ -86,20 +86,11 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageBackdrop"
                 app:layout_constraintTop_toBottomOf="@+id/imageBackdrop"/>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:background="@drawable/bg_view_gradient"
-                app:layout_constraintStart_toEndOf="@+id/imagePoster"
-                app:layout_constraintTop_toTopOf="@+id/imagePoster"
-                app:layout_constraintBottom_toBottomOf="@+id/imagePoster"/>
-
             <LinearLayout
                 android:id="@+id/layoutMainDetails"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imagePoster"
                 app:layout_constraintTop_toBottomOf="@+id/imageBackdrop">
@@ -108,30 +99,36 @@
                     android:id="@+id/textTitle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginVertical="5dp"
+                    android:background="@drawable/bg_view_gradient"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textRunTime"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginHorizontal="10dp"
                     android:includeFontPadding="false"
                     android:layout_marginTop="2dp"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/black"
-                    android:textSize="20sp"/>
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/textReleaseDate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginHorizontal="10dp"
                     android:includeFontPadding="false"
                     android:layout_marginTop="2dp"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/black"
-                    android:textSize="20sp"/>
+                    android:textSize="18sp"/>
 
             </LinearLayout>
 
@@ -149,6 +146,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:alpha="0.6"
+                    android:includeFontPadding="false"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/textRating"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:includeFontPadding="false"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/black"

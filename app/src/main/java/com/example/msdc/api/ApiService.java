@@ -24,6 +24,9 @@ public interface ApiService {
     @GET("search/movie")
     Call<MovieRespon> searchMovie(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") int page);
 
+    @GET("tv/airing_today")
+    Call<TVRespon> getTvAiringToday(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
+
     @GET("tv/popular")
     Call<TVRespon> getTvPopular(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
