@@ -84,7 +84,7 @@ public class DetailActivity extends AppCompatActivity {
                     binding.imagePosterBack.setVisibility(View.VISIBLE);
 
                     ImageAdapter.setPosterURL(binding.imagePosterBack, response.body().getPosterPath());
-                    ImageAdapter.setPosterURL(binding.imageBackdrop, response.body().getBackdropPath());
+                    ImageAdapter.setBackdropURL(binding.imageBackdrop, response.body().getBackdropPath());
                     ImageAdapter.setPosterURL(binding.imagePoster, response.body().getPosterPath());
                     binding.textTitle.setText(response.body().getTitle());
                     binding.textRunTime.setText("Runtime : " + response.body().getRuntime() + " Minutes");
@@ -188,7 +188,7 @@ public class DetailActivity extends AppCompatActivity {
                     binding.imagePosterBack.setVisibility(View.VISIBLE);
 
                     ImageAdapter.setPosterURL(binding.imagePosterBack, response.body().getPosterPath());
-                    ImageAdapter.setPosterURL(binding.imageBackdrop, response.body().getBackdropPath());
+                    ImageAdapter.setBackdropURL(binding.imageBackdrop, response.body().getBackdropPath());
                     ImageAdapter.setPosterURL(binding.imagePoster, response.body().getPosterPath());
                     binding.textTitle.setText("Name : " + response.body().getName());
                     binding.textRunTime.setText("Episode Runtime : " + Arrays.toString(response.body().getEpisodeRuntime()) + "Episodes");
