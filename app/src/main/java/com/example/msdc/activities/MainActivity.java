@@ -1,65 +1,34 @@
 package com.example.msdc.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.msdc.adapter.MovieAdapter;
-import com.example.msdc.api.MovieRespon;
-import com.example.msdc.api.MovieResult;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.example.msdc.R;
-import com.example.msdc.adapter.TVAdapter;
-import com.example.msdc.api.TVRespon;
-import com.example.msdc.api.TVResult;
-import com.example.msdc.api.ApiClient;
-import com.example.msdc.api.ApiService;
 import com.example.msdc.databinding.ActivityMainBinding;
+import com.example.msdc.ui.home.HomeFragment;
+import com.example.msdc.ui.movie.MovieFragment;
+import com.example.msdc.ui.tv_shows.TvFragment;
+import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-
-public class MainActivity extends AppCompatActivity {
-    private ApiService apiService;
-    private RecyclerView rvMoviePopular, rvMovieNowPlaying, rvMovieTopRated, rvMovieUpcoming;
-    private ProgressBar loadingMoviePopular, loadingMovieNowPlaying, loadingMovieTopRated, loadingMovieUpcoming;
-    private MovieAdapter moviePopularAdapter, movieNowPlayingAdapter, movieTopRatedAdapter, movieUpcomingAdapter;
-    private final List<MovieResult> moviePopularResults = new ArrayList<>();
-    private final List<MovieResult> movieNowPlayingResults = new ArrayList<>();
-    private final List<MovieResult> movieTopRatedResults = new ArrayList<>();
-    private final List<MovieResult> movieUpcomingResults = new ArrayList<>();
-    private int currentPageMoviePopular = 1, currentPageMovieNowPlaying = 1,
-            currentPageMovieTopRated = 1, currentPageUpcomingMovie = 1;
-    private int totalPagesMoviePopular = 1, totalPagesMovieNowPlaying = 1,
-            totalPagesMovieTopRated = 1, totalPagesUpcomingMovie = 1;
-
-    private RecyclerView rvTvPopular, rvTvTopRated, rvTvOnAir, rvTvAiringToday;
-    private ProgressBar loadingTvPopular, loadingTvTopRated, loadingTvOnAir, loadingTvAiringToday;
-    private TVAdapter tvPopularAdapter, tvTopRatedAdapter, tvOnAirAdapter, tvAiringTodayAdapter;
-    private final List<TVResult> tvPopularResults = new ArrayList<>();
-    private final List<TVResult> tvTopRatedResults = new ArrayList<>();
-    private final List<TVResult> tvOnAirResults = new ArrayList<>();
-    private final List<TVResult> tvAiringTodayResults = new ArrayList<>();
-    private int currentPageTVPopular = 1, currentPageTVTopRated = 1, currentPageTVOnAir = 1, currentPageTVAiringToday = 1;
-    private int totalPagesTVPopular = 1, totalPagesTVTopRated = 1, totalPagesTVOnAir = 1, totalPagesTVAiringToday = 1;
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
     public static final String LANGUAGE = "en-US";
@@ -68,26 +37,38 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Retrofit retrofit = ApiClient.getClient();
-        apiService = retrofit.create(ApiService.class);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        setPopularMovies();
-        setNowPlayingMovies();
-        setUpcomingMovies();
-        setTopRatedMovies();
+        drawerLayout = findViewById(R.id.drawerLayout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
-        setPopularTV();
-        setTopRatedTV();
-        setOnAirTV();
-        setOnAiringTV();
+        ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toogle);
+        toogle.syncState();
 
-        binding.imageSearch.setOnClickListener(v -> dialogSearch());
+       getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+               new HomeFragment()).commit();
+
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void dialogSearch() {
@@ -138,265 +119,31 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void setOnAirTV() {
-        rvTvOnAir = findViewById(R.id.rvTVOnAir);
-        tvOnAirAdapter = new TVAdapter(tvOnAirResults, this);
-        loadingTvOnAir = findViewById(R.id.loadingTVOnAir);
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.nav_now_playing_movie:
 
-        getOnAirTV();
-        rvTvOnAir.setAdapter(tvOnAirAdapter);
-    }
+            case R.id.nav_upcoming_movie:
 
-    private void getOnAirTV(){
-        Call<TVRespon> call = apiService.getTvOnAir(MYAPI_KEY, LANGUAGE, currentPageTVOnAir);
-        call.enqueue(new Callback<TVRespon>(){
+            case R.id.nav_top_rated_movie:
 
-            @Override
-            public void onResponse(Call<TVRespon> call, Response<TVRespon> response) {
-                if(response.body() != null){
-                    totalPagesTVOnAir = response.body().getTotalPages();
-                    if(response.body().getResult()!=null){
-                        loadingTvOnAir.setVisibility(View.GONE);
-                        int oldCount = tvOnAirResults.size();
-                        tvOnAirResults.addAll(response.body().getResult());
-                        tvOnAirAdapter.notifyItemChanged(oldCount, tvOnAirResults.size());
-                    }
-                }
-            }
+            case R.id.nav_popular_movie:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new MovieFragment()).commit();
+                break;
 
-            @Override
-            public void onFailure(Call<TVRespon> call, Throwable t) {
+            case R.id.nav_onair_tv:
 
-            }
-        });
-    }
+            case R.id.nav_popular_tv:
 
-    private void setTopRatedTV() {
-        rvTvTopRated = findViewById(R.id.rvTVTopRated);
-        tvTopRatedAdapter = new TVAdapter(tvTopRatedResults, this);
-        loadingTvTopRated = findViewById(R.id.loadingTVTopRated);
+            case R.id.nav_airing_today_tv:
 
-        getTopRatedTV();
-        rvTvTopRated.setAdapter(tvTopRatedAdapter);
-    }
-
-    private void getTopRatedTV(){
-        Call<TVRespon> call = apiService.getTvTopRated(MYAPI_KEY, LANGUAGE, currentPageTVTopRated);
-        call.enqueue(new Callback<TVRespon>(){
-
-            @Override
-            public void onResponse(Call<TVRespon> call, Response<TVRespon> response) {
-                if(response.body() != null){
-                    totalPagesTVTopRated = response.body().getTotalPages();
-                    if(response.body().getResult()!=null){
-                        loadingTvTopRated.setVisibility(View.GONE);
-                        int oldCount = tvTopRatedResults.size();
-                        tvTopRatedResults.addAll(response.body().getResult());
-                        tvTopRatedAdapter.notifyItemChanged(oldCount, tvTopRatedResults.size());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TVRespon> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void setPopularTV() {
-        rvTvPopular = findViewById(R.id.rvTVPopular);
-        tvPopularAdapter = new TVAdapter(tvPopularResults, this);
-        loadingTvPopular = findViewById(R.id.loadingTVPopular);
-
-        getPopularTV();
-        rvTvPopular.setAdapter(tvPopularAdapter);
-    }
-
-    private void getPopularTV(){
-        Call<TVRespon> call = apiService.getTvPopular(MYAPI_KEY, LANGUAGE, currentPageTVPopular);
-        call.enqueue(new Callback<TVRespon>(){
-
-            @Override
-            public void onResponse(Call<TVRespon> call, Response<TVRespon> response) {
-                if(response.body() != null){
-                    totalPagesTVPopular = response.body().getTotalPages();
-                    if(response.body().getResult()!=null){
-                        loadingTvPopular.setVisibility(View.GONE);
-                        int oldCount = tvPopularResults.size();
-                        tvPopularResults.addAll(response.body().getResult());
-                        tvPopularAdapter.notifyItemChanged(oldCount, tvPopularResults.size());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TVRespon> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void setOnAiringTV() {
-        rvTvAiringToday = findViewById(R.id.rvTVAiring);
-        tvAiringTodayAdapter = new TVAdapter(tvAiringTodayResults, this);
-        loadingTvAiringToday = findViewById(R.id.loadingTVAiring);
-
-        getOnAiringTV();
-        rvTvAiringToday.setAdapter(tvAiringTodayAdapter);
-    }
-
-    private void getOnAiringTV(){
-        Call<TVRespon> call = apiService.getTvAiringToday(MYAPI_KEY, LANGUAGE, currentPageTVPopular);
-        call.enqueue(new Callback<TVRespon>(){
-            @Override
-            public void onResponse(Call<TVRespon> call, Response<TVRespon> response) {
-                if(response.body() != null){
-                    totalPagesTVAiringToday = response.body().getTotalPages();
-                    if(response.body().getResult()!=null){
-                        loadingTvAiringToday.setVisibility(View.GONE);
-                        int oldCount = tvAiringTodayResults.size();
-                        tvAiringTodayResults.addAll(response.body().getResult());
-                        tvAiringTodayAdapter.notifyItemChanged(oldCount, tvAiringTodayResults.size());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TVRespon> call, Throwable t) {
-            }
-        });
-    }
-
-    private void setTopRatedMovies() {
-        rvMovieTopRated = findViewById(R.id.rvMovieTopRated);
-        movieTopRatedAdapter = new MovieAdapter(movieTopRatedResults, this);
-        loadingMovieTopRated = findViewById(R.id.loadingMovieTopRated);
-
-        getTopRatedMovies();
-        rvMovieTopRated.setAdapter(movieTopRatedAdapter);
-    }
-
-    private void getTopRatedMovies(){
-        Call<MovieRespon> call = apiService.getTopRatedMovies(MYAPI_KEY, LANGUAGE, currentPageMovieTopRated);
-        call.enqueue(new Callback<MovieRespon>(){
-
-            @Override
-            public void onResponse(Call<MovieRespon> call, Response<MovieRespon> response) {
-                if(response.body() != null){
-                    totalPagesMovieTopRated = response.body().getTotalPages();
-                    if(response.body().getResult()!=null){
-                        loadingMovieTopRated.setVisibility(View.GONE);
-                        int oldCount = movieTopRatedResults.size();
-                        movieTopRatedResults.addAll(response.body().getResult());
-                        movieTopRatedAdapter.notifyItemChanged(oldCount, movieTopRatedResults.size());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MovieRespon> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void setUpcomingMovies() {
-        rvMovieUpcoming = findViewById(R.id.rvUpcomingMovie);
-        movieUpcomingAdapter = new MovieAdapter(movieUpcomingResults, this);
-        loadingMovieUpcoming = findViewById(R.id.loadingUpcomingMovie);
-
-        getUpcomingMovies();
-        rvMovieUpcoming.setAdapter(movieUpcomingAdapter);
-    }
-
-    private void getUpcomingMovies(){
-        Call<MovieRespon> call = apiService.getUpcomingMovies(MYAPI_KEY, LANGUAGE, currentPageMoviePopular);
-        call.enqueue(new Callback<MovieRespon>(){
-
-            @Override
-            public void onResponse(Call<MovieRespon> call, Response<MovieRespon> response) {
-                if(response.body() != null){
-                    totalPagesUpcomingMovie = response.body().getTotalPages();
-                    if(response.body().getResult()!=null){
-                        loadingMovieUpcoming.setVisibility(View.GONE);
-                        int oldCount = movieUpcomingResults.size();
-                        movieUpcomingResults.addAll(response.body().getResult());
-                        movieUpcomingAdapter.notifyItemChanged(oldCount, movieUpcomingResults.size());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MovieRespon> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void setNowPlayingMovies() {
-        rvMovieNowPlaying = findViewById(R.id.rvMovieNowPlaying);
-        movieNowPlayingAdapter = new MovieAdapter(movieNowPlayingResults, this);
-        loadingMovieNowPlaying = findViewById(R.id.loadingMovieNowPlaying);
-
-        getNowPlayingMovies();
-        rvMovieNowPlaying.setAdapter(movieNowPlayingAdapter);
-    }
-
-    private void getNowPlayingMovies(){
-        Call<MovieRespon> call = apiService.getNowPlayingMovies(MYAPI_KEY, LANGUAGE, currentPageMoviePopular);
-        call.enqueue(new Callback<MovieRespon>(){
-
-            @Override
-            public void onResponse(Call<MovieRespon> call, Response<MovieRespon> response) {
-                if(response.body() != null){
-                    totalPagesMovieNowPlaying = response.body().getTotalPages();
-                    if(response.body().getResult()!=null){
-                        loadingMovieNowPlaying.setVisibility(View.GONE);
-                        int oldCount = movieNowPlayingResults.size();
-                        movieNowPlayingResults.addAll(response.body().getResult());
-                        movieNowPlayingAdapter.notifyItemChanged(oldCount, movieNowPlayingResults.size());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MovieRespon> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void setPopularMovies() {
-        rvMoviePopular = findViewById(R.id.rvMoviePopular);
-        moviePopularAdapter = new MovieAdapter(moviePopularResults, this);
-        loadingMoviePopular = findViewById(R.id.loadingMoviePopular);
-
-        getPopularMovies();
-        rvMoviePopular.setAdapter(moviePopularAdapter);
-    }
-
-    private void getPopularMovies(){
-        Call<MovieRespon> call = apiService.getPopularMovies(MYAPI_KEY, LANGUAGE, currentPageMoviePopular);
-        call.enqueue(new Callback<MovieRespon>(){
-
-            @Override
-            public void onResponse(Call<MovieRespon> call, Response<MovieRespon> response) {
-                if(response.body() != null){
-                    totalPagesMoviePopular = response.body().getTotalPages();
-                    if(response.body().getResult()!=null){
-                        loadingMoviePopular.setVisibility(View.GONE);
-                        int oldCount = moviePopularResults.size();
-                        moviePopularResults.addAll(response.body().getResult());
-                        moviePopularAdapter.notifyItemChanged(oldCount, moviePopularResults.size());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MovieRespon> call, Throwable t) {
-
-            }
-        });
+            case R.id.nav_top_rated_tv:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new TvFragment()).commit();
+                break;
+        }
+        return true;
     }
 }

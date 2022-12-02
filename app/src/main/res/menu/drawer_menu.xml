@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:id="@+id/item_movie"
+        android:title="@string/menu_movie"
+        android:icon="@drawable/ic_video">
+        <menu>
+            <item android:id="@+id/nav_popular_movie"
+                android:title="@string/most_popular_movies"/>
+
+            <item android:id="@+id/nav_top_rated_movie"
+                android:title="@string/top_rated_movies"/>
+
+            <item android:id="@+id/nav_now_playing_movie"
+                android:title="@string/now_playing_movies"/>
+
+            <item android:id="@+id/nav_upcoming_movie"
+                android:title="@string/upcoming_movies"/>
+        </menu>
+    </item>
+
+    <item android:id="@+id/item_tv"
+        android:title="@string/menu_tv_shows"
+        android:icon="@drawable/ic_tv">
+        <menu>
+            <item android:id="@+id/nav_popular_tv"
+                android:title="@string/most_popular_tv_shows"/>
+
+            <item android:id="@+id/nav_top_rated_tv"
+                android:title="@string/top_rated_tv_shows"/>
+
+            <item android:id="@+id/nav_onair_tv"
+                android:title="@string/on_the_air_tv_shows"/>
+
+            <item android:id="@+id/nav_airing_today_tv"
+                android:title="@string/tv_airing_today"/>
+        </menu>
+    </item>
+
+    <item android:id="@+id/item_account"
+        android:title="@string/menu_my_account"
+        android:icon="@drawable/ic_account">
+        <menu>
+            <item android:id="@+id/nav_favorites"
+                android:title="@string/my_favorites"/>
+
+            <item android:id="@+id/nav_account_profile"
+                android:title="@string/my_profiles"/>
+        </menu>
+    </item>
+
+    <item android:id="@+id/nav_logout"
+        android:title="@string/logout"
+        android:icon="@drawable/ic_logout"/>
+
+</menu>
