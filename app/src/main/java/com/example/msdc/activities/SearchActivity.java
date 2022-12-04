@@ -1,5 +1,6 @@
 package com.example.msdc.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -92,7 +93,7 @@ public class SearchActivity extends AppCompatActivity {
         Call<MovieRespon> call = apiService.searchMovie(MainActivity.MYAPI_KEY, MainActivity.LANGUAGE, query, currentPage);
         call.enqueue(new Callback<MovieRespon>() {
             @Override
-            public void onResponse(Call<MovieRespon> call, Response<MovieRespon> response) {
+            public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
                 if(response.body() != null){
                     if(response.body().getResult().size() > 8){
                         binding.loadingSearch.setVisibility(View.GONE);
@@ -109,7 +110,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @SuppressLint("SetTextI18n")
             @Override
-            public void onFailure(Call<MovieRespon> call, Throwable t) {
+            public void onFailure(@NonNull Call<MovieRespon> call, @NonNull Throwable t) {
                 binding.loadingSearch.setVisibility(View.GONE);
                 binding.textNoResults.setVisibility(View.VISIBLE);
                 binding.textNoResults.setText("Something wrong, with connection !!!");
@@ -121,7 +122,7 @@ public class SearchActivity extends AppCompatActivity {
         Call<TVRespon> call = apiService.searchTv(MainActivity.MYAPI_KEY, MainActivity.LANGUAGE, query, currentPage);
         call.enqueue(new Callback<TVRespon>() {
             @Override
-            public void onResponse(Call<TVRespon> call, Response<TVRespon> response) {
+            public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
                 if(response.body() != null){
                     if(response.body().getResult().size() > 8){
                         binding.loadingSearch.setVisibility(View.GONE);
@@ -138,7 +139,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @SuppressLint("SetTextI18n")
             @Override
-            public void onFailure(Call<TVRespon> call, Throwable t) {
+            public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
                 binding.loadingSearch.setVisibility(View.GONE);
                 binding.textNoResults.setVisibility(View.VISIBLE);
                 binding.textNoResults.setText("Something wrong, with connection !!!");

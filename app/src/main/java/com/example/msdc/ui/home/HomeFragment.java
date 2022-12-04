@@ -190,7 +190,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getUpcomingMovies(){
-        Call<MovieRespon> call = apiService.getUpcomingMovies(MYAPI_KEY, LANGUAGE, currentPageMoviePopular);
+        Call<MovieRespon> call = apiService.getUpcomingMovies(MYAPI_KEY, LANGUAGE, currentPageUpcomingMovie);
         call.enqueue(new Callback<MovieRespon>(){
 
             @Override
@@ -223,7 +223,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getNowPlayingMovies(){
-        Call<MovieRespon> call = apiService.getNowPlayingMovies(MYAPI_KEY, LANGUAGE, currentPageMoviePopular);
+        Call<MovieRespon> call = apiService.getNowPlayingMovies(MYAPI_KEY, LANGUAGE, currentPageMovieNowPlaying);
         call.enqueue(new Callback<MovieRespon>(){
 
             @Override
@@ -388,7 +388,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getOnAiringTV(){
-        Call<TVRespon> call = apiService.getTvAiringToday(MYAPI_KEY, LANGUAGE, currentPageTVPopular);
+        Call<TVRespon> call = apiService.getTvAiringToday(MYAPI_KEY, LANGUAGE, currentPageTVAiringToday);
         call.enqueue(new Callback<TVRespon>(){
             @Override
             public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {

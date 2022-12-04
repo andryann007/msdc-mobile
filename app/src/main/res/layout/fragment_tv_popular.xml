@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.tv_shows.TvPopularFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
@@ -17,17 +18,9 @@
             android:orientation="vertical">
 
             <include
-                android:id="@+id/layoutMovie"
-                layout="@layout/layout_movie"/>
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"
-                android:layout_marginVertical="15dp"/>
-
+                android:id="@+id/layoutTVShows"
+                layout="@layout/layout_tv_popular_gridlist"/>
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
-</RelativeLayout>
+
+</FrameLayout>

@@ -13,15 +13,9 @@
         android:layout_height="match_parent"
         tools:context=".activities.MainActivity">
 
-        <androidx.appcompat.widget.Toolbar
+        <include
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/black"
-            app:logo="@drawable/ic_menu"
-            app:title="@string/app_name"
-            app:titleTextColor="@color/white"
-            android:elevation="4dp"/>
+            layout="@layout/toolbar"/>
 
         <FrameLayout
             android:id="@+id/fragment_container"

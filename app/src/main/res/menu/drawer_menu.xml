@@ -3,51 +3,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+    <item android:id="@+id/nav_home"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home"/>
+
     <item android:id="@+id/item_movie"
-        android:title="@string/menu_movie"
-        android:icon="@drawable/ic_video">
+        android:title="@string/menu_movie">
         <menu>
             <item android:id="@+id/nav_popular_movie"
-                android:title="@string/most_popular_movies"/>
+                android:title="@string/most_popular_movies"
+                android:icon="@drawable/ic_video"/>
 
             <item android:id="@+id/nav_top_rated_movie"
-                android:title="@string/top_rated_movies"/>
+                android:title="@string/top_rated_movies"
+                android:icon="@drawable/ic_video"/>
 
             <item android:id="@+id/nav_now_playing_movie"
-                android:title="@string/now_playing_movies"/>
+                android:title="@string/now_playing_movies"
+                android:icon="@drawable/ic_video"/>
 
             <item android:id="@+id/nav_upcoming_movie"
-                android:title="@string/upcoming_movies"/>
+                android:title="@string/upcoming_movies"
+                android:icon="@drawable/ic_video"/>
         </menu>
     </item>
 
     <item android:id="@+id/item_tv"
-        android:title="@string/menu_tv_shows"
-        android:icon="@drawable/ic_tv">
+        android:title="@string/menu_tv_shows">
         <menu>
             <item android:id="@+id/nav_popular_tv"
-                android:title="@string/most_popular_tv_shows"/>
+                android:title="@string/most_popular_tv_shows"
+                android:icon="@drawable/ic_tv"/>
 
             <item android:id="@+id/nav_top_rated_tv"
-                android:title="@string/top_rated_tv_shows"/>
+                android:title="@string/top_rated_tv_shows"
+                android:icon="@drawable/ic_tv"/>
 
             <item android:id="@+id/nav_onair_tv"
-                android:title="@string/on_the_air_tv_shows"/>
+                android:title="@string/on_the_air_tv_shows"
+                android:icon="@drawable/ic_tv"/>
 
             <item android:id="@+id/nav_airing_today_tv"
-                android:title="@string/tv_airing_today"/>
+                android:title="@string/tv_airing_today"
+                android:icon="@drawable/ic_tv"/>
         </menu>
     </item>
 
     <item android:id="@+id/item_account"
-        android:title="@string/menu_my_account"
-        android:icon="@drawable/ic_account">
+        android:title="@string/menu_my_account">
         <menu>
             <item android:id="@+id/nav_favorites"
-                android:title="@string/my_favorites"/>
+                android:title="@string/my_favorites"
+                android:icon="@drawable/ic_favorite"/>
 
             <item android:id="@+id/nav_account_profile"
-                android:title="@string/my_profiles"/>
+                android:title="@string/my_profiles"
+                android:icon="@drawable/ic_account"/>
         </menu>
     </item>
 

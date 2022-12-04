@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.movie.MovieFragment">
+    tools:context=".ui.movie.MovieUpcomingFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
@@ -19,7 +19,7 @@
 
             <include
                 android:id="@+id/layoutMovie"
-                layout="@layout/layout_movie"/>
+                layout="@layout/layout_movie_upcoming_gridlist"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

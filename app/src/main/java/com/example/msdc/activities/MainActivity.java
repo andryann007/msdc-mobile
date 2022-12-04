@@ -1,5 +1,6 @@
 package com.example.msdc.activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,9 +26,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.msdc.R;
 import com.example.msdc.databinding.ActivityMainBinding;
 import com.example.msdc.ui.home.HomeFragment;
-import com.example.msdc.ui.movie.MovieFragment;
-import com.example.msdc.ui.tv_shows.TvFragment;
+import com.example.msdc.ui.movie.MovieNowPlayingFragment;
+import com.example.msdc.ui.movie.MoviePopularFragment;
+import com.example.msdc.ui.movie.MovieTopRatedFragment;
+import com.example.msdc.ui.movie.MovieUpcomingFragment;
+import com.example.msdc.ui.tv_shows.TvAiringTodayFragment;
+import com.example.msdc.ui.tv_shows.TvOnAirFragment;
+import com.example.msdc.ui.tv_shows.TvPopularFragment;
+import com.example.msdc.ui.tv_shows.TvTopRatedFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
@@ -39,11 +48,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawerLayout;
 
+    private FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                new HomeFragment()).commit();
 
+       ImageButton btnSearch = findViewById(R.id.btnSearch);
+       btnSearch.setOnClickListener(v -> dialogSearch());
     }
 
     @Override
@@ -119,29 +134,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(i);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
         switch(item.getItemId()){
+            case R.id.nav_home:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new HomeFragment()).commit();
+                break;
+
             case R.id.nav_now_playing_movie:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new MovieNowPlayingFragment()).commit();
+                break;
 
             case R.id.nav_upcoming_movie:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new MovieUpcomingFragment()).commit();
+                break;
 
             case R.id.nav_top_rated_movie:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new MovieTopRatedFragment()).commit();
+                break;
 
             case R.id.nav_popular_movie:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new MovieFragment()).commit();
+                        new MoviePopularFragment()).commit();
                 break;
 
             case R.id.nav_onair_tv:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new TvOnAirFragment()).commit();
+                break;
 
             case R.id.nav_popular_tv:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new TvPopularFragment()).commit();
+                break;
 
             case R.id.nav_airing_today_tv:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new TvAiringTodayFragment()).commit();
+                break;
 
             case R.id.nav_top_rated_tv:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new TvFragment()).commit();
+                        new TvTopRatedFragment()).commit();
+                break;
+
+            case R.id.nav_logout:
+                firebaseAuth.signOut();
+                Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(logoutIntent);
+                finish();
                 break;
         }
         return true;

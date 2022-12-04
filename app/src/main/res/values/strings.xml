@@ -52,4 +52,7 @@
     <string name="navigation_drawer_close">Close Drawer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_search_desc">Button Search</string>
+    <string name="button_menu_desc">Button Menu</string>
+    <string name="home">Home</string>
 </resources>
