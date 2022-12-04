@@ -6,11 +6,12 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -25,6 +26,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.msdc.R;
 import com.example.msdc.databinding.ActivityMainBinding;
+import com.example.msdc.ui.account.FavoriteFragment;
 import com.example.msdc.ui.home.HomeFragment;
 import com.example.msdc.ui.movie.MovieNowPlayingFragment;
 import com.example.msdc.ui.movie.MoviePopularFragment;
@@ -36,6 +38,11 @@ import com.example.msdc.ui.tv_shows.TvPopularFragment;
 import com.example.msdc.ui.tv_shows.TvTopRatedFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
@@ -49,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
 
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +65,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(binding.getRoot());
 
         firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
+
+        /*RoundedImageView image_profile = findViewById(R.id.imageProfile);
+        TextView textName, textEmail;
+        textName = findViewById(R.id.textProfileName);
+        textEmail = findViewById(R.id.textProfileEmail);
+
+        if(currentUser !=null){
+            String name = currentUser.getDisplayName();
+            String email = currentUser.getEmail();
+
+            Picasso.get().load(currentUser.getPhotoUrl()).into(image_profile);
+            textName.setText(name);
+            textEmail.setText(email);
+        }*/
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         drawerLayout = findViewById(R.id.drawerLayout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -72,9 +96,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                new HomeFragment()).commit();
-
-       ImageButton btnSearch = findViewById(R.id.btnSearch);
-       btnSearch.setOnClickListener(v -> dialogSearch());
     }
 
     @Override
@@ -116,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 return false;
             });
+            dialogSearch.show();
         }
     }
 
@@ -184,6 +206,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new TvTopRatedFragment()).commit();
                 break;
 
+            case R.id.nav_favorites:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new FavoriteFragment()).commit();
+                break;
+
             case R.id.nav_logout:
                 firebaseAuth.signOut();
                 Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
@@ -192,5 +219,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.nav_search:
+                dialogSearch();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

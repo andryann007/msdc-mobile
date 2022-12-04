@@ -55,4 +55,7 @@
     <string name="button_search_desc">Button Search</string>
     <string name="button_menu_desc">Button Menu</string>
     <string name="home">Home</string>
+    <string name="my_favorite_movies">My Favorite Movies</string>
+    <string name="my_favorite_tv_shows">My Favorite TV Shows</string>
+    <string name="search">Search</string>
 </resources>

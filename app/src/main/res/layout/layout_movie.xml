@@ -10,7 +10,7 @@
         android:id="@+id/moviesTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_text_title"
+        android:background="@drawable/bg_text_title2"
         android:fontFamily="sans-serif"
         android:text="@string/movies"
         android:textAlignment="center"

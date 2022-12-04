@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:background="#a9a9a9"
+        android:background="@drawable/bg_text_title"
         android:padding="10dp">
 
         <TextView
@@ -63,7 +63,7 @@
             android:padding="10dp">
             <EditText
                 android:id="@+id/inputSearch"
-                android:layout_width="0dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:importantForAutofill="no"
                 android:imeOptions="actionGo"
@@ -84,7 +84,7 @@
                 android:background="@drawable/bg_oval"
                 android:contentDescription="@string/app_name"
                 android:padding="2dp"
-                android:src="@drawable/ic_search" />
+                android:src="@drawable/ic_search_black" />
         </RelativeLayout>
 
     </RelativeLayout>

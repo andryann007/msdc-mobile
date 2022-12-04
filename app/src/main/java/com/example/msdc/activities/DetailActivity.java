@@ -2,14 +2,20 @@ package com.example.msdc.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.text.HtmlCompat;
+import androidx.core.view.GravityCompat;
 
+import com.example.msdc.R;
 import com.example.msdc.adapter.ImageAdapter;
 import com.example.msdc.adapter.MovieAdapter;
 import com.example.msdc.adapter.TVAdapter;
@@ -57,6 +63,9 @@ public class DetailActivity extends AppCompatActivity {
         binding = ActivityDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         Retrofit retrofit = ApiClient.getClient();
         apiService = retrofit.create(ApiService.class);
 
@@ -69,7 +78,7 @@ public class DetailActivity extends AppCompatActivity {
             setTVDetails();
         }
 
-        binding.imageBackDetails.setOnClickListener(v-> onBackPressed());
+        binding.toolbar.setOnClickListener(v-> onBackPressed());
     }
 
     private void setMovieDetails(){
@@ -81,6 +90,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
                 if(response.body() != null){
+                    Objects.requireNonNull(getSupportActionBar()).setTitle(response.body().getTitle());
                     binding.loadingDetails.setVisibility(View.GONE);
                     binding.scrollView.setVisibility(View.VISIBLE);
                     binding.imagePosterBack.setVisibility(View.VISIBLE);
@@ -185,6 +195,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TVDetails> call, @NonNull Response<TVDetails> response) {
                 if(response.body() != null){
+                    Objects.requireNonNull(getSupportActionBar()).setTitle(response.body().getName());
                     binding.loadingDetails.setVisibility(View.GONE);
                     binding.scrollView.setVisibility(View.VISIBLE);
                     binding.imagePosterBack.setVisibility(View.VISIBLE);
@@ -279,5 +290,26 @@ public class DetailActivity extends AppCompatActivity {
     private void setHtmlText(TextView tv, String textColored, String textValue){
         tv.setText(HtmlCompat.fromHtml("<font color='#059142'>" + textColored + "</font> : " +
                 "<b>" + textValue + "</b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.favorite_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.nav_favorite:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
