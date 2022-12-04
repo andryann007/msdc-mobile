@@ -3,10 +3,12 @@ package com.example.msdc.activities;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
 
 import com.example.msdc.adapter.ImageAdapter;
 import com.example.msdc.adapter.MovieAdapter;
@@ -86,26 +88,26 @@ public class DetailActivity extends AppCompatActivity {
                     ImageAdapter.setPosterURL(binding.imagePosterBack, response.body().getPosterPath());
                     ImageAdapter.setBackdropURL(binding.imageBackdrop, response.body().getBackdropPath());
                     ImageAdapter.setPosterURL(binding.imagePoster, response.body().getPosterPath());
-                    binding.textTitle.setText(response.body().getTitle());
-                    binding.textRunTime.setText("Runtime : " + response.body().getRuntime() + " Minutes");
-                    binding.textReleaseDate.setText("Released on : " + response.body().getReleaseDate());
-                    binding.textOverview.setText(response.body().getOverview());
-                    binding.textLanguage.setText("Language : " + response.body().getLanguage());
-                    binding.textStatus.setText("Status : " + response.body().getStatus());
+                    setHtmlText(binding.textTitle, "Movie Title", response.body().getTitle());
+                    setHtmlText(binding.textRunTime, "Runtime", response.body().getRuntime() + " Minutes");
+                    setHtmlText(binding.textReleaseDate, "Released on", response.body().getReleaseDate());
+                    setHtmlText(binding.textOverview, "Overview", response.body().getOverview());
+                    setHtmlText(binding.textLanguage, "Language", response.body().getLanguage());
+                    setHtmlText(binding.textStatus, "Status", response.body().getStatus());
 
                     Double budget = Double.parseDouble(response.body().getBudget());
                     String budgetFormatted = NumberFormat.getCurrencyInstance(Locale.US).format(budget);
-                    binding.textBudgetOrSeasons.setText("Budget : " + budgetFormatted);
+                    setHtmlText(binding.textBudgetOrSeasons, "Budget : ", budgetFormatted);
 
                     Double revenue = Double.parseDouble(response.body().getRevenue());
                     String revenueFormatted = NumberFormat.getCurrencyInstance(Locale.US).format(revenue);
-                    binding.textRevenueOrEpisodes.setText("Revenue : " + revenueFormatted);
+                    setHtmlText(binding.textRevenueOrEpisodes, "Revenue : ", revenueFormatted);
 
-                    binding.textPopularity.setText("Popularity : " + response.body().getPopularity());
-                    binding.textTagline.setText("Tagline : " + response.body().getTagline());
-                    binding.textVoteCount.setText("Vote Count : " + response.body().getVoteCount());
-                    binding.textVoteAverage.setText("Vote Average : " + response.body().getVoteAverage());
-                    binding.textHomePage.setText("Homepage : " + response.body().getHomepage());
+                    setHtmlText(binding.textPopularity, "Popularity : ", response.body().getPopularity());
+                    setHtmlText(binding.textTagline, "Tagline : ", response.body().getTagline());
+                    setHtmlText(binding.textVoteCount, "Vote Count : ", response.body().getVoteCount());
+                    setHtmlText(binding.textVoteAverage, "Vote Average : ", response.body().getVoteAverage());
+                    setHtmlText(binding.textHomePage, "Homepage : ", response.body().getHomepage());
 
                     setRecommendationsMovie();
                     setSimilarMovie();
@@ -190,20 +192,20 @@ public class DetailActivity extends AppCompatActivity {
                     ImageAdapter.setPosterURL(binding.imagePosterBack, response.body().getPosterPath());
                     ImageAdapter.setBackdropURL(binding.imageBackdrop, response.body().getBackdropPath());
                     ImageAdapter.setPosterURL(binding.imagePoster, response.body().getPosterPath());
-                    binding.textTitle.setText("Name : " + response.body().getName());
-                    binding.textRunTime.setText("Episode Runtime : " + Arrays.toString(response.body().getEpisodeRuntime()) + "Episodes");
-                    binding.textReleaseDate.setText("From : " + response.body().getFirstAirDate() + " - " + response.body().getLastAirDate());
-                    binding.textOverview.setText(response.body().getOverview());
-                    binding.textLanguage.setText("Language : " + response.body().getOriginalLanguage());
-                    binding.textStatus.setText("Status : " + response.body().getStatus());
-                    binding.textBudgetOrSeasons.setText("Number of Seasons : " + response.body().getNumberOfSeasons());
-                    binding.textRevenueOrEpisodes.setText("Number of Episodes : " + response.body().getNumberOfEpisodes());
+                    setHtmlText(binding.textTitle, "Name", response.body().getName());
+                    setHtmlText(binding.textRunTime, "Episode Runtime",  Arrays.toString(response.body().getEpisodeRuntime()) + "Episodes");
+                    setHtmlText(binding.textReleaseDate, "From", response.body().getFirstAirDate() + " - " + response.body().getLastAirDate());
+                    setHtmlText(binding.textOverview,"Overview", response.body().getOverview());
+                    setHtmlText(binding.textLanguage, "Language", response.body().getOriginalLanguage());
+                    setHtmlText(binding.textStatus, "Status", response.body().getStatus());
+                    setHtmlText(binding.textBudgetOrSeasons, "Number of Seasons", String.valueOf(response.body().getNumberOfSeasons()));
+                    setHtmlText(binding.textRevenueOrEpisodes, "Number of Episodes", String.valueOf(response.body().getNumberOfEpisodes()));
 
-                    binding.textPopularity.setText("Popularity : " + response.body().getPopularity());
-                    binding.textTagline.setText("Tagline : " + response.body().getTagline());
-                    binding.textVoteCount.setText("Vote Count : " + response.body().getVoteCount());
-                    binding.textVoteAverage.setText("Vote Average : " + response.body().getVoteAverage());
-                    binding.textHomePage.setText("Homepage : " + response.body().getHomepage());
+                    setHtmlText(binding.textPopularity, "Popularity", response.body().getPopularity());
+                    setHtmlText(binding.textTagline, "Tagline", response.body().getTagline());
+                    setHtmlText(binding.textVoteCount, "Vote Count", response.body().getVoteCount());
+                    setHtmlText(binding.textVoteAverage, "Vote Average", response.body().getVoteAverage());
+                    setHtmlText(binding.textHomePage, "Homepage", response.body().getHomepage());
 
                     binding.textMovieRecommendations.setText("TV Recommendations");
                     binding.textMovieSimilar.setText("Similar TV");
@@ -273,5 +275,9 @@ public class DetailActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call<TVRespon> call, Throwable t) {
             }
         });
+    }
+    private void setHtmlText(TextView tv, String textColored, String textValue){
+        tv.setText(HtmlCompat.fromHtml("<font color='#059142'>" + textColored + "</font> : " +
+                "<b>" + textValue + "</b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 }
