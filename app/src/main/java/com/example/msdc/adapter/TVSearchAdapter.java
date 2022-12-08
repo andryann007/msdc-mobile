@@ -67,7 +67,7 @@ public class TVSearchAdapter extends RecyclerView.Adapter<TVSearchAdapter.TvView
             itemView.setOnClickListener(v -> {
                 Intent i = new Intent(context, DetailActivity.class);
                 i.putExtra("tipe", "tv");
-                i.putExtra("id", TVResult.getId());
+                i.putExtra("tv_id", TVResult.getId());
                 context.startActivity(i);
             });
         }

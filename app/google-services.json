@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "201332861865",
+    "firebase_url": "https://movie-series-data-center-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "movie-series-data-center",
     "storage_bucket": "movie-series-data-center.appspot.com"
   },

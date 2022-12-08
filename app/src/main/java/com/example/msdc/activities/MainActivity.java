@@ -1,10 +1,13 @@
 package com.example.msdc.activities;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,7 +30,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.msdc.R;
 import com.example.msdc.databinding.ActivityMainBinding;
-import com.example.msdc.ui.account.FavoriteFragment;
 import com.example.msdc.ui.home.HomeFragment;
 import com.example.msdc.ui.movie.MovieNowPlayingFragment;
 import com.example.msdc.ui.movie.MoviePopularFragment;
@@ -36,11 +39,17 @@ import com.example.msdc.ui.tv_shows.TvAiringTodayFragment;
 import com.example.msdc.ui.tv_shows.TvOnAirFragment;
 import com.example.msdc.ui.tv_shows.TvPopularFragment;
 import com.example.msdc.ui.tv_shows.TvTopRatedFragment;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -56,7 +65,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
 
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser currentUser;
+
+    TextView textName, textEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,21 +75,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(binding.getRoot());
 
         firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
+        UserInfo user = FirebaseAuth.getInstance().getCurrentUser();
 
-        /*RoundedImageView image_profile = findViewById(R.id.imageProfile);
-        TextView textName, textEmail;
-        textName = findViewById(R.id.textProfileName);
-        textEmail = findViewById(R.id.textProfileEmail);
-
-        if(currentUser !=null){
-            String name = currentUser.getDisplayName();
-            String email = currentUser.getEmail();
-
-            Picasso.get().load(currentUser.getPhotoUrl()).into(image_profile);
-            textName.setText(name);
-            textEmail.setText(email);
-        }*/
+        loadUserInfo();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -94,8 +92,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toogle);
         toogle.syncState();
 
-       getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-               new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new HomeFragment()).commit();
     }
 
     @Override
@@ -206,11 +204,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new TvTopRatedFragment()).commit();
                 break;
 
-            case R.id.nav_favorites:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new FavoriteFragment()).commit();
-                break;
-
             case R.id.nav_logout:
                 firebaseAuth.signOut();
                 Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
@@ -230,11 +223,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.nav_search:
-                dialogSearch();
-                break;
+        if (item.getItemId() == R.id.nav_search) {
+            dialogSearch();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void loadUserInfo() {
+        Log.d(TAG, "loadUserInfo: Loading user "+firebaseAuth.getUid());
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.child(Objects.requireNonNull(firebaseAuth.getUid()))
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        //get all info of user here from snapshot
+                        String email = ""+snapshot.child("email").getValue();
+                        String name = ""+snapshot.child("name").getValue();
+                        String profileImage = ""+snapshot.child("profileImage").getValue();
+
+                        //set data to ui
+                        RoundedImageView image_profile = findViewById(R.id.imageProfile);
+                        textName = findViewById(R.id.textProfileName);
+                        textEmail = findViewById(R.id.textProfileEmail);
+                        textName.setText(name);
+                        textEmail.setText(email);
+                        image_profile.setImageResource(R.drawable.ic_account);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
     }
 }

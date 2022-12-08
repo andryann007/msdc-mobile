@@ -1,25 +1,25 @@
 package com.example.msdc.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.text.HtmlCompat;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.msdc.api.MovieRespon;
-import com.example.msdc.api.MovieResult;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.text.HtmlCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import com.example.msdc.adapter.MovieSearchAdapter;
-import com.example.msdc.R;
-import com.example.msdc.api.TVRespon;
 import com.example.msdc.adapter.TVSearchAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
+import com.example.msdc.api.MovieRespon;
+import com.example.msdc.api.MovieResult;
+import com.example.msdc.api.TVRespon;
 import com.example.msdc.databinding.ActivitySearchBinding;
 
 import java.util.ArrayList;
@@ -48,10 +48,9 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Toolbar toolbar = binding.toolbar;
 
-        textSearchQuery = findViewById(R.id.textSearch);
-
-        binding.rvSearch.setLayoutManager(new StaggeredGridLayoutManager(4, RecyclerView.VERTICAL));
+        binding.rvSearch.setLayoutManager(new StaggeredGridLayoutManager(3, RecyclerView.VERTICAL));
         binding.loadingSearch.setVisibility(View.VISIBLE);
 
         movieSearchAdapter = new MovieSearchAdapter(movieResult, this);
@@ -59,7 +58,7 @@ public class SearchActivity extends AppCompatActivity {
 
         apiService = ApiClient.getClient().create(ApiService.class);
         query = getIntent().getStringExtra("searchFor");
-        textSearchQuery.setText(HtmlCompat.fromHtml("You searched for : <b>" + query + "</b>",
+        toolbar.setTitle(HtmlCompat.fromHtml("You searched for : <b>" + query + "</b>",
                 HtmlCompat.FROM_HTML_MODE_LEGACY));
         tipe = getIntent().getStringExtra("tipe");
 
@@ -75,18 +74,7 @@ public class SearchActivity extends AppCompatActivity {
                 break;
         }
 
-        /*binding.rvSearch.addOnScrollListener(onScrolled(recyclerView, dx, dy) + {
-            super.onScrolled(recyclerView, dx, dy);
-            if (!binding.rvSearch.canScrollVertically(1)){
-                if(currentPage <= totalPages){
-                currentPage += 1;
-                if(tipe.equals("Movies"))
-                    searchForMovies();
-                else searchForTV();
-                }
-            }
-        });*/
-        binding.imageBack.setOnClickListener(v -> onBackPressed());
+        toolbar.setOnClickListener(v-> onBackPressed());
     }
 
     private void searchForMovies() {
@@ -95,7 +83,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
                 if(response.body() != null){
-                    if(response.body().getResult().size() > 8){
+                    if(response.body().getResult().size() > 0){
                         binding.loadingSearch.setVisibility(View.GONE);
                         totalPages = response.body().getTotalPages();
                         int oldCount = movieResult.size();
@@ -124,7 +112,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
                 if(response.body() != null){
-                    if(response.body().getResult().size() > 8){
+                    if(response.body().getResult().size() > 0){
                         binding.loadingSearch.setVisibility(View.GONE);
                         totalPages = response.body().getTotalPages();
                         int oldCount = TVResult.size();

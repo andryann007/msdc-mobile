@@ -227,7 +227,9 @@
                     android:includeFontPadding="false"
                     android:fontFamily="sans-serif"
                     android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:clickable="true"
+                    android:focusable="true" />
 
                 <TextView
                     android:id="@+id/textMovieRecommendations"

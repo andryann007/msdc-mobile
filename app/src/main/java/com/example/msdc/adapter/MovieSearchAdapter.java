@@ -27,7 +27,6 @@ public class MovieSearchAdapter extends RecyclerView.Adapter<MovieSearchAdapter.
         this.context = context;
     }
 
-
     @NonNull
     @Override
     public MovieSearchAdapter.MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -67,7 +66,7 @@ public class MovieSearchAdapter extends RecyclerView.Adapter<MovieSearchAdapter.
             itemView.setOnClickListener(v -> {
                 Intent i = new Intent(context, DetailActivity.class);
                 i.putExtra("tipe", "movie");
-                i.putExtra("id", movieResult.getId());
+                i.putExtra("movie_id", movieResult.getId());
                 context.startActivity(i);
             });
         }

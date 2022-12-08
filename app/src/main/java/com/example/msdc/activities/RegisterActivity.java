@@ -14,18 +14,24 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.msdc.R;
 import com.example.msdc.databinding.ActivityRegisterBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -63,6 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id))
                 .requestEmail()
+                .requestProfile()
                 .build();
 
         gsc = GoogleSignIn.getClient(this, gso);
@@ -112,6 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
                     assert firebaseUser != null;
                     String email = firebaseUser.getEmail();
 
+                    updateUserInfo();
                     Toast.makeText(RegisterActivity.this,"Account created\n"+email, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                     finish();
@@ -121,6 +129,49 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this,""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
+
+    private void updateUserInfo() {
+        progressDialog.setMessage("Saving user info...");
+
+        //timestamp
+        long timestamp = System.currentTimeMillis();
+
+        //get current user uid, since user is registered so we can get now
+        String uid = firebaseAuth.getUid();
+
+        //setup data to add in db
+        HashMap<String, Object> mHashmap = new HashMap<>();
+        mHashmap.put("uid", uid);
+        mHashmap.put("email", email);
+        mHashmap.put("name", username);
+        mHashmap.put("profileImage", R.drawable.ic_account);
+        mHashmap.put("timestamp", timestamp);
+
+        //set data to db
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(uid)
+                .setValue(mHashmap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        //data added to db
+                        progressDialog.dismiss();
+                        Toast.makeText(RegisterActivity.this, "Account created...", Toast.LENGTH_SHORT).show();
+                        //since user account is created so start dashboard of user
+                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(Exception e) {
+                        //data failed adding to db
+                        progressDialog.dismiss();
+                        Toast.makeText(RegisterActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     public void clear(){
         Objects.requireNonNull(binding.emailEt.getText()).clear();
         Objects.requireNonNull(binding.passwordEt.getText()).clear();
@@ -149,7 +200,8 @@ public class RegisterActivity extends AppCompatActivity {
                         assert profileAccount != null;
                         String email = profileAccount.getEmail();
                         Log.d(TAG, "signInWithCredential:success");
-                        HomeMenu();
+
+                        saveGoogleAccount(profileAccount);
                         Toast.makeText(RegisterActivity.this, "LoggedIn\n"+email, Toast.LENGTH_SHORT).show();
                     } else {
                         Log.d(TAG, "signInWithCredential:failure", task.getException());
@@ -162,7 +214,48 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void HomeMenu(){
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    private void saveGoogleAccount(GoogleSignInAccount user) {
+        progressDialog.setMessage("Saving user info...");
+
+        //timestamp
+        long timestamp = System.currentTimeMillis();
+
+        //get current user uid, since user is registered so we can get now
+        assert user != null;
+        String uid = firebaseAuth.getUid();
+        String name = user.getDisplayName();
+        String email = user.getEmail();
+        String photo = String.valueOf(user.getPhotoUrl());
+
+        //setup data to add in db
+        HashMap<String, Object> mHashmap = new HashMap<>();
+        mHashmap.put("uid", uid);
+        mHashmap.put("email", email);
+        mHashmap.put("name", name);
+        mHashmap.put("profileImage", photo);
+        mHashmap.put("timestamp", timestamp);
+
+        //set data to db
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(uid)
+                .setValue(mHashmap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        //data added to db
+                        progressDialog.dismiss();
+                        //since user account is created so start dashboard of user
+                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(Exception e) {
+                        //data failed adding to db
+                        progressDialog.dismiss();
+                        Toast.makeText(RegisterActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

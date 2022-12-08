@@ -1,6 +1,7 @@
 package com.example.msdc.activities;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.text.HtmlCompat;
-import androidx.core.view.GravityCompat;
 
 import com.example.msdc.R;
 import com.example.msdc.adapter.ImageAdapter;
@@ -28,10 +28,16 @@ import com.example.msdc.api.TVDetails;
 import com.example.msdc.api.TVRespon;
 import com.example.msdc.api.TVResult;
 import com.example.msdc.databinding.ActivityDetailBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -56,6 +62,12 @@ public class DetailActivity extends AppCompatActivity {
     private int totalPagesTVRecommendations = 1;
     private final List<TVResult> tvSimilarResult = new ArrayList<>();
     private int totalPagesTVSimilar = 1;
+
+    //firebase auth
+    private FirebaseAuth firebaseAuth;
+
+    //progress dialog
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,17 +119,37 @@ public class DetailActivity extends AppCompatActivity {
 
                     Double budget = Double.parseDouble(response.body().getBudget());
                     String budgetFormatted = NumberFormat.getCurrencyInstance(Locale.US).format(budget);
-                    setHtmlText(binding.textBudgetOrSeasons, "Budget : ", budgetFormatted);
+                    setHtmlText(binding.textBudgetOrSeasons, "Budget", budgetFormatted);
 
                     Double revenue = Double.parseDouble(response.body().getRevenue());
                     String revenueFormatted = NumberFormat.getCurrencyInstance(Locale.US).format(revenue);
-                    setHtmlText(binding.textRevenueOrEpisodes, "Revenue : ", revenueFormatted);
+                    setHtmlText(binding.textRevenueOrEpisodes, "Revenue", revenueFormatted);
 
-                    setHtmlText(binding.textPopularity, "Popularity : ", response.body().getPopularity());
-                    setHtmlText(binding.textTagline, "Tagline : ", response.body().getTagline());
-                    setHtmlText(binding.textVoteCount, "Vote Count : ", response.body().getVoteCount());
-                    setHtmlText(binding.textVoteAverage, "Vote Average : ", response.body().getVoteAverage());
-                    setHtmlText(binding.textHomePage, "Homepage : ", response.body().getHomepage());
+                    setHtmlText(binding.textPopularity, "Popularity", response.body().getPopularity());
+
+                    if(response.body().getTagline().isEmpty()){
+                        setHtmlEmptyText(binding.textTagline, "Tagline", "No Tagline Yet!!!");
+                    } else{
+                        setHtmlText(binding.textTagline, "Tagline", response.body().getTagline());
+                    }
+
+                    if(response.body().getVoteCount().isEmpty()){
+                        setHtmlEmptyText(binding.textVoteCount, "Vote Count", "No Vote Count Yet!!!");
+                    } else{
+                        setHtmlText(binding.textVoteCount, "Vote Count", response.body().getVoteCount());
+                    }
+
+                    if(response.body().getVoteAverage().isEmpty()){
+                        setHtmlEmptyText(binding.textVoteAverage, "Vote Average", "No Vote Average Yet!!!");
+                    } else{
+                        setHtmlText(binding.textVoteAverage, "Vote Average", response.body().getVoteAverage());
+                    }
+
+                    if(response.body().getHomepage().isEmpty()){
+                        setHtmlEmptyText(binding.textHomePage, "Homepage", "No Website Homepage Yet!!!");
+                    } else{
+                        setHtmlLinkText(binding.textHomePage, "Homepage", response.body().getHomepage(), response.body().getHomepage());
+                    }
 
                     setRecommendationsMovie();
                     setSimilarMovie();
@@ -213,16 +245,37 @@ public class DetailActivity extends AppCompatActivity {
                     setHtmlText(binding.textRevenueOrEpisodes, "Number of Episodes", String.valueOf(response.body().getNumberOfEpisodes()));
 
                     setHtmlText(binding.textPopularity, "Popularity", response.body().getPopularity());
-                    setHtmlText(binding.textTagline, "Tagline", response.body().getTagline());
-                    setHtmlText(binding.textVoteCount, "Vote Count", response.body().getVoteCount());
-                    setHtmlText(binding.textVoteAverage, "Vote Average", response.body().getVoteAverage());
-                    setHtmlText(binding.textHomePage, "Homepage", response.body().getHomepage());
+
+                    if(response.body().getTagline().isEmpty()){
+                        setHtmlEmptyText(binding.textTagline, "Tagline", "No Tagline Yet!!!");
+                    } else{
+                        setHtmlText(binding.textTagline, "Tagline", response.body().getTagline());
+                    }
+
+                    if(response.body().getVoteCount().isEmpty()){
+                        setHtmlEmptyText(binding.textVoteCount, "Vote Count", "No Vote Count Yet!!!");
+                    } else{
+                        setHtmlText(binding.textVoteCount, "Vote Count", response.body().getVoteCount());
+                    }
+
+                    if(response.body().getVoteAverage().isEmpty()){
+                        setHtmlEmptyText(binding.textVoteAverage, "Vote Average", "No Vote Average Yet!!!");
+                    } else{
+                        setHtmlText(binding.textVoteAverage, "Vote Average", response.body().getVoteAverage());
+                    }
+
+                    if(response.body().getHomepage().isEmpty()){
+                        setHtmlEmptyText(binding.textHomePage, "Homepage", "No Website Homepage Yet!!!");
+                    } else{
+                        setHtmlLinkText(binding.textHomePage, "Homepage", response.body().getHomepage(), response.body().getHomepage());
+                    }
 
                     binding.textMovieRecommendations.setText("TV Recommendations");
                     binding.textMovieSimilar.setText("Similar TV");
 
                     setRecommendationsTV();
                     setSimilarTV();
+
                 }
             }
 
@@ -292,6 +345,16 @@ public class DetailActivity extends AppCompatActivity {
                 "<b>" + textValue + "</b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 
+    private void setHtmlEmptyText(TextView tv, String textColored, String textValue){
+        tv.setText(HtmlCompat.fromHtml("<font color='#059142'>" + textColored + "</font> : " +
+                "<b> <font color='#FF0000'>" + textValue + "</font> </b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+    }
+
+    private void setHtmlLinkText(TextView tv, String textColored, String textLink, String textValue){
+        tv.setText(HtmlCompat.fromHtml("<font color='#059142'>" + textColored + "</font> : " +
+                "<b> <a href='" + textLink + "'>" + textValue +"</a> </b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+    }
+
     @Override
     public void onBackPressed(){
         super.onBackPressed();
@@ -304,12 +367,15 @@ public class DetailActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.nav_favorite:
-                break;
+
+        if (item.getItemId() == R.id.nav_favorite) {
+            item.setIcon(R.drawable.ic_favorite);
+            Toast.makeText(DetailActivity.this, "Favorite Added...", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
