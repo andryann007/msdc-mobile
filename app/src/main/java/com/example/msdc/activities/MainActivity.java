@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,6 +51,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -246,9 +248,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         RoundedImageView image_profile = findViewById(R.id.imageProfile);
                         textName = findViewById(R.id.textProfileName);
                         textEmail = findViewById(R.id.textProfileEmail);
+
                         textName.setText(name);
                         textEmail.setText(email);
-                        image_profile.setImageResource(R.drawable.ic_account);
+                        if(profileImage.equals("") || profileImage.equals("2131165363")){
+                            image_profile.setImageResource(R.drawable.ic_account);
+                        } else {
+                            Uri photo_url = Uri.parse(profileImage);
+                            Picasso.get().load(photo_url).resize(60, 60).into(image_profile);
+                        }
                     }
 
                     @Override

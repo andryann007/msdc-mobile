@@ -154,7 +154,6 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d(TAG, "signInWithCredential:success");
 
                         saveGoogleAccount(profileAccount);
-                        Toast.makeText(LoginActivity.this, "LoggedIn\n" + email, Toast.LENGTH_SHORT).show();
                     } else {
                         Log.d(TAG, "signInWithCredential:failure", task.getException());
                     }
@@ -198,7 +197,7 @@ public class LoginActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         //since user account is created so start dashboard of user
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
+                        Toast.makeText(LoginActivity.this, "Successfully Sign In With Google !!!", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

@@ -144,7 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
         mHashmap.put("uid", uid);
         mHashmap.put("email", email);
         mHashmap.put("name", username);
-        mHashmap.put("profileImage", R.drawable.ic_account);
+        mHashmap.put("profileImage", "");
         mHashmap.put("timestamp", timestamp);
 
         //set data to db
@@ -156,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onSuccess(Void unused) {
                         //data added to db
                         progressDialog.dismiss();
-                        Toast.makeText(RegisterActivity.this, "Account created...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Successfully Created Account!!!", Toast.LENGTH_SHORT).show();
                         //since user account is created so start dashboard of user
                         startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                         finish();
@@ -202,7 +202,6 @@ public class RegisterActivity extends AppCompatActivity {
                         Log.d(TAG, "signInWithCredential:success");
 
                         saveGoogleAccount(profileAccount);
-                        Toast.makeText(RegisterActivity.this, "LoggedIn\n"+email, Toast.LENGTH_SHORT).show();
                     } else {
                         Log.d(TAG, "signInWithCredential:failure", task.getException());
                     }
@@ -246,7 +245,7 @@ public class RegisterActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         //since user account is created so start dashboard of user
                         startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                        finish();
+                        Toast.makeText(RegisterActivity.this, "Successfully Sign In With Google !!!", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
