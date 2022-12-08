@@ -2,6 +2,8 @@ package com.example.msdc.api;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONObject;
+
 public class TVDetails {
     @SerializedName("name")
     String name;

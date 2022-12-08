@@ -52,6 +52,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.Objects;
 
@@ -255,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             image_profile.setImageResource(R.drawable.ic_account);
                         } else {
                             Uri photo_url = Uri.parse(profileImage);
-                            Picasso.get().load(photo_url).resize(60, 60).into(image_profile);
+                            Picasso.get().load(photo_url).fit().centerCrop().into(image_profile);
                         }
                     }
 

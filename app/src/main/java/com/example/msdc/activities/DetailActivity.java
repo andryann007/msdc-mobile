@@ -34,6 +34,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,7 +117,9 @@ public class DetailActivity extends AppCompatActivity {
                     setHtmlText(binding.textTitle, "Movie Title", response.body().getTitle());
                     setHtmlText(binding.textRunTime, "Runtime", response.body().getRuntime() + " Minutes");
                     setHtmlText(binding.textReleaseDate, "Released on", response.body().getReleaseDate());
+
                     setHtmlText(binding.textOverview, "Overview", response.body().getOverview());
+
                     setHtmlText(binding.textLanguage, "Language", response.body().getLanguage());
                     setHtmlText(binding.textStatus, "Status", response.body().getStatus());
 
@@ -238,7 +244,9 @@ public class DetailActivity extends AppCompatActivity {
                     setHtmlText(binding.textTitle, "Name", response.body().getName());
                     setHtmlText(binding.textRunTime, "Episode Runtime",  Arrays.toString(response.body().getEpisodeRuntime()) + "Episodes");
                     setHtmlText(binding.textReleaseDate, "From", response.body().getFirstAirDate() + " - " + response.body().getLastAirDate());
+
                     setHtmlText(binding.textOverview,"Overview", response.body().getOverview());
+
                     setHtmlText(binding.textLanguage, "Language", response.body().getOriginalLanguage());
                     setHtmlText(binding.textStatus, "Status", response.body().getStatus());
                     setHtmlText(binding.textBudgetOrSeasons, "Number of Seasons", String.valueOf(response.body().getNumberOfSeasons()));
