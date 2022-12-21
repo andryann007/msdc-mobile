@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:alpha="0.1">
+        android:alpha="0.2">
 
         <ImageView
             android:id="@+id/imagePosterBack"
@@ -39,209 +39,245 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imageBackdrop"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_margin="1dp"
+                android:layout_height="175dp"
+                android:alpha="0.5"
                 app:riv_corner_radius="3dp"
                 android:background="#a9a9a9"
-                android:scaleType="fitXY"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:scaleType="fitXY"/>
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imagePoster"
-                android:layout_width="150dp"
-                android:layout_height="220dp"
-                android:layout_margin="1dp"
-                app:riv_corner_radius="3dp"
-                android:background="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="@+id/imageBackdrop"
-                app:layout_constraintTop_toBottomOf="@+id/imageBackdrop"/>
+                android:layout_width="85dp"
+                android:layout_height="128.75dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="20dp"
+                app:riv_corner_radius="5dp"
+                android:background="@color/black"/>
 
             <LinearLayout
-                android:id="@+id/layoutMainDetails"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imagePoster"
-                app:layout_constraintTop_toBottomOf="@+id/imageBackdrop">
-
-                <TextView
-                    android:id="@+id/textTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textRunTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="5dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:includeFontPadding="false"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/textReleaseDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="5dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:includeFontPadding="false"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutOtherDetails"
+                android:id="@+id/descriptionContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutMainDetails">
+                android:layout_below="@+id/imageBackdrop"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textOverview"
+                <LinearLayout
+                    android:id="@+id/layoutMainDetails"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:alpha="0.6"
-                    android:includeFontPadding="false"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textRating"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:includeFontPadding="false"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
+                    <TextView
+                        android:id="@+id/textTitleReleaseDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textLanguage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:includeFontPadding="false"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/textRunTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="sans-serif"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"/>
 
-                <TextView
-                    android:id="@+id/textStatus"
+                    <TextView
+                        android:id="@+id/textVoteAverage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="sans-serif"
+                        android:drawablePadding="5dp"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:drawableStartCompat="@drawable/ic_star" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutOtherDetails"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+
+                    <TextView
+                        android:id="@+id/titleOverview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:text="@string/overview"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/textOverview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:alpha="0.6"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/textRating"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutLanguageStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:includeFontPadding="false"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    android:layout_marginHorizontal="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                <TextView
-                    android:id="@+id/textBudgetOrSeasons"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="2dp"
-                    android:includeFontPadding="false"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/textLanguage"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/textRevenueOrEpisodes"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="2dp"
-                    android:includeFontPadding="false"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/textStatus"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textPopularity"
+                <LinearLayout
+                    android:id="@+id/layoutBudgetRevenue"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:includeFontPadding="false"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    android:layout_marginHorizontal="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/textBudgetOrSeasons"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textRevenueOrEpisodes"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutPopularityVoteCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/textPopularity"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textVoteCount"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/textTagline"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="2dp"
-                    android:includeFontPadding="false"
+                    android:layout_marginHorizontal="10dp"
                     android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/textVoteCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="2dp"
                     android:includeFontPadding="false"
-                    android:fontFamily="sans-serif"
                     android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/textVoteAverage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="2dp"
-                    android:includeFontPadding="false"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/textHomePage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="2dp"
-                    android:includeFontPadding="false"
+                    android:layout_marginHorizontal="10dp"
                     android:fontFamily="sans-serif"
+                    android:includeFontPadding="false"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:clickable="true"
-                    android:focusable="true" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/textMovieRecommendations"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
                     android:text="@string/movie_recommendations"
-                    android:fontFamily="sans-serif"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvMovieRecommendations"
@@ -249,22 +285,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal"
-                    android:scrollbars="horizontal"
                     android:overScrollMode="never"
+                    android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_container"/>
+                    tools:listitem="@layout/item_container" />
 
                 <TextView
                     android:id="@+id/textMovieSimilar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
                     android:text="@string/similar_movies"
-                    android:fontFamily="sans-serif"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvMovieSimilar"
@@ -272,14 +309,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal"
-                    android:scrollbars="horizontal"
                     android:overScrollMode="never"
+                    android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_container"/>
+                    tools:listitem="@layout/item_container" />
 
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
 

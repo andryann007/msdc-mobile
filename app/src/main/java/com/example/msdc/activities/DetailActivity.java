@@ -1,7 +1,6 @@
 package com.example.msdc.activities;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,20 +27,10 @@ import com.example.msdc.api.TVDetails;
 import com.example.msdc.api.TVRespon;
 import com.example.msdc.api.TVResult;
 import com.example.msdc.databinding.ActivityDetailBinding;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -66,12 +55,6 @@ public class DetailActivity extends AppCompatActivity {
     private int totalPagesTVRecommendations = 1;
     private final List<TVResult> tvSimilarResult = new ArrayList<>();
     private int totalPagesTVSimilar = 1;
-
-    //firebase auth
-    private FirebaseAuth firebaseAuth;
-
-    //progress dialog
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,11 +97,11 @@ public class DetailActivity extends AppCompatActivity {
                     ImageAdapter.setPosterURL(binding.imagePosterBack, response.body().getPosterPath());
                     ImageAdapter.setBackdropURL(binding.imageBackdrop, response.body().getBackdropPath());
                     ImageAdapter.setPosterURL(binding.imagePoster, response.body().getPosterPath());
-                    setHtmlText(binding.textTitle, "Movie Title", response.body().getTitle());
+                    setTitleText(binding.textTitleReleaseDate, response.body().getTitle(),
+                            response.body().getReleaseDate());
                     setHtmlText(binding.textRunTime, "Runtime", response.body().getRuntime() + " Minutes");
-                    setHtmlText(binding.textReleaseDate, "Released on", response.body().getReleaseDate());
 
-                    setHtmlText(binding.textOverview, "Overview", response.body().getOverview());
+                    binding.textOverview.setText(response.body().getOverview());
 
                     setHtmlText(binding.textLanguage, "Language", response.body().getLanguage());
                     setHtmlText(binding.textStatus, "Status", response.body().getStatus());
@@ -154,7 +137,7 @@ public class DetailActivity extends AppCompatActivity {
                     if(response.body().getHomepage().isEmpty()){
                         setHtmlEmptyText(binding.textHomePage, "Homepage", "No Website Homepage Yet!!!");
                     } else{
-                        setHtmlLinkText(binding.textHomePage, "Homepage", response.body().getHomepage(), response.body().getHomepage());
+                        setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
                     }
 
                     setRecommendationsMovie();
@@ -241,11 +224,11 @@ public class DetailActivity extends AppCompatActivity {
                     ImageAdapter.setPosterURL(binding.imagePosterBack, response.body().getPosterPath());
                     ImageAdapter.setBackdropURL(binding.imageBackdrop, response.body().getBackdropPath());
                     ImageAdapter.setPosterURL(binding.imagePoster, response.body().getPosterPath());
-                    setHtmlText(binding.textTitle, "Name", response.body().getName());
+                    setTitleText(binding.textTitleReleaseDate, response.body().getName(),
+                            response.body().getFirstAirDate() + " - " + response.body().getLastAirDate());
                     setHtmlText(binding.textRunTime, "Episode Runtime",  Arrays.toString(response.body().getEpisodeRuntime()) + "Episodes");
-                    setHtmlText(binding.textReleaseDate, "From", response.body().getFirstAirDate() + " - " + response.body().getLastAirDate());
 
-                    setHtmlText(binding.textOverview,"Overview", response.body().getOverview());
+                    binding.textOverview.setText(response.body().getOverview());
 
                     setHtmlText(binding.textLanguage, "Language", response.body().getOriginalLanguage());
                     setHtmlText(binding.textStatus, "Status", response.body().getStatus());
@@ -275,7 +258,7 @@ public class DetailActivity extends AppCompatActivity {
                     if(response.body().getHomepage().isEmpty()){
                         setHtmlEmptyText(binding.textHomePage, "Homepage", "No Website Homepage Yet!!!");
                     } else{
-                        setHtmlLinkText(binding.textHomePage, "Homepage", response.body().getHomepage(), response.body().getHomepage());
+                        setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
                     }
 
                     binding.textMovieRecommendations.setText("TV Recommendations");
@@ -344,7 +327,7 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TVRespon> call, Throwable t) {
+            public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
             }
         });
     }
@@ -358,9 +341,14 @@ public class DetailActivity extends AppCompatActivity {
                 "<b> <font color='#FF0000'>" + textValue + "</font> </b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 
-    private void setHtmlLinkText(TextView tv, String textColored, String textLink, String textValue){
-        tv.setText(HtmlCompat.fromHtml("<font color='#059142'>" + textColored + "</font> : " +
+    private void setHtmlLinkText(TextView tv, String textLink, String textValue){
+        tv.setText(HtmlCompat.fromHtml("<font color='#059142'>" + "Homepage" + "</font> : " +
                 "<b> <a href='" + textLink + "'>" + textValue +"</a> </b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+    }
+
+    private void setTitleText(TextView tv, String textTitle, String textReleaseData){
+        tv.setText(HtmlCompat.fromHtml("<b>" + textTitle + "</b><font color='#808080'> ("
+                + textReleaseData + ") </font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 
     @Override
