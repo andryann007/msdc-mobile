@@ -12,6 +12,13 @@ public class TVResult {
     @SerializedName("original_name")
     String name;
 
+    @SerializedName("vote_average")
+    double voteAverage;
+
+    public double getVoteAverage() {
+        return voteAverage;
+    }
+
     public int getId(){ return id; }
 
     public String getPosterPath(){ return posterPath; }

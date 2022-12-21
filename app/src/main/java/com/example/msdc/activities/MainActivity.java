@@ -40,21 +40,18 @@ import com.example.msdc.ui.tv_shows.TvAiringTodayFragment;
 import com.example.msdc.ui.tv_shows.TvOnAirFragment;
 import com.example.msdc.ui.tv_shows.TvPopularFragment;
 import com.example.msdc.ui.tv_shows.TvTopRatedFragment;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
@@ -78,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(binding.getRoot());
 
         firebaseAuth = FirebaseAuth.getInstance();
-        UserInfo user = FirebaseAuth.getInstance().getCurrentUser();
 
         loadUserInfo();
 
@@ -246,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         String profileImage = ""+snapshot.child("profileImage").getValue();
 
                         //set data to ui
-                        RoundedImageView image_profile = findViewById(R.id.imageProfile);
+                        CircleImageView image_profile = findViewById(R.id.imageProfile);
                         textName = findViewById(R.id.textProfileName);
                         textEmail = findViewById(R.id.textProfileEmail);
 
@@ -256,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             image_profile.setImageResource(R.drawable.ic_account);
                         } else {
                             Uri photo_url = Uri.parse(profileImage);
-                            Picasso.get().load(photo_url).fit().centerCrop().into(image_profile);
+                            Picasso.get().load(photo_url).into(image_profile);
                         }
                     }
 

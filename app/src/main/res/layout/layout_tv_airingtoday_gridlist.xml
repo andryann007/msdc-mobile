@@ -10,11 +10,12 @@
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
         android:background="@drawable/bg_text_title"
         android:fontFamily="sans-serif"
         android:text="@string/tv_shows"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@android:color/background_light"
         android:textSize="20sp"/>
 
     <LinearLayout

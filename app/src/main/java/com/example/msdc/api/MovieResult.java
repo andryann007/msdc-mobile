@@ -12,6 +12,13 @@ public class MovieResult {
     @SerializedName("title")
     String title;
 
+    @SerializedName("vote_average")
+    double voteAverage;
+
+    public double getVoteAverage() {
+        return voteAverage;
+    }
+
     public int getId(){ return id; }
 
     public String getPosterPath(){ return posterPath; }

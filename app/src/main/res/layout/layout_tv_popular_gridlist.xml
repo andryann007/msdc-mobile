@@ -17,9 +17,10 @@
             android:id="@+id/textTVPopular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
             android:fontFamily="sans-serif"
             android:text="@string/most_popular_tv_shows"
-            android:textColor="@color/black"
+            android:textColor="@android:color/background_light"
             android:textSize="24sp"/>
 
         <androidx.recyclerview.widget.RecyclerView

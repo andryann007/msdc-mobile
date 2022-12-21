@@ -4,18 +4,24 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/bg_item"
+    android:backgroundTint="@android:color/background_dark">
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_text_title2"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
         android:fontFamily="sans-serif"
-        android:text="@string/tv_shows"
+        android:text="TV Shows List"
+        android:background="@drawable/bg_item"
+        android:backgroundTint="@color/white"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="20sp"/>
+        android:textSize="30sp"
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:id="@+id/containerTVAiringToday"
@@ -28,16 +34,18 @@
             android:id="@+id/textTVAiring"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:fontFamily="sans-serif"
             android:text="@string/tv_airing_today"
-            android:textColor="@color/black"
-            android:textSize="24sp"/>
+            android:textColor="@android:color/background_light"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTVAiring"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:scrollbars="horizontal"
             android:orientation="horizontal"
             android:overScrollMode="never"
@@ -69,16 +77,18 @@
             android:id="@+id/textTVPopular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:fontFamily="sans-serif"
             android:text="@string/most_popular_tv_shows"
-            android:textColor="@color/black"
-            android:textSize="24sp"/>
+            android:textColor="@android:color/background_light"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTVPopular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:scrollbars="horizontal"
             android:orientation="horizontal"
             android:overScrollMode="never"
@@ -110,16 +120,18 @@
             android:id="@+id/textTVTopRated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:text="@string/top_rated_tv_shows"
             android:fontFamily="sans-serif"
-            android:textColor="@color/black"
-            android:textSize="24sp"/>
+            android:textColor="@android:color/background_light"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTVTopRated"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:scrollbars="horizontal"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -149,10 +161,12 @@
             android:id="@+id/textTVOnAir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:fontFamily="sans-serif"
             android:text="@string/on_the_air_tv_shows"
-            android:textColor="@color/black"
+            android:textColor="@android:color/background_light"
             android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/rvTVOnAir"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

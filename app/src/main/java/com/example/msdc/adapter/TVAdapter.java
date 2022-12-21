@@ -17,6 +17,7 @@ import com.example.msdc.activities.DetailActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
+import java.util.Locale;
 
 public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TvViewHolder>{
     private final List<TVResult> tvResults;
@@ -44,13 +45,14 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TvViewHolder>{
 
     static class TvViewHolder extends RecyclerView.ViewHolder{
         private final RoundedImageView imageItemPoster;
-        private final TextView textItemName;
+        private final TextView textItemName, textRating;
 
         TvViewHolder(@NonNull View itemView){
             super(itemView);
 
             imageItemPoster = itemView.findViewById(R.id.imageItemPoster);
             textItemName = itemView.findViewById(R.id.textItemName);
+            textRating = itemView.findViewById(R.id.textRating);
         }
 
         void bindItem(TVResult tvResult, Context context){
@@ -60,6 +62,9 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TvViewHolder>{
                 imageItemPoster.setImageResource(R.drawable.ic_android);
             }
             textItemName.setText(tvResult.getName());
+            double rating = tvResult.getVoteAverage();
+            String mRating = String.format(Locale.US, "%.2f",rating).replace(',','.');
+            textRating.setText(mRating);
 
             itemView.setOnClickListener(v -> {
                 Intent i = new Intent(context, DetailActivity.class);

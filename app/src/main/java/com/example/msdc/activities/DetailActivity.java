@@ -145,7 +145,7 @@ public class DetailActivity extends AppCompatActivity {
                         setHtmlText(binding.textVoteCount, "Vote Count", response.body().getVoteCount());
                     }
 
-                    if(response.body().getVoteAverage().isEmpty()){
+                    if(response.body().getVoteAverage() == null){
                         setHtmlEmptyText(binding.textVoteAverage, "Vote Average", "No Vote Average Yet!!!");
                     } else{
                         setHtmlText(binding.textVoteAverage, "Vote Average", response.body().getVoteAverage());

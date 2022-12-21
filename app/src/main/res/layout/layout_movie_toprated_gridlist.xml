@@ -10,9 +10,10 @@
         android:id="@+id/textMovieTopRated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
         android:text="@string/top_rated_movies"
         android:fontFamily="sans-serif"
-        android:textColor="@color/black"
+        android:textColor="@android:color/background_light"
         android:textSize="24sp"/>
 
     <androidx.recyclerview.widget.RecyclerView
