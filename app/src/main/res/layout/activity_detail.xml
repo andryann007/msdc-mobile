@@ -46,7 +46,7 @@
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imageBackdrop"
                 android:layout_width="match_parent"
-                android:layout_height="175dp"
+                android:layout_height="238dp"
                 android:alpha="0.5"
                 app:riv_corner_radius="3dp"
                 android:background="#a9a9a9"
@@ -54,10 +54,10 @@
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imagePoster"
-                android:layout_width="85dp"
-                android:layout_height="128.75dp"
+                android:layout_width="92dp"
+                android:layout_height="138dp"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="20dp"
+                android:layout_marginVertical="40dp"
                 app:riv_corner_radius="5dp"
                 android:background="@color/black"/>
 
@@ -265,6 +265,29 @@
                     android:includeFontPadding="false"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textImageList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="Images Gallery"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvImagesList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/image_container"/>
 
                 <TextView
                     android:id="@+id/textMovieRecommendations"

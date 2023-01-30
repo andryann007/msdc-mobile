@@ -20,8 +20,8 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imageItemPoster"
-            android:layout_width="200dp"
-            android:layout_height="300dp"
+            android:layout_width="185dp"
+            android:layout_height="278dp"
             android:layout_marginTop="2dp"
             android:scaleType="fitXY"
             app:riv_corner_radius="10dp"/>

@@ -57,7 +57,7 @@ public class MovieSearchAdapter extends RecyclerView.Adapter<MovieSearchAdapter.
 
         void bindItem(MovieResult movieResult, Context context){
             if(!TextUtils.isEmpty(movieResult.getPosterPath())){
-                ImageAdapter.setPosterURL(imageItemPoster, movieResult.getPosterPath());
+                ImageAdapter.setSearchImageBaseURL(imageItemPoster, movieResult.getPosterPath());
             } else {
                 imageItemPoster.setImageResource(R.drawable.ic_android);
             }

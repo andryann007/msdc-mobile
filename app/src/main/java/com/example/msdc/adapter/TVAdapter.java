@@ -57,7 +57,7 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TvViewHolder>{
 
         void bindItem(TVResult tvResult, Context context){
             if(!TextUtils.isEmpty(tvResult.getPosterPath())){
-                ImageAdapter.setPosterURL(imageItemPoster, tvResult.getPosterPath());
+                ImageAdapter.setPosterLogoURL(imageItemPoster, tvResult.getPosterPath());
             } else {
                 imageItemPoster.setImageResource(R.drawable.ic_android);
             }

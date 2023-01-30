@@ -16,10 +16,13 @@ import androidx.core.text.HtmlCompat;
 
 import com.example.msdc.R;
 import com.example.msdc.adapter.ImageAdapter;
+import com.example.msdc.adapter.ImageListAdapter;
 import com.example.msdc.adapter.MovieAdapter;
 import com.example.msdc.adapter.TVAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
+import com.example.msdc.api.ImageRespon;
+import com.example.msdc.api.ImageResult;
 import com.example.msdc.api.MovieDetails;
 import com.example.msdc.api.MovieRespon;
 import com.example.msdc.api.MovieResult;
@@ -47,14 +50,15 @@ public class DetailActivity extends AppCompatActivity {
     private ActivityDetailBinding binding;
     private MovieAdapter movieRecommendationsAdapter, movieSimilarAdapter;
     private TVAdapter tvRecommendationsAdapter, tvSimilarAdapter;
+    private ImageListAdapter movieImagesAdapter, tvImagesAdapter;
+
+    private final List<ImageResult> movieImagesList = new ArrayList<>();
     private final List<MovieResult> movieRecommendationsResult = new ArrayList<>();
-    private int totalPagesMovieRecommendations = 1;
     private final List<MovieResult> movieSimilarResult = new ArrayList<>();
-    private int totalPagesMovieSimilar = 1;
+
+    private final List<ImageResult> tvImagesList = new ArrayList<>();
     private final List<TVResult> tvRecommendationsResult = new ArrayList<>();
-    private int totalPagesTVRecommendations = 1;
     private final List<TVResult> tvSimilarResult = new ArrayList<>();
-    private int totalPagesTVSimilar = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +100,7 @@ public class DetailActivity extends AppCompatActivity {
 
                     ImageAdapter.setPosterURL(binding.imagePosterBack, response.body().getPosterPath());
                     ImageAdapter.setBackdropURL(binding.imageBackdrop, response.body().getBackdropPath());
-                    ImageAdapter.setPosterURL(binding.imagePoster, response.body().getPosterPath());
+                    ImageAdapter.setPosterLogoDetailURL(binding.imagePoster, response.body().getPosterPath());
                     setTitleText(binding.textTitleReleaseDate, response.body().getTitle(),
                             response.body().getReleaseDate());
                     setHtmlText(binding.textRunTime, "Runtime", response.body().getRuntime() + " Minutes");
@@ -140,6 +144,7 @@ public class DetailActivity extends AppCompatActivity {
                         setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
                     }
 
+                    setImagesMovie();
                     setRecommendationsMovie();
                     setSimilarMovie();
                 }
@@ -166,7 +171,6 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
                 assert response.body() != null;
-                totalPagesMovieRecommendations = response.body().getTotalPages();
                 if(response.body().getResult()!=null){
                     int oldCount = movieRecommendationsResult.size();
                     movieRecommendationsResult.addAll(response.body().getResult());
@@ -193,7 +197,6 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
                 assert response.body() != null;
-                totalPagesMovieSimilar = response.body().getTotalPages();
                 if(response.body().getResult()!=null){
                     int oldCount = movieSimilarResult.size();
                     movieSimilarResult.addAll(response.body().getResult());
@@ -264,9 +267,9 @@ public class DetailActivity extends AppCompatActivity {
                     binding.textMovieRecommendations.setText("TV Recommendations");
                     binding.textMovieSimilar.setText("Similar TV");
 
+                    setImagesTV();
                     setRecommendationsTV();
                     setSimilarTV();
-
                 }
             }
 
@@ -291,7 +294,6 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
                 assert response.body() != null;
-                totalPagesTVRecommendations = response.body().getTotalPages();
                 if(response.body().getResult()!=null){
                     int oldCount = tvRecommendationsResult.size();
                     tvRecommendationsResult.addAll(response.body().getResult());
@@ -318,7 +320,6 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
                 assert response.body() != null;
-                totalPagesTVSimilar = response.body().getTotalPages();
                 if(response.body().getResult()!=null){
                     int oldCount = tvSimilarResult.size();
                     tvSimilarResult.addAll(response.body().getResult());
@@ -328,6 +329,58 @@ public class DetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
+            }
+        });
+    }
+
+    private void setImagesMovie(){
+        movieImagesAdapter = new ImageListAdapter(movieImagesList, this);
+
+        getImagesMovie();
+        binding.rvImagesList.setAdapter(movieImagesAdapter);
+    }
+
+    private void getImagesMovie(){
+        Call<ImageRespon> call = apiService.getMovieImages(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<ImageRespon>() {
+            @Override
+            public void onResponse(@NonNull Call<ImageRespon> call, @NonNull Response<ImageRespon> response) {
+                assert response.body() != null;
+                if(response.body().getResults()!=null){
+                    int oldCount = movieImagesList.size();
+                    movieImagesList.addAll(response.body().getResults());
+                    movieImagesAdapter.notifyItemChanged(oldCount, movieImagesList.size());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ImageRespon> call, @NonNull Throwable t) {
+            }
+        });
+    }
+
+    private void setImagesTV(){
+        tvImagesAdapter = new ImageListAdapter(tvImagesList, this);
+
+        getImagesTV();
+        binding.rvImagesList.setAdapter(tvImagesAdapter);
+    }
+
+    private void getImagesTV(){
+        Call<ImageRespon> call = apiService.getTvImages(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<ImageRespon>() {
+            @Override
+            public void onResponse(@NonNull Call<ImageRespon> call, @NonNull Response<ImageRespon> response) {
+                assert response.body() != null;
+                if(response.body().getResults()!=null){
+                    int oldCount = tvImagesList.size();
+                    tvImagesList.addAll(response.body().getResults());
+                    tvImagesAdapter.notifyItemChanged(oldCount, tvImagesList.size());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ImageRespon> call, @NonNull Throwable t) {
             }
         });
     }

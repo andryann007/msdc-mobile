@@ -57,7 +57,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         void bindItem(MovieResult movieResult, Context context){
             if(!TextUtils.isEmpty(movieResult.getPosterPath())){
-                ImageAdapter.setPosterURL(imageItemPoster, movieResult.getPosterPath());
+                ImageAdapter.setPosterLogoURL(imageItemPoster, movieResult.getPosterPath());
             } else {
                 imageItemPoster.setImageResource(R.drawable.ic_android);
             }

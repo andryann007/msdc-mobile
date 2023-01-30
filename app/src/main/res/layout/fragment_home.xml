@@ -10,20 +10,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/contentView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/layoutTrending"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/layout_trending" />
 
             <include
                 android:id="@+id/layoutMovie"
-                layout="@layout/layout_movie" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/layout_movie"
+                android:layout_below="@id/layoutTrending"/>
 
             <include
                 android:id="@+id/layoutTVShows"
-                layout="@layout/layout_tv"/>
-        </LinearLayout>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/layout_tv"
+                android:layout_below="@id/layoutMovie"/>
+        </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
 

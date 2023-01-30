@@ -5,26 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@drawable/bg_item"
-    android:backgroundTint="@android:color/background_dark">
-
-    <TextView
-        android:id="@+id/moviesTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:padding="10dp"
-        android:fontFamily="sans-serif"
-        android:text="Movies List"
-        android:background="@drawable/bg_item"
-        android:backgroundTint="@color/white"
-        android:textAlignment="center"
-        android:textColor="@android:color/background_dark"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
+    android:background="@android:color/background_dark">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/contentView"
+        android:id="@+id/containerMoviePopular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -48,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textMoviePopular"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
             android:orientation="horizontal"
             android:scrollbars="horizontal"
             android:overScrollMode="never"
@@ -58,11 +43,10 @@
 
         <ProgressBar
             android:id="@+id/loadingMoviePopular"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
             android:layout_alignParentEnd="true"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/rvMoviePopular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/rvMoviePopular"/>
@@ -95,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textMovieNowPlaying"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
             android:orientation="horizontal"
             android:scrollbars="horizontal"
             android:overScrollMode="never"
@@ -105,11 +90,10 @@
 
         <ProgressBar
             android:id="@+id/loadingMovieNowPlaying"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
             android:layout_alignParentEnd="true"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/rvMovieNowPlaying"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/rvMovieNowPlaying"/>
@@ -142,6 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textUpcomingMovie"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
             android:scrollbars="horizontal"
             android:orientation="horizontal"
             android:overScrollMode="never"
@@ -152,11 +137,10 @@
 
         <ProgressBar
             android:id="@+id/loadingUpcomingMovie"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
             android:layout_alignParentEnd="true"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/rvUpcomingMovie"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/rvUpcomingMovie"/>
@@ -176,7 +160,7 @@
             android:layout_marginHorizontal="10dp"
             android:text="@string/top_rated_movies"
             android:fontFamily="sans-serif"
-            android:textColor="@color/black"
+            android:textColor="@android:color/background_light"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/rvMovieTopRated"
@@ -189,6 +173,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textMovieTopRated"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
             android:scrollbars="horizontal"
             android:orientation="horizontal"
             android:overScrollMode="never"
@@ -199,11 +184,10 @@
 
         <ProgressBar
             android:id="@+id/loadingMovieTopRated"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
             android:layout_alignParentEnd="true"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/rvMovieTopRated"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/rvMovieTopRated"/>

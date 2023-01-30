@@ -60,4 +60,7 @@
     <string name="search">Search</string>
     <string name="image_star_rating">Image of Star Rating</string>
     <string name="overview">Overview</string>
+    <string name="trending_person_desc">Trending Person In This Week</string>
+    <string name="trending_tv_shows_desc">Trending TV Shows In This Week</string>
+    <string name="trending_movies_desc">Trending Movies In This Week</string>
 </resources>

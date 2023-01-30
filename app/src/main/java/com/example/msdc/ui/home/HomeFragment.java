@@ -1,32 +1,25 @@
 package com.example.msdc.ui.home;
 
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.msdc.R;
-import com.example.msdc.activities.SearchActivity;
 import com.example.msdc.adapter.MovieAdapter;
+import com.example.msdc.adapter.PersonAdapter;
 import com.example.msdc.adapter.TVAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
 import com.example.msdc.api.MovieRespon;
 import com.example.msdc.api.MovieResult;
+import com.example.msdc.api.PersonRespon;
+import com.example.msdc.api.PersonResult;
 import com.example.msdc.api.TVRespon;
 import com.example.msdc.api.TVResult;
 import com.example.msdc.databinding.FragmentHomeBinding;
@@ -42,33 +35,44 @@ import retrofit2.Retrofit;
 public class HomeFragment extends Fragment {
 
     private ApiService apiService;
-    private RecyclerView rvMoviePopular, rvMovieNowPlaying, rvMovieTopRated, rvMovieUpcoming;
-    private ProgressBar loadingMoviePopular, loadingMovieNowPlaying, loadingMovieTopRated, loadingMovieUpcoming;
-    private MovieAdapter moviePopularAdapter, movieNowPlayingAdapter, movieTopRatedAdapter, movieUpcomingAdapter;
+    private ProgressBar loadingMovieTrending, loadingMoviePopular, loadingMovieNowPlaying, loadingMovieTopRated, loadingMovieUpcoming;
+    private MovieAdapter movieTrendingAdapter, moviePopularAdapter, movieNowPlayingAdapter, movieTopRatedAdapter, movieUpcomingAdapter;
+
+    private final List<MovieResult> movieTrendingResults = new ArrayList<>();
     private final List<MovieResult> moviePopularResults = new ArrayList<>();
     private final List<MovieResult> movieNowPlayingResults = new ArrayList<>();
     private final List<MovieResult> movieTopRatedResults = new ArrayList<>();
     private final List<MovieResult> movieUpcomingResults = new ArrayList<>();
-    private int currentPageMoviePopular = 1, currentPageMovieNowPlaying = 1,
-            currentPageMovieTopRated = 1, currentPageUpcomingMovie = 1;
-    private int totalPagesMoviePopular = 1, totalPagesMovieNowPlaying = 1,
+    private int totalPagesMovieTrending = 1, totalPagesMoviePopular = 1, totalPagesMovieNowPlaying = 1,
             totalPagesMovieTopRated = 1, totalPagesUpcomingMovie = 1;
 
-    private RecyclerView rvTvPopular, rvTvTopRated, rvTvOnAir, rvTvAiringToday;
-    private ProgressBar loadingTvPopular, loadingTvTopRated, loadingTvOnAir, loadingTvAiringToday;
-    private TVAdapter tvPopularAdapter, tvTopRatedAdapter, tvOnAirAdapter, tvAiringTodayAdapter;
+    private ProgressBar loadingTvTrending, loadingTvPopular, loadingTvTopRated, loadingTvOnAir, loadingTvAiringToday;
+    private TVAdapter tvTrendingAdapter, tvPopularAdapter, tvTopRatedAdapter, tvOnAirAdapter, tvAiringTodayAdapter;
+
+    private final List<TVResult> tvTrendingResults = new ArrayList<>();
+
     private final List<TVResult> tvPopularResults = new ArrayList<>();
     private final List<TVResult> tvTopRatedResults = new ArrayList<>();
     private final List<TVResult> tvOnAirResults = new ArrayList<>();
     private final List<TVResult> tvAiringTodayResults = new ArrayList<>();
-    private int currentPageTVPopular = 1, currentPageTVTopRated = 1, currentPageTVOnAir = 1, currentPageTVAiringToday = 1;
-    private int totalPagesTVPopular = 1, totalPagesTVTopRated = 1, totalPagesTVOnAir = 1, totalPagesTVAiringToday = 1;
+    private int totalPagesTvTrending = 1, totalPagesTVPopular = 1, totalPagesTVTopRated = 1, totalPagesTVOnAir = 1,
+            totalPagesTVAiringToday = 1;
+
+    private ProgressBar loadingPersonTrending;
+    private PersonAdapter personTrendingAdapter;
+    private int totalPagesPersonTrending = 1;
+
+    private final List<PersonResult> personTrendingResults = new ArrayList<>();
 
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
     public static final String LANGUAGE = "en-US";
 
-    private String searchType = null;
+    public static final String TRENDING_MOVIE = "movie";
+    public static final String TRENDING_TV = "tv";
+    public static final String TRENDING_PERSON = "person";
+
+    public static final String TIME_WINDOW = "week";
     private FragmentHomeBinding binding;
 
     public HomeFragment() {
@@ -76,7 +80,7 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
@@ -85,6 +89,10 @@ public class HomeFragment extends Fragment {
 
         Retrofit retrofit = ApiClient.getClient();
         apiService = retrofit.create(ApiService.class);
+
+        setTrendingMovies(root);
+        setTrendingTV(root);
+        setTrendingPerson(root);
 
         setPopularMovies(root);
         setNowPlayingMovies(root);
@@ -99,56 +107,8 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    private void dialogSearch() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getLayoutInflater();
-        View v = inflater.inflate(R.layout.dialog_search, null);
-        EditText inputSearch = v.findViewById(R.id.inputSearch);
-        ImageView imageDoSearch = v.findViewById(R.id.imageDoSearch);
-        RadioGroup radioGroup = v.findViewById(R.id.radioGroup);
-        RadioButton radioButtonMovie = v.findViewById(R.id.radioButtonMovie);
-        RadioButton radioButtonTV = v.findViewById(R.id.radioButtonTV);
-
-        builder.setView(v);
-        AlertDialog dialogSearch = builder.create();
-        if(dialogSearch.getWindow() != null){
-            dialogSearch.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-
-            radioGroup.setOnCheckedChangeListener((group, checkedid) -> {
-                if(checkedid == R.id.radioButtonMovie){
-                    searchType = radioButtonMovie.getText().toString();
-                } else {
-                    searchType = radioButtonTV.getText().toString();
-                }
-            });
-            imageDoSearch.setOnClickListener(view -> doSearch(inputSearch.getText().toString()));
-
-            inputSearch.setOnEditorActionListener((v1, actionid, event) -> {
-                if(actionid == EditorInfo.IME_ACTION_GO){
-                    doSearch(inputSearch.getText().toString());
-                }
-                return false;
-            });
-        }
-    }
-
-    private void doSearch(String query) {
-        if(query.isEmpty()){
-            Toast.makeText(getContext(),"Tidak ada inputan!!!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(searchType == null){
-            Toast.makeText(getContext(),"Harap pilih tipe search!!!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Intent i = new Intent(getContext(), SearchActivity.class);
-        i.putExtra("tipe", searchType);
-        i.putExtra("searchFor", query);
-        startActivity(i);
-    }
-
     private void setTopRatedMovies(View view) {
-        rvMovieTopRated = view.findViewById(R.id.rvMovieTopRated);
+        RecyclerView rvMovieTopRated = view.findViewById(R.id.rvMovieTopRated);
         movieTopRatedAdapter = new MovieAdapter(movieTopRatedResults, getContext());
         loadingMovieTopRated = view.findViewById(R.id.loadingMovieTopRated);
 
@@ -157,6 +117,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getTopRatedMovies(){
+        int currentPageMovieTopRated = 1;
         Call<MovieRespon> call = apiService.getTopRatedMovies(MYAPI_KEY, LANGUAGE, currentPageMovieTopRated);
         call.enqueue(new Callback<MovieRespon>(){
 
@@ -181,7 +142,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setUpcomingMovies(View view) {
-        rvMovieUpcoming = view.findViewById(R.id.rvUpcomingMovie);
+        RecyclerView rvMovieUpcoming = view.findViewById(R.id.rvUpcomingMovie);
         movieUpcomingAdapter = new MovieAdapter(movieUpcomingResults, getContext());
         loadingMovieUpcoming = view.findViewById(R.id.loadingUpcomingMovie);
 
@@ -190,6 +151,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getUpcomingMovies(){
+        int currentPageUpcomingMovie = 1;
         Call<MovieRespon> call = apiService.getUpcomingMovies(MYAPI_KEY, LANGUAGE, currentPageUpcomingMovie);
         call.enqueue(new Callback<MovieRespon>(){
 
@@ -214,7 +176,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setNowPlayingMovies(View view) {
-        rvMovieNowPlaying = view.findViewById(R.id.rvMovieNowPlaying);
+        RecyclerView rvMovieNowPlaying = view.findViewById(R.id.rvMovieNowPlaying);
         movieNowPlayingAdapter = new MovieAdapter(movieNowPlayingResults, getContext());
         loadingMovieNowPlaying = view.findViewById(R.id.loadingMovieNowPlaying);
 
@@ -223,6 +185,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getNowPlayingMovies(){
+        int currentPageMovieNowPlaying = 1;
         Call<MovieRespon> call = apiService.getNowPlayingMovies(MYAPI_KEY, LANGUAGE, currentPageMovieNowPlaying);
         call.enqueue(new Callback<MovieRespon>(){
 
@@ -247,7 +210,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setPopularMovies(View view) {
-        rvMoviePopular = view.findViewById(R.id.rvMoviePopular);
+        RecyclerView rvMoviePopular = view.findViewById(R.id.rvMoviePopular);
         moviePopularAdapter = new MovieAdapter(moviePopularResults, getContext());
         loadingMoviePopular = view.findViewById(R.id.loadingMoviePopular);
 
@@ -256,6 +219,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getPopularMovies(){
+        int currentPageMoviePopular = 1;
         Call<MovieRespon> call = apiService.getPopularMovies(MYAPI_KEY, LANGUAGE, currentPageMoviePopular);
         call.enqueue(new Callback<MovieRespon>(){
 
@@ -280,7 +244,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setOnAirTV(View view) {
-        rvTvOnAir = view.findViewById(R.id.rvTVOnAir);
+        RecyclerView rvTvOnAir = view.findViewById(R.id.rvTVOnAir);
         tvOnAirAdapter = new TVAdapter(tvOnAirResults, getContext());
         loadingTvOnAir = view.findViewById(R.id.loadingTVOnAir);
 
@@ -289,6 +253,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getOnAirTV(){
+        int currentPageTVOnAir = 1;
         Call<TVRespon> call = apiService.getTvOnAir(MYAPI_KEY, LANGUAGE, currentPageTVOnAir);
         call.enqueue(new Callback<TVRespon>(){
 
@@ -313,7 +278,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setTopRatedTV(View view) {
-        rvTvTopRated = view.findViewById(R.id.rvTVTopRated);
+        RecyclerView rvTvTopRated = view.findViewById(R.id.rvTVTopRated);
         tvTopRatedAdapter = new TVAdapter(tvTopRatedResults, getContext());
         loadingTvTopRated = view.findViewById(R.id.loadingTVTopRated);
 
@@ -322,6 +287,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getTopRatedTV(){
+        int currentPageTVTopRated = 1;
         Call<TVRespon> call = apiService.getTvTopRated(MYAPI_KEY, LANGUAGE, currentPageTVTopRated);
         call.enqueue(new Callback<TVRespon>(){
 
@@ -346,7 +312,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setPopularTV(View view) {
-        rvTvPopular = view.findViewById(R.id.rvTVPopular);
+        RecyclerView rvTvPopular = view.findViewById(R.id.rvTVPopular);
         tvPopularAdapter = new TVAdapter(tvPopularResults, getContext());
         loadingTvPopular = view.findViewById(R.id.loadingTVPopular);
 
@@ -355,6 +321,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getPopularTV(){
+        int currentPageTVPopular = 1;
         Call<TVRespon> call = apiService.getTvPopular(MYAPI_KEY, LANGUAGE, currentPageTVPopular);
         call.enqueue(new Callback<TVRespon>(){
 
@@ -379,7 +346,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setOnAiringTV(View view) {
-        rvTvAiringToday = view.findViewById(R.id.rvTVAiring);
+        RecyclerView rvTvAiringToday = view.findViewById(R.id.rvTVAiring);
         tvAiringTodayAdapter = new TVAdapter(tvAiringTodayResults, getContext());
         loadingTvAiringToday = view.findViewById(R.id.loadingTVAiring);
 
@@ -388,6 +355,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getOnAiringTV(){
+        int currentPageTVAiringToday = 1;
         Call<TVRespon> call = apiService.getTvAiringToday(MYAPI_KEY, LANGUAGE, currentPageTVAiringToday);
         call.enqueue(new Callback<TVRespon>(){
             @Override
@@ -408,6 +376,106 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+    private void setTrendingMovies(View view) {
+        RecyclerView rvMovieTrending = view.findViewById(R.id.rvMovieTrending);
+        movieTrendingAdapter = new MovieAdapter(movieTrendingResults, getContext());
+        loadingMovieTrending = view.findViewById(R.id.loadingMovieTrending);
+
+        getTrendingMovies();
+        rvMovieTrending.setAdapter(movieTrendingAdapter);
+    }
+
+    private void getTrendingMovies(){
+        Call<MovieRespon> call = apiService.getTrendingMovies(TRENDING_MOVIE, TIME_WINDOW, MYAPI_KEY);
+        call.enqueue(new Callback<MovieRespon>(){
+
+            @Override
+            public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
+                if(response.body() != null){
+                    totalPagesMovieTrending = response.body().getTotalPages();
+                    if(response.body().getResult()!=null){
+                        loadingMovieTrending.setVisibility(View.GONE);
+                        int oldCount = movieTrendingResults.size();
+                        movieTrendingResults.addAll(response.body().getResult());
+                        movieTrendingAdapter.notifyItemChanged(oldCount, movieTrendingResults.size());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MovieRespon> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    private void setTrendingTV(View view) {
+        RecyclerView rvTvTrending = view.findViewById(R.id.rvTVTrending);
+        tvTrendingAdapter = new TVAdapter(tvTrendingResults, getContext());
+        loadingTvTrending = view.findViewById(R.id.loadingTVTrending);
+
+        getTrendingTV();
+        rvTvTrending.setAdapter(tvTrendingAdapter);
+    }
+
+    private void getTrendingTV(){
+        Call<TVRespon> call = apiService.getTrendingTV(TRENDING_TV, TIME_WINDOW, MYAPI_KEY);
+        call.enqueue(new Callback<TVRespon>(){
+
+            @Override
+            public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
+                if(response.body() != null){
+                    totalPagesTvTrending = response.body().getTotalPages();
+                    if(response.body().getResult()!=null){
+                        loadingTvTrending.setVisibility(View.GONE);
+                        int oldCount = tvTrendingResults.size();
+                        tvTrendingResults.addAll(response.body().getResult());
+                        tvTrendingAdapter.notifyItemChanged(oldCount, tvTrendingResults.size());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    private void setTrendingPerson(View view) {
+        RecyclerView rvPersonTrending = view.findViewById(R.id.rvPersonTrending);
+        personTrendingAdapter = new PersonAdapter(personTrendingResults, getContext());
+        loadingPersonTrending = view.findViewById(R.id.loadingPersonTrending);
+
+        getTrendingPerson();
+        rvPersonTrending.setAdapter(personTrendingAdapter);
+    }
+
+    private void getTrendingPerson(){
+        Call<PersonRespon> call = apiService.getTrendingPerson(TRENDING_PERSON, TIME_WINDOW, MYAPI_KEY);
+        call.enqueue(new Callback<PersonRespon>(){
+
+            @Override
+            public void onResponse(@NonNull Call<PersonRespon> call, @NonNull Response<PersonRespon> response) {
+                if(response.body() != null){
+                    totalPagesPersonTrending = response.body().getTotalPages();
+                    if(response.body().getResults()!=null){
+                        loadingPersonTrending.setVisibility(View.GONE);
+                        int oldCount = personTrendingResults.size();
+                        personTrendingResults.addAll(response.body().getResults());
+                        personTrendingAdapter.notifyItemChanged(oldCount, personTrendingResults.size());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<PersonRespon> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
