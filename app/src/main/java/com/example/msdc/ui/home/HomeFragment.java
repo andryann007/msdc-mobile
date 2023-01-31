@@ -43,8 +43,6 @@ public class HomeFragment extends Fragment {
     private final List<MovieResult> movieNowPlayingResults = new ArrayList<>();
     private final List<MovieResult> movieTopRatedResults = new ArrayList<>();
     private final List<MovieResult> movieUpcomingResults = new ArrayList<>();
-    private int totalPagesMovieTrending = 1, totalPagesMoviePopular = 1, totalPagesMovieNowPlaying = 1,
-            totalPagesMovieTopRated = 1, totalPagesUpcomingMovie = 1;
 
     private ProgressBar loadingTvTrending, loadingTvPopular, loadingTvTopRated, loadingTvOnAir, loadingTvAiringToday;
     private TVAdapter tvTrendingAdapter, tvPopularAdapter, tvTopRatedAdapter, tvOnAirAdapter, tvAiringTodayAdapter;
@@ -55,12 +53,9 @@ public class HomeFragment extends Fragment {
     private final List<TVResult> tvTopRatedResults = new ArrayList<>();
     private final List<TVResult> tvOnAirResults = new ArrayList<>();
     private final List<TVResult> tvAiringTodayResults = new ArrayList<>();
-    private int totalPagesTvTrending = 1, totalPagesTVPopular = 1, totalPagesTVTopRated = 1, totalPagesTVOnAir = 1,
-            totalPagesTVAiringToday = 1;
 
     private ProgressBar loadingPersonTrending;
     private PersonAdapter personTrendingAdapter;
-    private int totalPagesPersonTrending = 1;
 
     private final List<PersonResult> personTrendingResults = new ArrayList<>();
 
@@ -124,7 +119,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    totalPagesMovieTopRated = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingMovieTopRated.setVisibility(View.GONE);
                         int oldCount = movieTopRatedResults.size();
@@ -158,7 +152,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    totalPagesUpcomingMovie = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingMovieUpcoming.setVisibility(View.GONE);
                         int oldCount = movieUpcomingResults.size();
@@ -192,7 +185,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    totalPagesMovieNowPlaying = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingMovieNowPlaying.setVisibility(View.GONE);
                         int oldCount = movieNowPlayingResults.size();
@@ -226,7 +218,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    totalPagesMoviePopular = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingMoviePopular.setVisibility(View.GONE);
                         int oldCount = moviePopularResults.size();
@@ -260,7 +251,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    totalPagesTVOnAir = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingTvOnAir.setVisibility(View.GONE);
                         int oldCount = tvOnAirResults.size();
@@ -294,7 +284,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    totalPagesTVTopRated = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingTvTopRated.setVisibility(View.GONE);
                         int oldCount = tvTopRatedResults.size();
@@ -328,7 +317,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    totalPagesTVPopular = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingTvPopular.setVisibility(View.GONE);
                         int oldCount = tvPopularResults.size();
@@ -361,7 +349,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    totalPagesTVAiringToday = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingTvAiringToday.setVisibility(View.GONE);
                         int oldCount = tvAiringTodayResults.size();
@@ -393,7 +380,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    totalPagesMovieTrending = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingMovieTrending.setVisibility(View.GONE);
                         int oldCount = movieTrendingResults.size();
@@ -426,7 +412,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    totalPagesTvTrending = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingTvTrending.setVisibility(View.GONE);
                         int oldCount = tvTrendingResults.size();
@@ -459,7 +444,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<PersonResponse> call, @NonNull Response<PersonResponse> response) {
                 if(response.body() != null){
-                    totalPagesPersonTrending = response.body().getTotalPages();
                     if(response.body().getResults()!=null){
                         loadingPersonTrending.setVisibility(View.GONE);
                         int oldCount = personTrendingResults.size();

@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.msdc.R;
@@ -38,16 +39,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-
 public class MoviePopularFragment extends Fragment {
 
     private ApiService apiService;
-    private RecyclerView rvMoviePopular;
     private ProgressBar loadingMoviePopular;
     private MovieGridAdapter moviePopularAdapter;
     private final List<MovieResult> moviePopularResults = new ArrayList<>();
-    private int currentPageMoviePopular = 1;
-    private int totalPagesMoviePopular = 1;
 
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -62,7 +59,7 @@ public class MoviePopularFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentMoviePopularBinding.inflate(inflater, container, false);
@@ -124,9 +121,13 @@ public class MoviePopularFragment extends Fragment {
     }
 
     private void setPopularMovies(View view) {
-        rvMoviePopular = view.findViewById(R.id.rvPopularMovieGrid);
+        TextView textTitle = view.findViewById(R.id.textMovieVertical);
+        String title = "Popular Movies";
+        textTitle.setText(title);
+
+        RecyclerView rvMoviePopular = view.findViewById(R.id.rvMovieVertical);
         moviePopularAdapter = new MovieGridAdapter(moviePopularResults, getContext());
-        loadingMoviePopular = view.findViewById(R.id.loadingMoviePopular);
+        loadingMoviePopular = view.findViewById(R.id.loadingMovieVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
 
         rvMoviePopular.setLayoutManager(gridLayoutManager);
@@ -135,13 +136,13 @@ public class MoviePopularFragment extends Fragment {
     }
 
     private void getPopularMovies(){
+        int currentPageMoviePopular = 1;
         Call<MovieResponse> call = apiService.getPopularMovies(MYAPI_KEY, LANGUAGE, currentPageMoviePopular);
         call.enqueue(new Callback<MovieResponse>(){
 
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    totalPagesMoviePopular = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingMoviePopular.setVisibility(View.GONE);
                         int oldCount = moviePopularResults.size();

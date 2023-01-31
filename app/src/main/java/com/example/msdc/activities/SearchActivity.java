@@ -3,8 +3,6 @@ package com.example.msdc.activities;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,15 +30,11 @@ import retrofit2.Response;
 public class SearchActivity extends AppCompatActivity {
     private final List<MovieResult> movieResult = new ArrayList<>();
     private final List<com.example.msdc.api.TVResult> TVResult = new ArrayList<>();
-    private String query, tipe;
-    private RecyclerView rvSearch;
+    private String query;
     private MovieSearchAdapter movieSearchAdapter;
     private TVSearchAdapter tvSearchAdapter;
     private ApiService apiService;
-    private ProgressBar loadingSearch;
-    private TextView textNoResults, textSearchQuery;
-    private int currentPage = 1;
-    private int totalPages = 1;
+    private final int currentPage = 1;
     private ActivitySearchBinding binding;
 
     @Override
@@ -60,7 +54,7 @@ public class SearchActivity extends AppCompatActivity {
         query = getIntent().getStringExtra("searchFor");
         toolbar.setTitle(HtmlCompat.fromHtml("You searched for : <b>" + query + "</b>",
                 HtmlCompat.FROM_HTML_MODE_LEGACY));
-        tipe = getIntent().getStringExtra("tipe");
+        String tipe = getIntent().getStringExtra("tipe");
 
         switch(tipe){
             case "Movies" :
@@ -85,7 +79,6 @@ public class SearchActivity extends AppCompatActivity {
                 if(response.body() != null){
                     if(response.body().getResult().size() > 0){
                         binding.loadingSearch.setVisibility(View.GONE);
-                        totalPages = response.body().getTotalPages();
                         int oldCount = movieResult.size();
                         movieResult.addAll(response.body().getResult());
                         movieSearchAdapter.notifyItemRangeInserted(oldCount, movieResult.size());
@@ -114,7 +107,6 @@ public class SearchActivity extends AppCompatActivity {
                 if(response.body() != null){
                     if(response.body().getResult().size() > 0){
                         binding.loadingSearch.setVisibility(View.GONE);
-                        totalPages = response.body().getTotalPages();
                         int oldCount = TVResult.size();
                         TVResult.addAll(response.body().getResult());
                         tvSearchAdapter.notifyItemRangeInserted(oldCount, TVResult.size());

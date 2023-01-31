@@ -19,7 +19,7 @@
 
             <include
                 android:id="@+id/layoutTVShows"
-                layout="@layout/layout_tv_toprated_gridlist"/>
+                layout="@layout/layout_tv_vertical"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

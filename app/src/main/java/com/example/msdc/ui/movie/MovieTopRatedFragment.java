@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.msdc.R;
@@ -41,12 +42,9 @@ import retrofit2.Retrofit;
 public class MovieTopRatedFragment extends Fragment {
 
     private ApiService apiService;
-    private RecyclerView rvMovieTopRated;
     private ProgressBar loadingMovieTopRated;
     private MovieGridAdapter movieTopRatedAdapter;
     private final List<MovieResult> movieTopRatedResults = new ArrayList<>();
-    private int currentPageMovieTopRated = 1;
-    private int totalPagesMovieTopRated = 1;
 
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -60,7 +58,7 @@ public class MovieTopRatedFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
@@ -123,9 +121,13 @@ public class MovieTopRatedFragment extends Fragment {
     }
 
     private void setTopRatedMovies(View view) {
-        rvMovieTopRated = view.findViewById(R.id.rvMovieTopRatedGrid);
+        TextView textTitle = view.findViewById(R.id.textMovieVertical);
+        String title = "Top Rated Movies";
+        textTitle.setText(title);
+
+        RecyclerView rvMovieTopRated = view.findViewById(R.id.rvMovieVertical);
         movieTopRatedAdapter = new MovieGridAdapter(movieTopRatedResults, getContext());
-        loadingMovieTopRated = view.findViewById(R.id.loadingMovieTopRated);
+        loadingMovieTopRated = view.findViewById(R.id.loadingMovieVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
 
         rvMovieTopRated.setLayoutManager(gridLayoutManager);
@@ -134,13 +136,13 @@ public class MovieTopRatedFragment extends Fragment {
     }
 
     private void getTopRatedMovies(){
+        int currentPageMovieTopRated = 1;
         Call<MovieResponse> call = apiService.getTopRatedMovies(MYAPI_KEY, LANGUAGE, currentPageMovieTopRated);
         call.enqueue(new Callback<MovieResponse>(){
 
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    totalPagesMovieTopRated = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingMovieTopRated.setVisibility(View.GONE);
                         int oldCount = movieTopRatedResults.size();

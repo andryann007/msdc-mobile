@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.msdc.R;
@@ -40,12 +41,9 @@ import retrofit2.Retrofit;
 
 public class MovieNowPlayingFragment extends Fragment {
     private ApiService apiService;
-    private RecyclerView rvMovieNowPlaying;
     private ProgressBar loadingMovieNowPlaying;
     private MovieGridAdapter movieNowPlayingAdapter;
     private final List<MovieResult> movieNowPlayingResults = new ArrayList<>();
-    private int currentPageMovieNowPlaying = 1;
-    private int totalPagesMovieNowPlaying = 1;
 
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -59,7 +57,7 @@ public class MovieNowPlayingFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
@@ -123,9 +121,13 @@ public class MovieNowPlayingFragment extends Fragment {
     }
 
     private void setNowPlayingMovies(View view) {
-        rvMovieNowPlaying = view.findViewById(R.id.rvNowPlayingMovieGrid);
+        TextView textTitle = view.findViewById(R.id.textMovieVertical);
+        String title = "Now Playing Movies";
+        textTitle.setText(title);
+
+        RecyclerView rvMovieNowPlaying = view.findViewById(R.id.rvMovieVertical);
         movieNowPlayingAdapter = new MovieGridAdapter(movieNowPlayingResults, getContext());
-        loadingMovieNowPlaying = view.findViewById(R.id.loadingMovieNowPlaying);
+        loadingMovieNowPlaying = view.findViewById(R.id.loadingMovieVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
 
         rvMovieNowPlaying.setLayoutManager(gridLayoutManager);
@@ -134,13 +136,13 @@ public class MovieNowPlayingFragment extends Fragment {
     }
 
     private void getNowPlayingMovies(){
+        int currentPageMovieNowPlaying = 1;
         Call<MovieResponse> call = apiService.getNowPlayingMovies(MYAPI_KEY, LANGUAGE, currentPageMovieNowPlaying);
         call.enqueue(new Callback<MovieResponse>(){
 
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    totalPagesMovieNowPlaying = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingMovieNowPlaying.setVisibility(View.GONE);
                         int oldCount = movieNowPlayingResults.size();

@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.msdc.R;
@@ -41,12 +42,9 @@ import retrofit2.Retrofit;
 public class TvTopRatedFragment extends Fragment {
 
     private ApiService apiService;
-    private RecyclerView rvTvTopRated;
     private ProgressBar loadingTvTopRated;
     private TVGridAdapter tvTopRatedAdapter;
     private final List<TVResult> tvTopRatedResults = new ArrayList<>();
-    private int currentPageTVTopRated = 1;
-    private int totalPagesTVTopRated = 1;
 
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -61,7 +59,7 @@ public class TvTopRatedFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
@@ -125,9 +123,13 @@ public class TvTopRatedFragment extends Fragment {
     }
 
     private void setTopRatedTV(View view) {
-        rvTvTopRated = view.findViewById(R.id.rvTVTopRatedGrid);
+        TextView textTitle = view.findViewById(R.id.textTvVertical);
+        String title = "Top Rated TV Shows";
+        textTitle.setText(title);
+
+        RecyclerView rvTvTopRated = view.findViewById(R.id.rvTvVertical);
         tvTopRatedAdapter = new TVGridAdapter(tvTopRatedResults, getContext());
-        loadingTvTopRated = view.findViewById(R.id.loadingTVTopRated);
+        loadingTvTopRated = view.findViewById(R.id.loadingTvVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
 
         rvTvTopRated.setLayoutManager(gridLayoutManager);
@@ -136,13 +138,13 @@ public class TvTopRatedFragment extends Fragment {
     }
 
     private void getTopRatedTV(){
+        int currentPageTVTopRated = 1;
         Call<TVResponse> call = apiService.getTvTopRated(MYAPI_KEY, LANGUAGE, currentPageTVTopRated);
         call.enqueue(new Callback<TVResponse>(){
 
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    totalPagesTVTopRated = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingTvTopRated.setVisibility(View.GONE);
                         int oldCount = tvTopRatedResults.size();

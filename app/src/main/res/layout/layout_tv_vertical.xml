@@ -7,17 +7,16 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textMovieTopRated"
+        android:id="@+id/textTvVertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="5dp"
-        android:text="@string/top_rated_movies"
         android:fontFamily="sans-serif"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMovieTopRatedGrid"
+        android:id="@+id/rvTvVertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -26,10 +25,10 @@
         app:spanCount="2"
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_single"/>
+        tools:listitem="@layout/item_container_vertical"/>
 
     <ProgressBar
-        android:id="@+id/loadingMovieTopRated"
+        android:id="@+id/loadingTvVertical"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginHorizontal="10dp"

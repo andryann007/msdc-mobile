@@ -19,7 +19,7 @@
 
             <include
                 android:id="@+id/layoutMovie"
-                layout="@layout/layout_movie_toprated_gridlist"/>
+                layout="@layout/layout_movie_vertical"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

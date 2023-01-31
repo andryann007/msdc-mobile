@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.msdc.R;
@@ -41,12 +42,9 @@ import retrofit2.Retrofit;
 public class MovieUpcomingFragment extends Fragment {
 
     private ApiService apiService;
-    private RecyclerView rvMovieUpcoming;
     private ProgressBar loadingMovieUpcoming;
     private MovieGridAdapter movieUpcomingAdapter;
     private final List<MovieResult> movieUpcomingResults = new ArrayList<>();
-    private int currentPageUpcomingMovie = 1;
-    private int totalPagesUpcomingMovie = 1;
 
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -124,9 +122,13 @@ public class MovieUpcomingFragment extends Fragment {
     }
 
     private void setUpcomingMovies(View view) {
-        rvMovieUpcoming = view.findViewById(R.id.rvUpcomingMovieGrid);
+        TextView textTitle = view.findViewById(R.id.textMovieVertical);
+        String title = "Upcoming Movies";
+        textTitle.setText(title);
+
+        RecyclerView rvMovieUpcoming = view.findViewById(R.id.rvMovieVertical);
         movieUpcomingAdapter = new MovieGridAdapter(movieUpcomingResults, getContext());
-        loadingMovieUpcoming = view.findViewById(R.id.loadingUpcomingMovie);
+        loadingMovieUpcoming = view.findViewById(R.id.loadingMovieVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
 
         rvMovieUpcoming.setLayoutManager(gridLayoutManager);
@@ -135,13 +137,13 @@ public class MovieUpcomingFragment extends Fragment {
     }
 
     private void getUpcomingMovies(){
+        int currentPageUpcomingMovie = 1;
         Call<MovieResponse> call = apiService.getUpcomingMovies(MYAPI_KEY, LANGUAGE, currentPageUpcomingMovie);
         call.enqueue(new Callback<MovieResponse>(){
 
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    totalPagesUpcomingMovie = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingMovieUpcoming.setVisibility(View.GONE);
                         int oldCount = movieUpcomingResults.size();

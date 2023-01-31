@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.msdc.R;
@@ -41,12 +42,9 @@ import retrofit2.Retrofit;
 public class TvPopularFragment extends Fragment {
 
     private ApiService apiService;
-    private RecyclerView rvTvPopular;
     private ProgressBar loadingTvPopular;
     private TVGridAdapter tvPopularAdapter;
     private final List<TVResult> tvPopularResults = new ArrayList<>();
-    private int currentPageTVPopular = 1;
-    private int totalPagesTVPopular = 1;
 
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -61,7 +59,7 @@ public class TvPopularFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         // Inflate the layout for this fragment
@@ -126,9 +124,13 @@ public class TvPopularFragment extends Fragment {
     }
 
     private void setPopularTV(View view) {
-        rvTvPopular = view.findViewById(R.id.rvTVPopularGrid);
+        TextView textTitle = view.findViewById(R.id.textTvVertical);
+        String title = "Popular TV SHows";
+        textTitle.setText(title);
+
+        RecyclerView rvTvPopular = view.findViewById(R.id.rvTvVertical);
         tvPopularAdapter = new TVGridAdapter(tvPopularResults, getContext());
-        loadingTvPopular = view.findViewById(R.id.loadingTVPopular);
+        loadingTvPopular = view.findViewById(R.id.loadingTvVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
 
         rvTvPopular.setLayoutManager(gridLayoutManager);
@@ -137,13 +139,13 @@ public class TvPopularFragment extends Fragment {
     }
 
     private void getPopularTV(){
+        int currentPageTVPopular = 1;
         Call<TVResponse> call = apiService.getTvPopular(MYAPI_KEY, LANGUAGE, currentPageTVPopular);
         call.enqueue(new Callback<TVResponse>(){
 
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    totalPagesTVPopular = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingTvPopular.setVisibility(View.GONE);
                         int oldCount = tvPopularResults.size();

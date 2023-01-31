@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.msdc.R;
@@ -41,12 +42,9 @@ import retrofit2.Retrofit;
 public class TvOnAirFragment extends Fragment {
 
     private ApiService apiService;
-    private RecyclerView rvTvOnAir;
     private ProgressBar loadingTvOnAir;
     private TVGridAdapter tvOnAirAdapter;
     private final List<TVResult> tvOnAirResults = new ArrayList<>();
-    private int currentPageTVOnAir = 1;
-    private int totalPagesTVOnAir = 3;
 
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -62,7 +60,7 @@ public class TvOnAirFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
@@ -126,9 +124,13 @@ public class TvOnAirFragment extends Fragment {
     }
 
     private void setOnAirTV(View view) {
-        rvTvOnAir = view.findViewById(R.id.rvTVOnAirGrid);
+        TextView textTitle = view.findViewById(R.id.textTvVertical);
+        String title = "On Air TV Shows";
+        textTitle.setText(title);
+
+        RecyclerView rvTvOnAir = view.findViewById(R.id.rvTvVertical);
         tvOnAirAdapter = new TVGridAdapter(tvOnAirResults, getContext());
-        loadingTvOnAir = view.findViewById(R.id.loadingTVOnAir);
+        loadingTvOnAir = view.findViewById(R.id.loadingTvVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
 
         rvTvOnAir.setLayoutManager(gridLayoutManager);
@@ -137,13 +139,13 @@ public class TvOnAirFragment extends Fragment {
     }
 
     private void getOnAirTV(){
+        int currentPageTVOnAir = 1;
         Call<TVResponse> call = apiService.getTvOnAir(MYAPI_KEY, LANGUAGE, currentPageTVOnAir);
         call.enqueue(new Callback<TVResponse>(){
 
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    totalPagesTVOnAir = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingTvOnAir.setVisibility(View.GONE);
                         int oldCount = tvOnAirResults.size();

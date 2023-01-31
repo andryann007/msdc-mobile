@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.msdc.R;
@@ -41,12 +42,9 @@ import retrofit2.Retrofit;
 public class TvAiringTodayFragment extends Fragment {
 
     private ApiService apiService;
-    private RecyclerView rvTvAiringToday;
     private ProgressBar loadingTvAiringToday;
     private TVGridAdapter tvAiringTodayAdapter;
     private final List<TVResult> tvAiringTodayResults = new ArrayList<>();
-    private int currentPageTVAiringToday = 1;
-    private int totalPagesTVAiringToday = 3;
 
     public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -62,7 +60,7 @@ public class TvAiringTodayFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
@@ -126,9 +124,13 @@ public class TvAiringTodayFragment extends Fragment {
     }
 
     private void setOnAiringTV(View view) {
-        rvTvAiringToday = view.findViewById(R.id.rvTVAiringGrid);
+        TextView textTitle = view.findViewById(R.id.textTvVertical);
+        String title = "Airing Today TV Shows";
+        textTitle.setText(title);
+
+        RecyclerView rvTvAiringToday = view.findViewById(R.id.rvTvVertical);
         tvAiringTodayAdapter = new TVGridAdapter(tvAiringTodayResults, getContext());
-        loadingTvAiringToday = view.findViewById(R.id.loadingTVAiring);
+        loadingTvAiringToday = view.findViewById(R.id.loadingTvVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
 
         rvTvAiringToday.setLayoutManager(gridLayoutManager);
@@ -137,12 +139,12 @@ public class TvAiringTodayFragment extends Fragment {
     }
 
     private void getOnAiringTV(){
+        int currentPageTVAiringToday = 1;
         Call<TVResponse> call = apiService.getTvAiringToday(MYAPI_KEY, LANGUAGE, currentPageTVAiringToday);
         call.enqueue(new Callback<TVResponse>(){
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    totalPagesTVAiringToday = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
                         loadingTvAiringToday.setVisibility(View.GONE);
                         int oldCount = tvAiringTodayResults.size();
