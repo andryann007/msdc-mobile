@@ -26,7 +26,7 @@ import com.example.msdc.activities.SearchActivity;
 import com.example.msdc.adapter.MovieGridAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
-import com.example.msdc.api.MovieRespon;
+import com.example.msdc.api.MovieResponse;
 import com.example.msdc.api.MovieResult;
 import com.example.msdc.databinding.FragmentMoviePopularBinding;
 
@@ -135,11 +135,11 @@ public class MoviePopularFragment extends Fragment {
     }
 
     private void getPopularMovies(){
-        Call<MovieRespon> call = apiService.getPopularMovies(MYAPI_KEY, LANGUAGE, currentPageMoviePopular);
-        call.enqueue(new Callback<MovieRespon>(){
+        Call<MovieResponse> call = apiService.getPopularMovies(MYAPI_KEY, LANGUAGE, currentPageMoviePopular);
+        call.enqueue(new Callback<MovieResponse>(){
 
             @Override
-            public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
+            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
                     totalPagesMoviePopular = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
@@ -152,7 +152,7 @@ public class MoviePopularFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<MovieRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
 
             }
         });

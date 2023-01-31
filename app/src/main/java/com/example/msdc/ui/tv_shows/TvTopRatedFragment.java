@@ -26,7 +26,7 @@ import com.example.msdc.activities.SearchActivity;
 import com.example.msdc.adapter.TVGridAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
-import com.example.msdc.api.TVRespon;
+import com.example.msdc.api.TVResponse;
 import com.example.msdc.api.TVResult;
 import com.example.msdc.databinding.FragmentTvTopRatedBinding;
 
@@ -136,11 +136,11 @@ public class TvTopRatedFragment extends Fragment {
     }
 
     private void getTopRatedTV(){
-        Call<TVRespon> call = apiService.getTvTopRated(MYAPI_KEY, LANGUAGE, currentPageTVTopRated);
-        call.enqueue(new Callback<TVRespon>(){
+        Call<TVResponse> call = apiService.getTvTopRated(MYAPI_KEY, LANGUAGE, currentPageTVTopRated);
+        call.enqueue(new Callback<TVResponse>(){
 
             @Override
-            public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
+            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
                     totalPagesTVTopRated = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
@@ -153,7 +153,7 @@ public class TvTopRatedFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
 
             }
         });

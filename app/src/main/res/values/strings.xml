@@ -63,4 +63,7 @@
     <string name="trending_person_desc">Trending Person In This Week</string>
     <string name="trending_tv_shows_desc">Trending TV Shows In This Week</string>
     <string name="trending_movies_desc">Trending Movies In This Week</string>
+    <string name="credit_name">Name</string>
+    <string name="credit_gender">Gender</string>
+    <string name="credit_departement">Departement</string>
 </resources>

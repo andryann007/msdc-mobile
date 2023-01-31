@@ -26,7 +26,7 @@ import com.example.msdc.activities.SearchActivity;
 import com.example.msdc.adapter.TVGridAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
-import com.example.msdc.api.TVRespon;
+import com.example.msdc.api.TVResponse;
 import com.example.msdc.api.TVResult;
 import com.example.msdc.databinding.FragmentTvOnAirBinding;
 
@@ -137,11 +137,11 @@ public class TvOnAirFragment extends Fragment {
     }
 
     private void getOnAirTV(){
-        Call<TVRespon> call = apiService.getTvOnAir(MYAPI_KEY, LANGUAGE, currentPageTVOnAir);
-        call.enqueue(new Callback<TVRespon>(){
+        Call<TVResponse> call = apiService.getTvOnAir(MYAPI_KEY, LANGUAGE, currentPageTVOnAir);
+        call.enqueue(new Callback<TVResponse>(){
 
             @Override
-            public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
+            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
                     totalPagesTVOnAir = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
@@ -154,7 +154,7 @@ public class TvOnAirFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
 
             }
         });

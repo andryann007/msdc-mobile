@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonRespon {
+public class PersonResponse {
     @SerializedName("results")
     private final List<PersonResult> results = new ArrayList<>();
 

@@ -16,11 +16,11 @@ import com.example.msdc.adapter.PersonAdapter;
 import com.example.msdc.adapter.TVAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
-import com.example.msdc.api.MovieRespon;
+import com.example.msdc.api.MovieResponse;
 import com.example.msdc.api.MovieResult;
-import com.example.msdc.api.PersonRespon;
+import com.example.msdc.api.PersonResponse;
 import com.example.msdc.api.PersonResult;
-import com.example.msdc.api.TVRespon;
+import com.example.msdc.api.TVResponse;
 import com.example.msdc.api.TVResult;
 import com.example.msdc.databinding.FragmentHomeBinding;
 
@@ -118,11 +118,11 @@ public class HomeFragment extends Fragment {
 
     private void getTopRatedMovies(){
         int currentPageMovieTopRated = 1;
-        Call<MovieRespon> call = apiService.getTopRatedMovies(MYAPI_KEY, LANGUAGE, currentPageMovieTopRated);
-        call.enqueue(new Callback<MovieRespon>(){
+        Call<MovieResponse> call = apiService.getTopRatedMovies(MYAPI_KEY, LANGUAGE, currentPageMovieTopRated);
+        call.enqueue(new Callback<MovieResponse>(){
 
             @Override
-            public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
+            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
                     totalPagesMovieTopRated = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
@@ -135,7 +135,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<MovieRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
 
             }
         });
@@ -152,11 +152,11 @@ public class HomeFragment extends Fragment {
 
     private void getUpcomingMovies(){
         int currentPageUpcomingMovie = 1;
-        Call<MovieRespon> call = apiService.getUpcomingMovies(MYAPI_KEY, LANGUAGE, currentPageUpcomingMovie);
-        call.enqueue(new Callback<MovieRespon>(){
+        Call<MovieResponse> call = apiService.getUpcomingMovies(MYAPI_KEY, LANGUAGE, currentPageUpcomingMovie);
+        call.enqueue(new Callback<MovieResponse>(){
 
             @Override
-            public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
+            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
                     totalPagesUpcomingMovie = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
@@ -169,7 +169,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<MovieRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
 
             }
         });
@@ -186,11 +186,11 @@ public class HomeFragment extends Fragment {
 
     private void getNowPlayingMovies(){
         int currentPageMovieNowPlaying = 1;
-        Call<MovieRespon> call = apiService.getNowPlayingMovies(MYAPI_KEY, LANGUAGE, currentPageMovieNowPlaying);
-        call.enqueue(new Callback<MovieRespon>(){
+        Call<MovieResponse> call = apiService.getNowPlayingMovies(MYAPI_KEY, LANGUAGE, currentPageMovieNowPlaying);
+        call.enqueue(new Callback<MovieResponse>(){
 
             @Override
-            public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
+            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
                     totalPagesMovieNowPlaying = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
@@ -203,7 +203,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<MovieRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
 
             }
         });
@@ -220,11 +220,11 @@ public class HomeFragment extends Fragment {
 
     private void getPopularMovies(){
         int currentPageMoviePopular = 1;
-        Call<MovieRespon> call = apiService.getPopularMovies(MYAPI_KEY, LANGUAGE, currentPageMoviePopular);
-        call.enqueue(new Callback<MovieRespon>(){
+        Call<MovieResponse> call = apiService.getPopularMovies(MYAPI_KEY, LANGUAGE, currentPageMoviePopular);
+        call.enqueue(new Callback<MovieResponse>(){
 
             @Override
-            public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
+            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
                     totalPagesMoviePopular = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
@@ -237,7 +237,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<MovieRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
 
             }
         });
@@ -254,11 +254,11 @@ public class HomeFragment extends Fragment {
 
     private void getOnAirTV(){
         int currentPageTVOnAir = 1;
-        Call<TVRespon> call = apiService.getTvOnAir(MYAPI_KEY, LANGUAGE, currentPageTVOnAir);
-        call.enqueue(new Callback<TVRespon>(){
+        Call<TVResponse> call = apiService.getTvOnAir(MYAPI_KEY, LANGUAGE, currentPageTVOnAir);
+        call.enqueue(new Callback<TVResponse>(){
 
             @Override
-            public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
+            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
                     totalPagesTVOnAir = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
@@ -271,7 +271,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
 
             }
         });
@@ -288,11 +288,11 @@ public class HomeFragment extends Fragment {
 
     private void getTopRatedTV(){
         int currentPageTVTopRated = 1;
-        Call<TVRespon> call = apiService.getTvTopRated(MYAPI_KEY, LANGUAGE, currentPageTVTopRated);
-        call.enqueue(new Callback<TVRespon>(){
+        Call<TVResponse> call = apiService.getTvTopRated(MYAPI_KEY, LANGUAGE, currentPageTVTopRated);
+        call.enqueue(new Callback<TVResponse>(){
 
             @Override
-            public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
+            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
                     totalPagesTVTopRated = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
@@ -305,7 +305,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
 
             }
         });
@@ -322,11 +322,11 @@ public class HomeFragment extends Fragment {
 
     private void getPopularTV(){
         int currentPageTVPopular = 1;
-        Call<TVRespon> call = apiService.getTvPopular(MYAPI_KEY, LANGUAGE, currentPageTVPopular);
-        call.enqueue(new Callback<TVRespon>(){
+        Call<TVResponse> call = apiService.getTvPopular(MYAPI_KEY, LANGUAGE, currentPageTVPopular);
+        call.enqueue(new Callback<TVResponse>(){
 
             @Override
-            public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
+            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
                     totalPagesTVPopular = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
@@ -339,7 +339,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
 
             }
         });
@@ -356,10 +356,10 @@ public class HomeFragment extends Fragment {
 
     private void getOnAiringTV(){
         int currentPageTVAiringToday = 1;
-        Call<TVRespon> call = apiService.getTvAiringToday(MYAPI_KEY, LANGUAGE, currentPageTVAiringToday);
-        call.enqueue(new Callback<TVRespon>(){
+        Call<TVResponse> call = apiService.getTvAiringToday(MYAPI_KEY, LANGUAGE, currentPageTVAiringToday);
+        call.enqueue(new Callback<TVResponse>(){
             @Override
-            public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
+            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
                     totalPagesTVAiringToday = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
@@ -372,7 +372,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
             }
         });
     }
@@ -387,11 +387,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void getTrendingMovies(){
-        Call<MovieRespon> call = apiService.getTrendingMovies(TRENDING_MOVIE, TIME_WINDOW, MYAPI_KEY);
-        call.enqueue(new Callback<MovieRespon>(){
+        Call<MovieResponse> call = apiService.getTrendingMovies(TRENDING_MOVIE, TIME_WINDOW, MYAPI_KEY);
+        call.enqueue(new Callback<MovieResponse>(){
 
             @Override
-            public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
+            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
                     totalPagesMovieTrending = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
@@ -404,7 +404,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<MovieRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
 
             }
         });
@@ -420,11 +420,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void getTrendingTV(){
-        Call<TVRespon> call = apiService.getTrendingTV(TRENDING_TV, TIME_WINDOW, MYAPI_KEY);
-        call.enqueue(new Callback<TVRespon>(){
+        Call<TVResponse> call = apiService.getTrendingTV(TRENDING_TV, TIME_WINDOW, MYAPI_KEY);
+        call.enqueue(new Callback<TVResponse>(){
 
             @Override
-            public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
+            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
                     totalPagesTvTrending = response.body().getTotalPages();
                     if(response.body().getResult()!=null){
@@ -437,7 +437,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
 
             }
         });
@@ -453,11 +453,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void getTrendingPerson(){
-        Call<PersonRespon> call = apiService.getTrendingPerson(TRENDING_PERSON, TIME_WINDOW, MYAPI_KEY);
-        call.enqueue(new Callback<PersonRespon>(){
+        Call<PersonResponse> call = apiService.getTrendingPerson(TRENDING_PERSON, TIME_WINDOW, MYAPI_KEY);
+        call.enqueue(new Callback<PersonResponse>(){
 
             @Override
-            public void onResponse(@NonNull Call<PersonRespon> call, @NonNull Response<PersonRespon> response) {
+            public void onResponse(@NonNull Call<PersonResponse> call, @NonNull Response<PersonResponse> response) {
                 if(response.body() != null){
                     totalPagesPersonTrending = response.body().getTotalPages();
                     if(response.body().getResults()!=null){
@@ -470,7 +470,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<PersonRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<PersonResponse> call, @NonNull Throwable t) {
 
             }
         });

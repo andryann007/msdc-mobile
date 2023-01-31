@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieRespon {
+public class TVResponse {
     @SerializedName("results")
-    private final List<MovieResult> results = new ArrayList<>();
+    private final List<TVResult> results = new ArrayList<>();
 
     @SerializedName("total_pages")
     int totalPages;
 
-    public List<MovieResult> getResult(){ return results; }
+    public List<TVResult> getResult(){ return results; }
     public int getTotalPages(){ return totalPages; }
 }

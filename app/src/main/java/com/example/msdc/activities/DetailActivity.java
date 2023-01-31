@@ -15,19 +15,24 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.text.HtmlCompat;
 
 import com.example.msdc.R;
+import com.example.msdc.adapter.CreditCastAdapter;
+import com.example.msdc.adapter.CreditCrewAdapter;
 import com.example.msdc.adapter.ImageAdapter;
 import com.example.msdc.adapter.ImageListAdapter;
 import com.example.msdc.adapter.MovieAdapter;
 import com.example.msdc.adapter.TVAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
-import com.example.msdc.api.ImageRespon;
+import com.example.msdc.api.CreditCastResult;
+import com.example.msdc.api.CreditCrewResult;
+import com.example.msdc.api.CreditResponse;
+import com.example.msdc.api.ImageResponse;
 import com.example.msdc.api.ImageResult;
 import com.example.msdc.api.MovieDetails;
-import com.example.msdc.api.MovieRespon;
+import com.example.msdc.api.MovieResponse;
 import com.example.msdc.api.MovieResult;
 import com.example.msdc.api.TVDetails;
-import com.example.msdc.api.TVRespon;
+import com.example.msdc.api.TVResponse;
 import com.example.msdc.api.TVResult;
 import com.example.msdc.databinding.ActivityDetailBinding;
 
@@ -51,14 +56,20 @@ public class DetailActivity extends AppCompatActivity {
     private MovieAdapter movieRecommendationsAdapter, movieSimilarAdapter;
     private TVAdapter tvRecommendationsAdapter, tvSimilarAdapter;
     private ImageListAdapter movieImagesAdapter, tvImagesAdapter;
+    private CreditCastAdapter creditCastAdapter;
+    private CreditCrewAdapter creditCrewAdapter;
 
     private final List<ImageResult> movieImagesList = new ArrayList<>();
     private final List<MovieResult> movieRecommendationsResult = new ArrayList<>();
     private final List<MovieResult> movieSimilarResult = new ArrayList<>();
+    private final List<CreditCastResult> movieCreditCastResult = new ArrayList<>();
+    private final List<CreditCrewResult> movieCreditCrewResult = new ArrayList<>();
 
     private final List<ImageResult> tvImagesList = new ArrayList<>();
     private final List<TVResult> tvRecommendationsResult = new ArrayList<>();
     private final List<TVResult> tvSimilarResult = new ArrayList<>();
+    private final List<CreditCastResult> tvCreditCastResult = new ArrayList<>();
+    private final List<CreditCrewResult> tvCreditCrewResult = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +156,8 @@ public class DetailActivity extends AppCompatActivity {
                     }
 
                     setImagesMovie();
+                    setMovieCast();
+                    setMovieCrew();
                     setRecommendationsMovie();
                     setSimilarMovie();
                 }
@@ -158,6 +171,88 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
+    private void setImagesMovie(){
+        movieImagesAdapter = new ImageListAdapter(movieImagesList, this);
+
+        getImagesMovie();
+        binding.rvImagesList.setAdapter(movieImagesAdapter);
+    }
+
+    private void getImagesMovie(){
+        Call<ImageResponse> call = apiService.getMovieImages(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
+                assert response.body() != null;
+                if(response.body().getResults()!=null){
+                    int oldCount = movieImagesList.size();
+                    movieImagesList.addAll(response.body().getResults());
+                    movieImagesAdapter.notifyItemChanged(oldCount, movieImagesList.size());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ImageResponse> call, @NonNull Throwable t) {
+            }
+        });
+    }
+
+    private void setMovieCast(){
+        creditCastAdapter = new CreditCastAdapter(movieCreditCastResult, this);
+
+        getMovieCast();
+        binding.rvCreditCast.setAdapter(creditCastAdapter);
+    }
+
+    private void getMovieCast(){
+        Call<CreditResponse> call = apiService.getMovieCredit(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<CreditResponse>() {
+
+            @Override
+            public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
+                assert response.body() != null;
+                if(response.body().getCast()!=null){
+                    int oldCount = movieCreditCastResult.size();
+                    movieCreditCastResult.addAll(response.body().getCast());
+                    creditCastAdapter.notifyItemChanged(oldCount, movieCreditCastResult.size());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    private void setMovieCrew(){
+        creditCrewAdapter = new CreditCrewAdapter(movieCreditCrewResult, this);
+
+        getMovieCrew();
+        binding.rvCreditCrew.setAdapter(creditCrewAdapter);
+    }
+
+    private void getMovieCrew(){
+        Call<CreditResponse> call = apiService.getMovieCredit(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<CreditResponse>() {
+
+            @Override
+            public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
+                assert response.body() != null;
+                if(response.body().getCrew()!=null){
+                    int oldCount = movieCreditCrewResult.size();
+                    movieCreditCrewResult.addAll(response.body().getCrew());
+                    creditCrewAdapter.notifyItemChanged(oldCount, movieCreditCrewResult.size());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
     private void setRecommendationsMovie(){
         movieRecommendationsAdapter = new MovieAdapter(movieRecommendationsResult, this);
 
@@ -166,10 +261,10 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getRecommendationsMovie(){
-        Call<MovieRespon> call = apiService.getMovieRecommendations(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
-        call.enqueue(new Callback<MovieRespon>() {
+        Call<MovieResponse> call = apiService.getMovieRecommendations(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<MovieResponse>() {
             @Override
-            public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
+            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 assert response.body() != null;
                 if(response.body().getResult()!=null){
                     int oldCount = movieRecommendationsResult.size();
@@ -179,7 +274,7 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<MovieRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
             }
         });
     }
@@ -192,10 +287,10 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getSimilarMovie(){
-        Call<MovieRespon> call = apiService.getMovieSimilar(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
-        call.enqueue(new Callback<MovieRespon>() {
+        Call<MovieResponse> call = apiService.getMovieSimilar(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<MovieResponse>() {
             @Override
-            public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
+            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 assert response.body() != null;
                 if(response.body().getResult()!=null){
                     int oldCount = movieSimilarResult.size();
@@ -205,7 +300,7 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<MovieRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
             }
         });
     }
@@ -268,6 +363,8 @@ public class DetailActivity extends AppCompatActivity {
                     binding.textMovieSimilar.setText("Similar TV");
 
                     setImagesTV();
+                    setTvCast();
+                    setTvCrew();
                     setRecommendationsTV();
                     setSimilarTV();
                 }
@@ -281,6 +378,82 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
+    private void setImagesTV(){
+        tvImagesAdapter = new ImageListAdapter(tvImagesList, this);
+
+        getImagesTV();
+        binding.rvImagesList.setAdapter(tvImagesAdapter);
+    }
+
+    private void getImagesTV(){
+        Call<ImageResponse> call = apiService.getTvImages(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
+                assert response.body() != null;
+                if(response.body().getResults()!=null){
+                    int oldCount = tvImagesList.size();
+                    tvImagesList.addAll(response.body().getResults());
+                    tvImagesAdapter.notifyItemChanged(oldCount, tvImagesList.size());
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ImageResponse> call, @NonNull Throwable t) {
+            }
+        });
+    }
+
+    private void setTvCast(){
+        creditCastAdapter = new CreditCastAdapter(tvCreditCastResult, this);
+
+        getTvCast();
+        binding.rvCreditCast.setAdapter(creditCastAdapter);
+    }
+
+    private void getTvCast(){
+        Call<CreditResponse> call = apiService.getTvCredit(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<CreditResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
+                assert response.body() != null;
+                if(response.body().getCast()!=null){
+                    int oldCount = tvCreditCastResult.size();
+                    tvCreditCastResult.addAll(response.body().getCast());
+                    creditCastAdapter.notifyItemChanged(oldCount, tvCreditCastResult.size());
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
+            }
+        });
+    }
+
+    private void setTvCrew(){
+        creditCrewAdapter = new CreditCrewAdapter(tvCreditCrewResult, this);
+
+        getTvCrew();
+        binding.rvCreditCrew.setAdapter(creditCrewAdapter);
+    }
+
+    private void getTvCrew(){
+        Call<CreditResponse> call = apiService.getTvCredit(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<CreditResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
+                assert response.body() != null;
+                if(response.body().getCrew()!=null){
+                    int oldCount = tvCreditCrewResult.size();
+                    tvCreditCrewResult.addAll(response.body().getCrew());
+                    creditCrewAdapter.notifyItemChanged(oldCount, tvCreditCrewResult.size());
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
     private void setRecommendationsTV(){
         tvRecommendationsAdapter = new TVAdapter(tvRecommendationsResult, this);
 
@@ -289,10 +462,10 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getRecommendationsTV(){
-        Call<TVRespon> call = apiService.getTVRecommendations(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
-        call.enqueue(new Callback<TVRespon>() {
+        Call<TVResponse> call = apiService.getTVRecommendations(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<TVResponse>() {
             @Override
-            public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
+            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 assert response.body() != null;
                 if(response.body().getResult()!=null){
                     int oldCount = tvRecommendationsResult.size();
@@ -302,7 +475,7 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
             }
         });
     }
@@ -315,10 +488,10 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getSimilarTV(){
-        Call<TVRespon> call = apiService.getTVSimilar(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
-        call.enqueue(new Callback<TVRespon>() {
+        Call<TVResponse> call = apiService.getTVSimilar(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<TVResponse>() {
             @Override
-            public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
+            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 assert response.body() != null;
                 if(response.body().getResult()!=null){
                     int oldCount = tvSimilarResult.size();
@@ -328,62 +501,11 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
             }
         });
     }
 
-    private void setImagesMovie(){
-        movieImagesAdapter = new ImageListAdapter(movieImagesList, this);
-
-        getImagesMovie();
-        binding.rvImagesList.setAdapter(movieImagesAdapter);
-    }
-
-    private void getImagesMovie(){
-        Call<ImageRespon> call = apiService.getMovieImages(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
-        call.enqueue(new Callback<ImageRespon>() {
-            @Override
-            public void onResponse(@NonNull Call<ImageRespon> call, @NonNull Response<ImageRespon> response) {
-                assert response.body() != null;
-                if(response.body().getResults()!=null){
-                    int oldCount = movieImagesList.size();
-                    movieImagesList.addAll(response.body().getResults());
-                    movieImagesAdapter.notifyItemChanged(oldCount, movieImagesList.size());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ImageRespon> call, @NonNull Throwable t) {
-            }
-        });
-    }
-
-    private void setImagesTV(){
-        tvImagesAdapter = new ImageListAdapter(tvImagesList, this);
-
-        getImagesTV();
-        binding.rvImagesList.setAdapter(tvImagesAdapter);
-    }
-
-    private void getImagesTV(){
-        Call<ImageRespon> call = apiService.getTvImages(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
-        call.enqueue(new Callback<ImageRespon>() {
-            @Override
-            public void onResponse(@NonNull Call<ImageRespon> call, @NonNull Response<ImageRespon> response) {
-                assert response.body() != null;
-                if(response.body().getResults()!=null){
-                    int oldCount = tvImagesList.size();
-                    tvImagesList.addAll(response.body().getResults());
-                    tvImagesAdapter.notifyItemChanged(oldCount, tvImagesList.size());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ImageRespon> call, @NonNull Throwable t) {
-            }
-        });
-    }
     private void setHtmlText(TextView tv, String textColored, String textValue){
         tv.setText(HtmlCompat.fromHtml("<font color='#059142'>" + textColored + "</font> : " +
                 "<b>" + textValue + "</b>", HtmlCompat.FROM_HTML_MODE_LEGACY));

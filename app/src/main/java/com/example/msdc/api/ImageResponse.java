@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageRespon {
+public class ImageResponse {
     @SerializedName("backdrops")
     private final List<ImageResult> results = new ArrayList<>();
 

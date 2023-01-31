@@ -17,9 +17,9 @@ import com.example.msdc.adapter.MovieSearchAdapter;
 import com.example.msdc.adapter.TVSearchAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
-import com.example.msdc.api.MovieRespon;
+import com.example.msdc.api.MovieResponse;
 import com.example.msdc.api.MovieResult;
-import com.example.msdc.api.TVRespon;
+import com.example.msdc.api.TVResponse;
 import com.example.msdc.databinding.ActivitySearchBinding;
 
 import java.util.ArrayList;
@@ -78,10 +78,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchForMovies() {
-        Call<MovieRespon> call = apiService.searchMovie(MainActivity.MYAPI_KEY, MainActivity.LANGUAGE, query, currentPage);
-        call.enqueue(new Callback<MovieRespon>() {
+        Call<MovieResponse> call = apiService.searchMovie(MainActivity.MYAPI_KEY, MainActivity.LANGUAGE, query, currentPage);
+        call.enqueue(new Callback<MovieResponse>() {
             @Override
-            public void onResponse(@NonNull Call<MovieRespon> call, @NonNull Response<MovieRespon> response) {
+            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
                     if(response.body().getResult().size() > 0){
                         binding.loadingSearch.setVisibility(View.GONE);
@@ -98,7 +98,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @SuppressLint("SetTextI18n")
             @Override
-            public void onFailure(@NonNull Call<MovieRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 binding.loadingSearch.setVisibility(View.GONE);
                 binding.textNoResults.setVisibility(View.VISIBLE);
                 binding.textNoResults.setText("Something wrong, with connection !!!");
@@ -107,10 +107,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchForTV() {
-        Call<TVRespon> call = apiService.searchTv(MainActivity.MYAPI_KEY, MainActivity.LANGUAGE, query, currentPage);
-        call.enqueue(new Callback<TVRespon>() {
+        Call<TVResponse> call = apiService.searchTv(MainActivity.MYAPI_KEY, MainActivity.LANGUAGE, query, currentPage);
+        call.enqueue(new Callback<TVResponse>() {
             @Override
-            public void onResponse(@NonNull Call<TVRespon> call, @NonNull Response<TVRespon> response) {
+            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
                     if(response.body().getResult().size() > 0){
                         binding.loadingSearch.setVisibility(View.GONE);
@@ -127,7 +127,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @SuppressLint("SetTextI18n")
             @Override
-            public void onFailure(@NonNull Call<TVRespon> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 binding.loadingSearch.setVisibility(View.GONE);
                 binding.textNoResults.setVisibility(View.VISIBLE);
                 binding.textNoResults.setText("Something wrong, with connection !!!");
