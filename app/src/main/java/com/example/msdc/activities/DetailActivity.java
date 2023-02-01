@@ -413,7 +413,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setKeywordsTV(){
-        keywordAdapter = new KeywordAdapter(movieKeyword, this);
+        keywordAdapter = new KeywordAdapter(tvKeyword, this);
 
         getKeywordsTV();
         binding.rvKeywordList.setAdapter(keywordAdapter);
