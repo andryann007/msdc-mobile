@@ -19,6 +19,7 @@ import com.example.msdc.adapter.CreditCastAdapter;
 import com.example.msdc.adapter.CreditCrewAdapter;
 import com.example.msdc.adapter.ImageAdapter;
 import com.example.msdc.adapter.ImageListAdapter;
+import com.example.msdc.adapter.KeywordAdapter;
 import com.example.msdc.adapter.MovieAdapter;
 import com.example.msdc.adapter.TVAdapter;
 import com.example.msdc.api.ApiClient;
@@ -28,6 +29,8 @@ import com.example.msdc.api.CreditCrewResult;
 import com.example.msdc.api.CreditResponse;
 import com.example.msdc.api.ImageResponse;
 import com.example.msdc.api.ImageResult;
+import com.example.msdc.api.KeywordResponse;
+import com.example.msdc.api.KeywordResult;
 import com.example.msdc.api.MovieDetails;
 import com.example.msdc.api.MovieResponse;
 import com.example.msdc.api.MovieResult;
@@ -55,16 +58,19 @@ public class DetailActivity extends AppCompatActivity {
     private ActivityDetailBinding binding;
     private MovieAdapter movieRecommendationsAdapter, movieSimilarAdapter;
     private TVAdapter tvRecommendationsAdapter, tvSimilarAdapter;
+    private KeywordAdapter keywordAdapter;
     private ImageListAdapter movieImagesAdapter, tvImagesAdapter;
     private CreditCastAdapter creditCastAdapter;
     private CreditCrewAdapter creditCrewAdapter;
 
+    private final List<KeywordResult> movieKeyword = new ArrayList<>();
     private final List<ImageResult> movieImagesList = new ArrayList<>();
     private final List<MovieResult> movieRecommendationsResult = new ArrayList<>();
     private final List<MovieResult> movieSimilarResult = new ArrayList<>();
     private final List<CreditCastResult> movieCreditCastResult = new ArrayList<>();
     private final List<CreditCrewResult> movieCreditCrewResult = new ArrayList<>();
 
+    private final List<KeywordResult> tvKeyword = new ArrayList<>();
     private final List<ImageResult> tvImagesList = new ArrayList<>();
     private final List<TVResult> tvRecommendationsResult = new ArrayList<>();
     private final List<TVResult> tvSimilarResult = new ArrayList<>();
@@ -155,6 +161,7 @@ public class DetailActivity extends AppCompatActivity {
                         setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
                     }
 
+                    setKeywordsMovie();
                     setImagesMovie();
                     setMovieCast();
                     setMovieCrew();
@@ -167,6 +174,32 @@ public class DetailActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call<MovieDetails> call, @NonNull Throwable t) {
                 binding.loadingDetails.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), "Terjadi kesalahan saat memuat halaman detail!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setKeywordsMovie(){
+        keywordAdapter = new KeywordAdapter(movieKeyword, this);
+
+        getKeywordsMovie();
+        binding.rvKeywordList.setAdapter(keywordAdapter);
+    }
+
+    private void getKeywordsMovie(){
+        Call<KeywordResponse> call = apiService.getMovieKeywords(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<KeywordResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
+                assert response.body() != null;
+                if(response.body().getKeywords()!=null){
+                    int oldCount = movieKeyword.size();
+                    movieKeyword.addAll(response.body().getKeywords());
+                    keywordAdapter.notifyItemChanged(oldCount, movieKeyword.size());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<KeywordResponse> call, @NonNull Throwable t) {
             }
         });
     }
@@ -362,6 +395,7 @@ public class DetailActivity extends AppCompatActivity {
                     binding.textMovieRecommendations.setText("TV Recommendations");
                     binding.textMovieSimilar.setText("Similar TV");
 
+                    setKeywordsTV();
                     setImagesTV();
                     setTvCast();
                     setTvCrew();
@@ -374,6 +408,32 @@ public class DetailActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call<TVDetails> call, @NonNull Throwable t) {
                 binding.loadingDetails.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), "Terjadi kesalahan saat memuat halaman detail dari " + tv_id, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setKeywordsTV(){
+        keywordAdapter = new KeywordAdapter(movieKeyword, this);
+
+        getKeywordsTV();
+        binding.rvKeywordList.setAdapter(keywordAdapter);
+    }
+
+    private void getKeywordsTV(){
+        Call<KeywordResponse> call = apiService.getTvKeywords(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<KeywordResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
+                assert response.body() != null;
+                if(response.body().getKeywords()!=null){
+                    int oldCount = tvKeyword.size();
+                    tvKeyword.addAll(response.body().getKeywords());
+                    keywordAdapter.notifyItemChanged(oldCount, tvKeyword.size());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<KeywordResponse> call, @NonNull Throwable t) {
             }
         });
     }
