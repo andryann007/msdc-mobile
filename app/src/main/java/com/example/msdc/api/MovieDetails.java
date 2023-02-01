@@ -2,6 +2,9 @@ package com.example.msdc.api;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MovieDetails {
     @SerializedName("title")
     String title;
@@ -47,6 +50,9 @@ public class MovieDetails {
 
     @SerializedName("vote_count")
     String voteCount;
+
+    @SerializedName("genres")
+    private final List<GenreResult> genres = new ArrayList<>();
 
     public String getTitle() {
         return title;
@@ -106,5 +112,9 @@ public class MovieDetails {
 
     public String getVoteCount() {
         return voteCount;
+    }
+
+    public List<GenreResult> getGenres() {
+        return genres;
     }
 }

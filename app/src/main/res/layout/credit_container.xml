@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_marginHorizontal="10dp"
+    android:orientation="horizontal"
+    android:background="@android:color/background_light">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/creditProfilePath"
@@ -13,16 +15,19 @@
         android:scaleType="fitXY"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="139dp"
+        android:gravity="center_vertical"
+        android:weightSum="3"
         android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="5dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textCastOrCrewName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/background_dark"
             android:textSize="20sp"
@@ -31,8 +36,8 @@
         <TextView
             android:id="@+id/textGender"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/background_dark"
             android:textSize="20sp"
@@ -41,8 +46,8 @@
         <TextView
             android:id="@+id/textDepartement"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/background_dark"
             android:textSize="20sp"

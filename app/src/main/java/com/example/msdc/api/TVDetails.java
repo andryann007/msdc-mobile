@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TVDetails {
     @SerializedName("name")
     String name;
@@ -52,6 +55,9 @@ public class TVDetails {
 
     @SerializedName("homepage")
     String homepage;
+
+    @SerializedName("genres")
+    private final List<GenreResult> genres = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -115,5 +121,9 @@ public class TVDetails {
 
     public String getHomepage() {
         return homepage;
+    }
+
+    public List<GenreResult> getGenres() {
+        return genres;
     }
 }

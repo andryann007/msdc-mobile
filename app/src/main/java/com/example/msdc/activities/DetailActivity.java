@@ -17,6 +17,7 @@ import androidx.core.text.HtmlCompat;
 import com.example.msdc.R;
 import com.example.msdc.adapter.CreditCastAdapter;
 import com.example.msdc.adapter.CreditCrewAdapter;
+import com.example.msdc.adapter.GenreAdapter;
 import com.example.msdc.adapter.ImageAdapter;
 import com.example.msdc.adapter.ImageListAdapter;
 import com.example.msdc.adapter.KeywordAdapter;
@@ -27,6 +28,7 @@ import com.example.msdc.api.ApiService;
 import com.example.msdc.api.CreditCastResult;
 import com.example.msdc.api.CreditCrewResult;
 import com.example.msdc.api.CreditResponse;
+import com.example.msdc.api.GenreResult;
 import com.example.msdc.api.ImageResponse;
 import com.example.msdc.api.ImageResult;
 import com.example.msdc.api.KeywordResponse;
@@ -58,11 +60,13 @@ public class DetailActivity extends AppCompatActivity {
     private ActivityDetailBinding binding;
     private MovieAdapter movieRecommendationsAdapter, movieSimilarAdapter;
     private TVAdapter tvRecommendationsAdapter, tvSimilarAdapter;
+    private GenreAdapter genreAdapter;
     private KeywordAdapter keywordAdapter;
     private ImageListAdapter movieImagesAdapter, tvImagesAdapter;
     private CreditCastAdapter creditCastAdapter;
     private CreditCrewAdapter creditCrewAdapter;
 
+    private final List<GenreResult> movieGenre = new ArrayList<>();
     private final List<KeywordResult> movieKeyword = new ArrayList<>();
     private final List<ImageResult> movieImagesList = new ArrayList<>();
     private final List<MovieResult> movieRecommendationsResult = new ArrayList<>();
@@ -70,6 +74,7 @@ public class DetailActivity extends AppCompatActivity {
     private final List<CreditCastResult> movieCreditCastResult = new ArrayList<>();
     private final List<CreditCrewResult> movieCreditCrewResult = new ArrayList<>();
 
+    private final List<GenreResult> tvGenre = new ArrayList<>();
     private final List<KeywordResult> tvKeyword = new ArrayList<>();
     private final List<ImageResult> tvImagesList = new ArrayList<>();
     private final List<TVResult> tvRecommendationsResult = new ArrayList<>();
@@ -161,6 +166,7 @@ public class DetailActivity extends AppCompatActivity {
                         setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
                     }
 
+                    setGenresMovie();
                     setKeywordsMovie();
                     setImagesMovie();
                     setMovieCast();
@@ -174,6 +180,32 @@ public class DetailActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call<MovieDetails> call, @NonNull Throwable t) {
                 binding.loadingDetails.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), "Terjadi kesalahan saat memuat halaman detail!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setGenresMovie(){
+        genreAdapter = new GenreAdapter(movieGenre, this);
+
+        getGenresMovie();
+        binding.rvGenreList.setAdapter(genreAdapter);
+    }
+
+    private void getGenresMovie(){
+        Call<MovieDetails> call = apiService.getMovieDetails(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<MovieDetails>() {
+            @Override
+            public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
+                assert response.body() != null;
+                if(response.body().getGenres()!=null){
+                    int oldCount = movieGenre.size();
+                    movieGenre.addAll(response.body().getGenres());
+                    genreAdapter.notifyItemChanged(oldCount, movieGenre.size());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MovieDetails> call, @NonNull Throwable t) {
             }
         });
     }
@@ -395,6 +427,7 @@ public class DetailActivity extends AppCompatActivity {
                     binding.textMovieRecommendations.setText("TV Recommendations");
                     binding.textMovieSimilar.setText("Similar TV");
 
+                    setGenresTV();
                     setKeywordsTV();
                     setImagesTV();
                     setTvCast();
@@ -408,6 +441,32 @@ public class DetailActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call<TVDetails> call, @NonNull Throwable t) {
                 binding.loadingDetails.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), "Terjadi kesalahan saat memuat halaman detail dari " + tv_id, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setGenresTV(){
+        genreAdapter = new GenreAdapter(tvGenre, this);
+
+        getGenresTV();
+        binding.rvGenreList.setAdapter(genreAdapter);
+    }
+
+    private void getGenresTV(){
+        Call<TVDetails> call = apiService.getTvDetails(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        call.enqueue(new Callback<TVDetails>() {
+            @Override
+            public void onResponse(@NonNull Call<TVDetails> call, @NonNull Response<TVDetails> response) {
+                assert response.body() != null;
+                if(response.body().getGenres()!=null){
+                    int oldCount = tvGenre.size();
+                    tvGenre.addAll(response.body().getGenres());
+                    genreAdapter.notifyItemChanged(oldCount, tvGenre.size());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<TVDetails> call, @NonNull Throwable t) {
             }
         });
     }
