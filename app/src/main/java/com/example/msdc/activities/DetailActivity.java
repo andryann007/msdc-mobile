@@ -166,6 +166,9 @@ public class DetailActivity extends AppCompatActivity {
                         setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
                     }
 
+                    binding.textGenreList.setVisibility(View.GONE);
+                    binding.textKeywordList.setVisibility(View.GONE);
+
                     setGenresMovie();
                     setKeywordsMovie();
                     setImagesMovie();
@@ -198,6 +201,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
                 assert response.body() != null;
                 if(response.body().getGenres()!=null){
+                    binding.textGenreList.setVisibility(View.VISIBLE);
                     int oldCount = movieGenre.size();
                     movieGenre.addAll(response.body().getGenres());
                     genreAdapter.notifyItemChanged(oldCount, movieGenre.size());
@@ -224,6 +228,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
                 assert response.body() != null;
                 if(response.body().getKeywords()!=null){
+                    binding.textKeywordList.setVisibility(View.VISIBLE);
                     int oldCount = movieKeyword.size();
                     movieKeyword.addAll(response.body().getKeywords());
                     keywordAdapter.notifyItemChanged(oldCount, movieKeyword.size());
@@ -424,6 +429,8 @@ public class DetailActivity extends AppCompatActivity {
                         setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
                     }
 
+                    binding.textGenreList.setVisibility(View.GONE);
+                    binding.textKeywordList.setVisibility(View.GONE);
                     binding.textMovieRecommendations.setText("TV Recommendations");
                     binding.textMovieSimilar.setText("Similar TV");
 
@@ -459,6 +466,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<TVDetails> call, @NonNull Response<TVDetails> response) {
                 assert response.body() != null;
                 if(response.body().getGenres()!=null){
+                    binding.textGenreList.setVisibility(View.VISIBLE);
                     int oldCount = tvGenre.size();
                     tvGenre.addAll(response.body().getGenres());
                     genreAdapter.notifyItemChanged(oldCount, tvGenre.size());
@@ -485,6 +493,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
                 assert response.body() != null;
                 if(response.body().getKeywords()!=null){
+                    binding.textKeywordList.setVisibility(View.VISIBLE);
                     int oldCount = tvKeyword.size();
                     tvKeyword.addAll(response.body().getKeywords());
                     keywordAdapter.notifyItemChanged(oldCount, tvKeyword.size());
