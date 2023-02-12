@@ -33,9 +33,6 @@ public interface ApiService {
     @GET("movie/{movie_id}/images")
     Call<ImageResponse> getMovieImages(@Path("movie_id") String id, @Query("api_key") String apiKey);
 
-    @GET("movie/{movie_id}/reviews")
-    Call<MovieResponse> getMovieReviews(@Path("movie_id") String id, @Query("api_key") String apiKey);
-
     @GET("movie/{movie_id}/credits")
     Call<CreditResponse> getMovieCredit(@Path("movie_id") String id, @Query("api_key") String apiKey);
 
@@ -65,9 +62,6 @@ public interface ApiService {
 
     @GET("tv/{tv_id}/images")
     Call<ImageResponse> getTvImages(@Path("tv_id") String id, @Query("api_key") String apiKey);
-
-    @GET("tv/{tv_id}/reviews")
-    Call<ImageResponse> getTvReviews(@Path("tv_id") String id, @Query("api_key") String apiKey);
 
     @GET("tv/{tv_id}/keywords")
     Call<KeywordResponse> getTvKeywords(@Path("tv_id") String id, @Query("api_key") String apiKey);

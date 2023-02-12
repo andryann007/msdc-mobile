@@ -11,20 +11,20 @@
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imageItemPoster"
-        android:layout_width="154dp"
-        android:layout_height="231dp"
+        android:layout_width="115.5dp"
+        android:layout_height="173.25dp"
         android:layout_marginTop="2dp"
         android:scaleType="fitXY"
         app:riv_corner_radius="5dp"/>
 
     <TextView
         android:id="@+id/textItemName"
-        android:layout_width="match_parent"
+        android:layout_width="115.5dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:alpha="0.6"
         android:gravity="center"
-        android:maxLines="2"
+        android:maxLines="1"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"/>
