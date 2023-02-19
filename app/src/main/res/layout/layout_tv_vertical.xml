@@ -22,7 +22,7 @@
         android:layout_marginTop="10dp"
         android:scrollbars="vertical"
         android:orientation="vertical"
-        app:spanCount="2"
+        app:spanCount="3"
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:listitem="@layout/item_container_vertical"/>

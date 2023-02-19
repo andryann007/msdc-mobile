@@ -1,6 +1,7 @@
 package com.example.msdc.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -98,6 +99,10 @@ public class DetailActivity extends AppCompatActivity {
         if(Objects.equals(tipe, "movie")){
             movie_id = getIntent().getIntExtra("movie_id", 0);
             setMovieDetails();
+
+            /*Intent i = new Intent(this, DiscoverActivity.class);
+            i.putExtra("discoverType", "movie");*/
+
         } else if(Objects.equals(tipe, "tv")){
             tv_id = getIntent().getIntExtra("tv_id", 0);
             setTVDetails();

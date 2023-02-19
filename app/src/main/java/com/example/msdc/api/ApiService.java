@@ -42,6 +42,12 @@ public interface ApiService {
     @GET("search/movie")
     Call<MovieResponse> searchMovie(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") int page);
 
+    @GET("discover/movie")
+    Call<MovieResponse> discoverMovie(@Query("api_key") String apiKey, @Query("language") String language, @Query("with_genres") String genreId);
+
+    @GET("genre/movie/list")
+    Call<GenreResponse> discoverMovieGenreList(@Query("api_key") String apiKey, @Query("language") String language);
+
     @GET("tv/airing_today")
     Call<TVResponse> getTvAiringToday(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
@@ -71,6 +77,12 @@ public interface ApiService {
 
     @GET("search/tv")
     Call<TVResponse> searchTv(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") int page);
+
+    @GET("discover/tv")
+    Call<TVResponse> discoverTv(@Query("api_key") String apiKey, @Query("language") String language, @Query("with_genres") String genreId);
+
+    @GET("genre/tv/list")
+    Call<GenreResponse> discoverTvGenreList(@Query("api_key") String apiKey, @Query("language") String language);
 
     @GET("person/popular")
     Call<PersonResponse> getPopularPerson(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
