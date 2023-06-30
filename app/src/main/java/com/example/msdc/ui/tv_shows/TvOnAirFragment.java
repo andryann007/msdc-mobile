@@ -46,9 +46,12 @@ public class TvOnAirFragment extends Fragment {
     private TVGridAdapter tvOnAirAdapter;
     private final List<TVResult> tvOnAirResults = new ArrayList<>();
 
-    public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
+    private RecyclerView rvTvOnAir;
+
+    public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
     public static final String LANGUAGE = "en-US";
+    private int page = 1;
 
     private String searchType = null;
 
@@ -90,8 +93,8 @@ public class TvOnAirFragment extends Fragment {
         if(dialogSearch.getWindow() != null){
             dialogSearch.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
-            radioGroup.setOnCheckedChangeListener((group, checkedid) -> {
-                if(checkedid == R.id.radioButtonMovie){
+            radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                if(checkedId == R.id.radioButtonMovie){
                     searchType = radioButtonMovie.getText().toString();
                 } else {
                     searchType = radioButtonTV.getText().toString();
@@ -99,8 +102,8 @@ public class TvOnAirFragment extends Fragment {
             });
             imageDoSearch.setOnClickListener(view -> doSearch(inputSearch.getText().toString()));
 
-            inputSearch.setOnEditorActionListener((v1, actionid, event) -> {
-                if(actionid == EditorInfo.IME_ACTION_GO){
+            inputSearch.setOnEditorActionListener((v1, actionId, event) -> {
+                if(actionId == EditorInfo.IME_ACTION_GO){
                     doSearch(inputSearch.getText().toString());
                 }
                 return false;
@@ -110,15 +113,15 @@ public class TvOnAirFragment extends Fragment {
 
     private void doSearch(String query) {
         if(query.isEmpty()){
-            Toast.makeText(getContext(),"Tidak ada inputan!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"No Input !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         if(searchType == null){
-            Toast.makeText(getContext(),"Harap pilih tipe search!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"No Search Type !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent i = new Intent(getContext(), SearchActivity.class);
-        i.putExtra("tipe", searchType);
+        i.putExtra("type", searchType);
         i.putExtra("searchFor", query);
         startActivity(i);
     }
@@ -128,19 +131,30 @@ public class TvOnAirFragment extends Fragment {
         String title = "On Air TV Shows";
         textTitle.setText(title);
 
-        RecyclerView rvTvOnAir = view.findViewById(R.id.rvTvVertical);
+        rvTvOnAir = view.findViewById(R.id.rvTvVertical);
         tvOnAirAdapter = new TVGridAdapter(tvOnAirResults, getContext());
         loadingTvOnAir = view.findViewById(R.id.loadingTvVertical);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvTvOnAir.setLayoutManager(gridLayoutManager);
         rvTvOnAir.setAdapter(tvOnAirAdapter);
-        getOnAirTV();
+        getOnAirTV(page);
+
+        rvTvOnAir.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(!rvTvOnAir.canScrollVertically(1)){
+                    page++;
+                    getOnAirTV(page);
+                }
+            }
+        });
     }
 
-    private void getOnAirTV(){
-        int currentPageTVOnAir = 1;
-        Call<TVResponse> call = apiService.getTvOnAir(MYAPI_KEY, LANGUAGE, currentPageTVOnAir);
+    private void getOnAirTV(int PAGE){
+        Call<TVResponse> call = apiService.getTvOnAir(MY_API_KEY, LANGUAGE, PAGE);
         call.enqueue(new Callback<TVResponse>(){
 
             @Override
@@ -148,16 +162,19 @@ public class TvOnAirFragment extends Fragment {
                 if(response.body() != null){
                     if(response.body().getResult()!=null){
                         loadingTvOnAir.setVisibility(View.GONE);
+                        rvTvOnAir.setVisibility(View.VISIBLE);
+
                         int oldCount = tvOnAirResults.size();
                         tvOnAirResults.addAll(response.body().getResult());
-                        tvOnAirAdapter.notifyItemChanged(oldCount, tvOnAirResults.size());
+                        tvOnAirAdapter.notifyItemRangeInserted(oldCount, tvOnAirResults.size());
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
-
+                loadingTvOnAir.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "Failed To Fetch On Air TV Shows !!!", Toast.LENGTH_SHORT).show();
             }
         });
     }

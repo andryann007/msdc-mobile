@@ -46,9 +46,12 @@ public class TvAiringTodayFragment extends Fragment {
     private TVGridAdapter tvAiringTodayAdapter;
     private final List<TVResult> tvAiringTodayResults = new ArrayList<>();
 
-    public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
+    private RecyclerView rvTvAiringToday;
+
+    public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
     public static final String LANGUAGE = "en-US";
+    private int page = 1;
 
     private String searchType = null;
 
@@ -90,8 +93,8 @@ public class TvAiringTodayFragment extends Fragment {
         if(dialogSearch.getWindow() != null){
             dialogSearch.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
-            radioGroup.setOnCheckedChangeListener((group, checkedid) -> {
-                if(checkedid == R.id.radioButtonMovie){
+            radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                if(checkedId == R.id.radioButtonMovie){
                     searchType = radioButtonMovie.getText().toString();
                 } else {
                     searchType = radioButtonTV.getText().toString();
@@ -99,8 +102,8 @@ public class TvAiringTodayFragment extends Fragment {
             });
             imageDoSearch.setOnClickListener(view -> doSearch(inputSearch.getText().toString()));
 
-            inputSearch.setOnEditorActionListener((v1, actionid, event) -> {
-                if(actionid == EditorInfo.IME_ACTION_GO){
+            inputSearch.setOnEditorActionListener((v1, actionId, event) -> {
+                if(actionId == EditorInfo.IME_ACTION_GO){
                     doSearch(inputSearch.getText().toString());
                 }
                 return false;
@@ -110,15 +113,15 @@ public class TvAiringTodayFragment extends Fragment {
 
     private void doSearch(String query) {
         if(query.isEmpty()){
-            Toast.makeText(getContext(),"Tidak ada inputan!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"No Input !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         if(searchType == null){
-            Toast.makeText(getContext(),"Harap pilih tipe search!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"No Search Type !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent i = new Intent(getContext(), SearchActivity.class);
-        i.putExtra("tipe", searchType);
+        i.putExtra("type", searchType);
         i.putExtra("searchFor", query);
         startActivity(i);
     }
@@ -128,34 +131,49 @@ public class TvAiringTodayFragment extends Fragment {
         String title = "Airing Today TV Shows";
         textTitle.setText(title);
 
-        RecyclerView rvTvAiringToday = view.findViewById(R.id.rvTvVertical);
+        rvTvAiringToday = view.findViewById(R.id.rvTvVertical);
         tvAiringTodayAdapter = new TVGridAdapter(tvAiringTodayResults, getContext());
         loadingTvAiringToday = view.findViewById(R.id.loadingTvVertical);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvTvAiringToday.setLayoutManager(gridLayoutManager);
         rvTvAiringToday.setAdapter(tvAiringTodayAdapter);
-        getOnAiringTV();
+        getOnAiringTV(page);
+
+        rvTvAiringToday.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(!rvTvAiringToday.canScrollVertically(1)){
+                    page++;
+                    getOnAiringTV(page);
+                }
+            }
+        });
     }
 
-    private void getOnAiringTV(){
-        int currentPageTVAiringToday = 1;
-        Call<TVResponse> call = apiService.getTvAiringToday(MYAPI_KEY, LANGUAGE, currentPageTVAiringToday);
+    private void getOnAiringTV(int PAGE){
+        Call<TVResponse> call = apiService.getTvAiringToday(MY_API_KEY, LANGUAGE, PAGE);
         call.enqueue(new Callback<TVResponse>(){
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
                     if(response.body().getResult()!=null){
                         loadingTvAiringToday.setVisibility(View.GONE);
+                        rvTvAiringToday.setVisibility(View.VISIBLE);
+
                         int oldCount = tvAiringTodayResults.size();
                         tvAiringTodayResults.addAll(response.body().getResult());
-                        tvAiringTodayAdapter.notifyItemChanged(oldCount, tvAiringTodayResults.size());
+                        tvAiringTodayAdapter.notifyItemRangeInserted(oldCount, tvAiringTodayResults.size());
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
+                loadingTvAiringToday.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "Failed To Fetch Airing TV Shows !!!", Toast.LENGTH_SHORT).show();
             }
         });
     }

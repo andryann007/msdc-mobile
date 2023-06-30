@@ -46,9 +46,11 @@ public class MoviePopularFragment extends Fragment {
     private MovieGridAdapter moviePopularAdapter;
     private final List<MovieResult> moviePopularResults = new ArrayList<>();
 
-    public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
+    private RecyclerView rvMoviePopular;
+    public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
     public static final String LANGUAGE = "en-US";
+    private int page = 1;
 
     private String searchType = null;
 
@@ -87,8 +89,8 @@ public class MoviePopularFragment extends Fragment {
         if(dialogSearch.getWindow() != null){
             dialogSearch.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
-            radioGroup.setOnCheckedChangeListener((group, checkedid) -> {
-                if(checkedid == R.id.radioButtonMovie){
+            radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                if(checkedId == R.id.radioButtonMovie){
                     searchType = radioButtonMovie.getText().toString();
                 } else {
                     searchType = radioButtonTV.getText().toString();
@@ -96,8 +98,8 @@ public class MoviePopularFragment extends Fragment {
             });
             imageDoSearch.setOnClickListener(view -> doSearch(inputSearch.getText().toString()));
 
-            inputSearch.setOnEditorActionListener((v1, actionid, event) -> {
-                if(actionid == EditorInfo.IME_ACTION_GO){
+            inputSearch.setOnEditorActionListener((v1, actionId, event) -> {
+                if(actionId == EditorInfo.IME_ACTION_GO){
                     doSearch(inputSearch.getText().toString());
                 }
                 return false;
@@ -107,15 +109,15 @@ public class MoviePopularFragment extends Fragment {
 
     private void doSearch(String query) {
         if(query.isEmpty()){
-            Toast.makeText(getContext(),"Tidak ada inputan!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"No Input !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         if(searchType == null){
-            Toast.makeText(getContext(),"Harap pilih tipe search!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"No Search Type !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent i = new Intent(getContext(), SearchActivity.class);
-        i.putExtra("tipe", searchType);
+        i.putExtra("type", searchType);
         i.putExtra("searchFor", query);
         startActivity(i);
     }
@@ -125,19 +127,30 @@ public class MoviePopularFragment extends Fragment {
         String title = "Popular Movies";
         textTitle.setText(title);
 
-        RecyclerView rvMoviePopular = view.findViewById(R.id.rvMovieVertical);
+        rvMoviePopular = view.findViewById(R.id.rvMovieVertical);
         moviePopularAdapter = new MovieGridAdapter(moviePopularResults, getContext());
         loadingMoviePopular = view.findViewById(R.id.loadingMovieVertical);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvMoviePopular.setLayoutManager(gridLayoutManager);
         rvMoviePopular.setAdapter(moviePopularAdapter);
-        getPopularMovies();
+        getPopularMovies(page);
+
+        rvMoviePopular.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(!rvMoviePopular.canScrollVertically(1)){
+                    page++;
+                    getPopularMovies(page);
+                }
+            }
+        });
     }
 
-    private void getPopularMovies(){
-        int currentPageMoviePopular = 1;
-        Call<MovieResponse> call = apiService.getPopularMovies(MYAPI_KEY, LANGUAGE, currentPageMoviePopular);
+    private void getPopularMovies(int PAGE){
+        Call<MovieResponse> call = apiService.getPopularMovies(MY_API_KEY, LANGUAGE, PAGE);
         call.enqueue(new Callback<MovieResponse>(){
 
             @Override
@@ -145,16 +158,19 @@ public class MoviePopularFragment extends Fragment {
                 if(response.body() != null){
                     if(response.body().getResult()!=null){
                         loadingMoviePopular.setVisibility(View.GONE);
+                        rvMoviePopular.setVisibility(View.VISIBLE);
+
                         int oldCount = moviePopularResults.size();
                         moviePopularResults.addAll(response.body().getResult());
-                        moviePopularAdapter.notifyItemChanged(oldCount, moviePopularResults.size());
+                        moviePopularAdapter.notifyItemRangeInserted(oldCount, moviePopularResults.size());
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
-
+                loadingMoviePopular.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "Failed To Fetch Popular Movie !!!", Toast.LENGTH_SHORT).show();
             }
         });
     }

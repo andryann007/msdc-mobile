@@ -15,11 +15,6 @@
         android:theme="@style/Theme.MSDC"
         tools:targetApi="31">
         <activity
-            android:name=".activities.DiscoverActivity"
-            android:exported="false"
-            android:label="@string/title_activity_discover"
-            android:theme="@style/Theme.MSDC.NoActionBar" />
-        <activity
             android:name=".activities.SearchActivity"
             android:exported="false">
             <meta-data

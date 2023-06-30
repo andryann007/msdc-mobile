@@ -6,18 +6,18 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.msdc.api.MovieResult;
 import com.example.msdc.R;
 import com.example.msdc.activities.DetailActivity;
+import com.example.msdc.api.MovieResult;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
-import java.util.Locale;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>{
     private final List<MovieResult> movieResults;
@@ -45,14 +45,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     static class MovieViewHolder extends RecyclerView.ViewHolder{
         private final RoundedImageView imageItemPoster;
-        private final TextView textItemName, textRating;
+        private final TextView textItemName;
 
         MovieViewHolder(@NonNull View itemView){
             super(itemView);
 
             imageItemPoster = itemView.findViewById(R.id.imageItemPoster);
             textItemName = itemView.findViewById(R.id.textItemName);
-            textRating = itemView.findViewById(R.id.textRating);
         }
 
         void bindItem(MovieResult movieResult, Context context){
@@ -60,15 +59,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 ImageAdapter.setPosterLogoURL(imageItemPoster, movieResult.getPosterPath());
             } else {
                 imageItemPoster.setImageResource(R.drawable.ic_android);
+                imageItemPoster.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
             textItemName.setText(movieResult.getTitle());
-            double rating = movieResult.getVoteAverage();
-            String mRating = String.format(Locale.US, "%.2f",rating).replace(',','.');
-            textRating.setText(mRating);
 
             itemView.setOnClickListener(v -> {
                 Intent i = new Intent(context, DetailActivity.class);
-                i.putExtra("tipe", "movie");
+                i.putExtra("type", "movie");
                 i.putExtra("movie_id", movieResult.getId());
                 context.startActivity(i);
             });

@@ -1,7 +1,6 @@
 package com.example.msdc.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -95,15 +94,12 @@ public class DetailActivity extends AppCompatActivity {
         Retrofit retrofit = ApiClient.getClient();
         apiService = retrofit.create(ApiService.class);
 
-        String tipe = getIntent().getStringExtra("tipe");
-        if(Objects.equals(tipe, "movie")){
+        String type = getIntent().getStringExtra("type");
+        if(Objects.equals(type, "movie")){
             movie_id = getIntent().getIntExtra("movie_id", 0);
             setMovieDetails();
 
-            /*Intent i = new Intent(this, DiscoverActivity.class);
-            i.putExtra("discoverType", "movie");*/
-
-        } else if(Objects.equals(tipe, "tv")){
+        } else if(Objects.equals(type, "tv")){
             tv_id = getIntent().getIntExtra("tv_id", 0);
             setTVDetails();
         }
@@ -113,7 +109,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setMovieDetails(){
         binding.loadingDetails.setVisibility(View.VISIBLE);
-        Call<MovieDetails> call = apiService.getMovieDetails(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        Call<MovieDetails> call = apiService.getMovieDetails(String.valueOf(movie_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<MovieDetails>(){
 
             @SuppressLint("SetTextI18n")
@@ -187,7 +183,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<MovieDetails> call, @NonNull Throwable t) {
                 binding.loadingDetails.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), "Terjadi kesalahan saat memuat halaman detail!!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Detail Data !!!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -200,7 +196,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getGenresMovie(){
-        Call<MovieDetails> call = apiService.getMovieDetails(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        Call<MovieDetails> call = apiService.getMovieDetails(String.valueOf(movie_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<MovieDetails>() {
             @Override
             public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
@@ -227,7 +223,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getKeywordsMovie(){
-        Call<KeywordResponse> call = apiService.getMovieKeywords(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        Call<KeywordResponse> call = apiService.getMovieKeywords(String.valueOf(movie_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<KeywordResponse>() {
             @Override
             public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
@@ -254,7 +250,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getImagesMovie(){
-        Call<ImageResponse> call = apiService.getMovieImages(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        Call<ImageResponse> call = apiService.getMovieImages(String.valueOf(movie_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<ImageResponse>() {
             @Override
             public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
@@ -280,7 +276,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getMovieCast(){
-        Call<CreditResponse> call = apiService.getMovieCredit(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        Call<CreditResponse> call = apiService.getMovieCredit(String.valueOf(movie_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<CreditResponse>() {
 
             @Override
@@ -308,7 +304,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getMovieCrew(){
-        Call<CreditResponse> call = apiService.getMovieCredit(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        Call<CreditResponse> call = apiService.getMovieCredit(String.valueOf(movie_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<CreditResponse>() {
 
             @Override
@@ -336,7 +332,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getRecommendationsMovie(){
-        Call<MovieResponse> call = apiService.getMovieRecommendations(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        Call<MovieResponse> call = apiService.getMovieRecommendations(String.valueOf(movie_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
@@ -362,7 +358,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getSimilarMovie(){
-        Call<MovieResponse> call = apiService.getMovieSimilar(String.valueOf(movie_id), MainActivity.MYAPI_KEY);
+        Call<MovieResponse> call = apiService.getMovieSimilar(String.valueOf(movie_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
@@ -382,7 +378,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setTVDetails(){
         binding.loadingDetails.setVisibility(View.VISIBLE);
-        Call<TVDetails> call = apiService.getTvDetails(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        Call<TVDetails> call = apiService.getTvDetails(String.valueOf(tv_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<TVDetails>(){
 
             @SuppressLint("SetTextI18n")
@@ -452,7 +448,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<TVDetails> call, @NonNull Throwable t) {
                 binding.loadingDetails.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), "Terjadi kesalahan saat memuat halaman detail dari " + tv_id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Detail Data !!!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -465,7 +461,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getGenresTV(){
-        Call<TVDetails> call = apiService.getTvDetails(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        Call<TVDetails> call = apiService.getTvDetails(String.valueOf(tv_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<TVDetails>() {
             @Override
             public void onResponse(@NonNull Call<TVDetails> call, @NonNull Response<TVDetails> response) {
@@ -492,7 +488,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getKeywordsTV(){
-        Call<KeywordResponse> call = apiService.getTvKeywords(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        Call<KeywordResponse> call = apiService.getTvKeywords(String.valueOf(tv_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<KeywordResponse>() {
             @Override
             public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
@@ -519,7 +515,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getImagesTV(){
-        Call<ImageResponse> call = apiService.getTvImages(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        Call<ImageResponse> call = apiService.getTvImages(String.valueOf(tv_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<ImageResponse>() {
             @Override
             public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
@@ -544,7 +540,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getTvCast(){
-        Call<CreditResponse> call = apiService.getTvCredit(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        Call<CreditResponse> call = apiService.getTvCredit(String.valueOf(tv_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<CreditResponse>() {
             @Override
             public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
@@ -569,7 +565,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getTvCrew(){
-        Call<CreditResponse> call = apiService.getTvCredit(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        Call<CreditResponse> call = apiService.getTvCredit(String.valueOf(tv_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<CreditResponse>() {
             @Override
             public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
@@ -595,7 +591,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getRecommendationsTV(){
-        Call<TVResponse> call = apiService.getTVRecommendations(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        Call<TVResponse> call = apiService.getTVRecommendations(String.valueOf(tv_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<TVResponse>() {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
@@ -621,7 +617,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getSimilarTV(){
-        Call<TVResponse> call = apiService.getTVSimilar(String.valueOf(tv_id), MainActivity.MYAPI_KEY);
+        Call<TVResponse> call = apiService.getTVSimilar(String.valueOf(tv_id), MainActivity.MY_API_KEY);
         call.enqueue(new Callback<TVResponse>() {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {

@@ -5,9 +5,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.msdc.R;
@@ -44,7 +46,7 @@ public class CreditCastAdapter extends RecyclerView.Adapter<CreditCastAdapter.Cr
 
     static class CreditViewHolder extends RecyclerView.ViewHolder{
         private final RoundedImageView creditPersonImage;
-        private final TextView textPersonName, textPersonGender, textPersonDepartement;
+        private final TextView textPersonName, textPersonGender, textPersonDepartment;
 
         CreditViewHolder(@NonNull View itemView){
             super(itemView);
@@ -52,7 +54,7 @@ public class CreditCastAdapter extends RecyclerView.Adapter<CreditCastAdapter.Cr
             creditPersonImage = itemView.findViewById(R.id.creditProfilePath);
             textPersonName = itemView.findViewById(R.id.textCastOrCrewName);
             textPersonGender = itemView.findViewById(R.id.textGender);
-            textPersonDepartement = itemView.findViewById(R.id.textDepartement);
+            textPersonDepartment = itemView.findViewById(R.id.textDepartement);
         }
 
         public void bindItem(CreditCastResult creditCastResult, Context context) {
@@ -60,25 +62,41 @@ public class CreditCastAdapter extends RecyclerView.Adapter<CreditCastAdapter.Cr
                 ImageAdapter.setProfileLogoURL(creditPersonImage, creditCastResult.getProfilePath());
             } else {
                 creditPersonImage.setImageResource(R.drawable.ic_android);
+                creditPersonImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             }
 
-            textPersonName.setText(creditCastResult.getName());
+            setNameText(textPersonName, creditCastResult.getName());
 
             int genderCode = creditCastResult.getGender();
             String genderName;
 
             if(genderCode == 1){
                 genderName = "Female";
-                textPersonGender.setText(genderName);
+                setGenderText(textPersonGender, genderName);
             } else if(genderCode == 2){
                 genderName = "Male";
-                textPersonGender.setText(genderName);
+                setGenderText(textPersonGender, genderName);
             } else {
-                genderName = "Unknown";
-                textPersonGender.setText(genderName);
+                genderName = "-";
+                setGenderText(textPersonGender, genderName);
             }
 
-            textPersonDepartement.setText(creditCastResult.getCharacter());
+            setRoleText(textPersonDepartment, creditCastResult.getCharacter());
         }
+    }
+
+    private static void setNameText(TextView tv, String textName){
+        tv.setText(HtmlCompat.fromHtml("Name : <b>" + textName + "</b>",
+                HtmlCompat.FROM_HTML_MODE_LEGACY));
+    }
+
+    private static void setGenderText(TextView tv, String textGender){
+        tv.setText(HtmlCompat.fromHtml("Gender : <b>" + textGender + "</b>",
+                HtmlCompat.FROM_HTML_MODE_LEGACY));
+    }
+
+    private static  void setRoleText(TextView tv, String textRole){
+        tv.setText(HtmlCompat.fromHtml("Role : <b>" + textRole + "</b>",
+                HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 }

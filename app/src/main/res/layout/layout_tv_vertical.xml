@@ -25,7 +25,8 @@
         app:spanCount="3"
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_container_vertical"/>
+        tools:listitem="@layout/item_container_vertical"
+        android:visibility="gone"/>
 
     <ProgressBar
         android:id="@+id/loadingTvVertical"

@@ -1,7 +1,6 @@
 package com.example.msdc.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.msdc.R;
-import com.example.msdc.activities.DetailActivity;
-import com.example.msdc.activities.DiscoverActivity;
 import com.example.msdc.api.GenreResult;
 
 import java.util.List;
@@ -54,13 +51,6 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
 
         public void bindItem(GenreResult genreResult, Context context){
             textGenres.setText(genreResult.getName());
-
-            itemView.setOnClickListener(v -> {
-                Intent i = new Intent(context, DiscoverActivity.class);
-                i.putExtra("genre_id", genreResult.getId());
-                i.putExtra("genre_name", genreResult.getName());
-                context.startActivity(i);
-            });
         }
     }
 }

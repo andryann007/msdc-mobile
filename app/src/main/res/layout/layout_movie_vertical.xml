@@ -26,7 +26,8 @@
         app:spanCount="3"
         android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_container_vertical"/>
+        tools:listitem="@layout/item_container_vertical"
+        android:visibility="gone"/>
 
     <ProgressBar
         android:id="@+id/loadingMovieVertical"

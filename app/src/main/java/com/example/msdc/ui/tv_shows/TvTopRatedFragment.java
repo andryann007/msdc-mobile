@@ -46,9 +46,12 @@ public class TvTopRatedFragment extends Fragment {
     private TVGridAdapter tvTopRatedAdapter;
     private final List<TVResult> tvTopRatedResults = new ArrayList<>();
 
-    public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
+    private RecyclerView rvTvTopRated;
+
+    public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
     public static final String LANGUAGE = "en-US";
+    private int page = 1;
 
     private String searchType = null;
 
@@ -89,8 +92,8 @@ public class TvTopRatedFragment extends Fragment {
         if(dialogSearch.getWindow() != null){
             dialogSearch.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
-            radioGroup.setOnCheckedChangeListener((group, checkedid) -> {
-                if(checkedid == R.id.radioButtonMovie){
+            radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                if(checkedId == R.id.radioButtonMovie){
                     searchType = radioButtonMovie.getText().toString();
                 } else {
                     searchType = radioButtonTV.getText().toString();
@@ -98,8 +101,8 @@ public class TvTopRatedFragment extends Fragment {
             });
             imageDoSearch.setOnClickListener(view -> doSearch(inputSearch.getText().toString()));
 
-            inputSearch.setOnEditorActionListener((v1, actionid, event) -> {
-                if(actionid == EditorInfo.IME_ACTION_GO){
+            inputSearch.setOnEditorActionListener((v1, actionId, event) -> {
+                if(actionId == EditorInfo.IME_ACTION_GO){
                     doSearch(inputSearch.getText().toString());
                 }
                 return false;
@@ -109,15 +112,15 @@ public class TvTopRatedFragment extends Fragment {
 
     private void doSearch(String query) {
         if(query.isEmpty()){
-            Toast.makeText(getContext(),"Tidak ada inputan!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"No Input !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         if(searchType == null){
-            Toast.makeText(getContext(),"Harap pilih tipe search!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"No Search Type !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent i = new Intent(getContext(), SearchActivity.class);
-        i.putExtra("tipe", searchType);
+        i.putExtra("type", searchType);
         i.putExtra("searchFor", query);
         startActivity(i);
     }
@@ -127,19 +130,30 @@ public class TvTopRatedFragment extends Fragment {
         String title = "Top Rated TV Shows";
         textTitle.setText(title);
 
-        RecyclerView rvTvTopRated = view.findViewById(R.id.rvTvVertical);
+        rvTvTopRated = view.findViewById(R.id.rvTvVertical);
         tvTopRatedAdapter = new TVGridAdapter(tvTopRatedResults, getContext());
         loadingTvTopRated = view.findViewById(R.id.loadingTvVertical);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvTvTopRated.setLayoutManager(gridLayoutManager);
         rvTvTopRated.setAdapter(tvTopRatedAdapter);
-        getTopRatedTV();
+        getTopRatedTV(page);
+
+        rvTvTopRated.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(!rvTvTopRated.canScrollVertically(1)){
+                    page++;
+                    getTopRatedTV(page);
+                }
+            }
+        });
     }
 
-    private void getTopRatedTV(){
-        int currentPageTVTopRated = 1;
-        Call<TVResponse> call = apiService.getTvTopRated(MYAPI_KEY, LANGUAGE, currentPageTVTopRated);
+    private void getTopRatedTV(int PAGE){
+        Call<TVResponse> call = apiService.getTvTopRated(MY_API_KEY, LANGUAGE, PAGE);
         call.enqueue(new Callback<TVResponse>(){
 
             @Override
@@ -147,16 +161,19 @@ public class TvTopRatedFragment extends Fragment {
                 if(response.body() != null){
                     if(response.body().getResult()!=null){
                         loadingTvTopRated.setVisibility(View.GONE);
+                        rvTvTopRated.setVisibility(View.VISIBLE);
+
                         int oldCount = tvTopRatedResults.size();
                         tvTopRatedResults.addAll(response.body().getResult());
-                        tvTopRatedAdapter.notifyItemChanged(oldCount, tvTopRatedResults.size());
+                        tvTopRatedAdapter.notifyItemRangeInserted(oldCount, tvTopRatedResults.size());
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
-
+                loadingTvTopRated.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "Failed To Fetch Top Rated TV Shows !!!", Toast.LENGTH_SHORT).show();
             }
         });
     }

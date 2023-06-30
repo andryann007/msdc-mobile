@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,12 +59,13 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
                 ImageAdapter.setPosterURL(imageItemPoster, movieResult.getPosterPath());
             } else {
                 imageItemPoster.setImageResource(R.drawable.ic_android);
+                imageItemPoster.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
             textItemName.setText(movieResult.getTitle());
 
             itemView.setOnClickListener(v -> {
                 Intent i = new Intent(context, DetailActivity.class);
-                i.putExtra("tipe", "movie");
+                i.putExtra("type", "movie");
                 i.putExtra("movie_id", movieResult.getId());
                 context.startActivity(i);
             });

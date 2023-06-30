@@ -46,11 +46,11 @@
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imageBackdrop"
                 android:layout_width="match_parent"
-                android:layout_height="238dp"
+                android:layout_height="220dp"
                 android:alpha="0.5"
                 app:riv_corner_radius="3dp"
-                android:background="#a9a9a9"
-                android:scaleType="fitXY"/>
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"/>
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imagePoster"
@@ -72,8 +72,7 @@
                     android:id="@+id/layoutMainDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_margin="5dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -117,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_margin="10dp">
+                    android:layout_margin="5dp">
 
                     <TextView
                         android:id="@+id/titleOverview"
@@ -157,7 +156,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -187,7 +186,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -218,7 +217,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -249,7 +248,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="2dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
                     android:textColor="@color/black"
@@ -260,7 +259,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="2dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
                     android:textColor="@color/black"
@@ -271,7 +270,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:text="Genres"
                     android:fontFamily="sans-serif"
                     android:textColor="@android:color/background_dark"
@@ -295,7 +294,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:text="Keywords"
                     android:fontFamily="sans-serif"
                     android:textColor="@android:color/background_dark"
@@ -343,7 +342,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
                     android:text="Movie Credit Cast"
@@ -367,7 +366,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
                     android:text="Movie Credit Crew"
@@ -391,7 +390,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
                     android:text="@string/movie_recommendations"
@@ -415,7 +414,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
                     android:text="@string/similar_movies"

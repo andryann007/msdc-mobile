@@ -39,7 +39,8 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTVPopular"
-            tools:listitem="@layout/item_container"/>
+            tools:listitem="@layout/item_container"
+            android:visibility="gone"/>
 
         <ProgressBar
             android:id="@+id/loadingTVPopular"
@@ -86,7 +87,8 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTVAiring"
-            tools:listitem="@layout/item_container"/>
+            tools:listitem="@layout/item_container"
+            android:visibility="gone"/>
 
         <ProgressBar
             android:id="@+id/loadingTVAiring"
@@ -132,7 +134,8 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTVOnAir"
-            tools:listitem="@layout/item_container" />
+            tools:listitem="@layout/item_container"
+            android:visibility="gone"/>
 
         <ProgressBar
             android:id="@+id/loadingTVOnAir"
@@ -177,7 +180,8 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTVTopRated"
-            tools:listitem="@layout/item_container"/>
+            tools:listitem="@layout/item_container"
+            android:visibility="gone"/>
 
         <ProgressBar
             android:id="@+id/loadingTVTopRated"

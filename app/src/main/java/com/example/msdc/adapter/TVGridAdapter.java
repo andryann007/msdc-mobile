@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,12 +59,13 @@ public class TVGridAdapter extends RecyclerView.Adapter<TVGridAdapter.TvViewHold
                 ImageAdapter.setPosterURL(imageItemPoster, tvResult.getPosterPath());
             } else {
                 imageItemPoster.setImageResource(R.drawable.ic_android);
+                imageItemPoster.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
             textItemName.setText(tvResult.getName());
 
             itemView.setOnClickListener(v -> {
                 Intent i = new Intent(context, DetailActivity.class);
-                i.putExtra("tipe", "tv");
+                i.putExtra("type", "tv");
                 i.putExtra("tv_id", tvResult.getId());
                 context.startActivity(i);
             });

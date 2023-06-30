@@ -54,13 +54,11 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
+    public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
     public static final String LANGUAGE = "en-US";
 
     private String searchType = null;
-
-    private ActivityMainBinding binding;
 
     private DrawerLayout drawerLayout;
 
@@ -71,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.example.msdc.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -86,10 +84,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toogle);
-        toogle.syncState();
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new HomeFragment()).commit();
@@ -119,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(dialogSearch.getWindow() != null){
             dialogSearch.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
-            radioGroup.setOnCheckedChangeListener((group, checkedid) -> {
-                if(checkedid == R.id.radioButtonMovie){
+            radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                if(checkedId == R.id.radioButtonMovie){
                     searchType = radioButtonMovie.getText().toString();
                 } else {
                     searchType = radioButtonTV.getText().toString();
@@ -128,8 +126,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
             imageDoSearch.setOnClickListener(view -> doSearch(inputSearch.getText().toString()));
 
-            inputSearch.setOnEditorActionListener((v1, actionid, event) -> {
-                if(actionid == EditorInfo.IME_ACTION_GO){
+            inputSearch.setOnEditorActionListener((v1, actionId, event) -> {
+                if(actionId == EditorInfo.IME_ACTION_GO){
                     doSearch(inputSearch.getText().toString());
                 }
                 return false;
@@ -140,15 +138,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void doSearch(String query) {
         if(query.isEmpty()){
-            Toast.makeText(getApplicationContext(),"Tidak ada inputan!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"No Input !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         if(searchType == null){
-            Toast.makeText(getApplicationContext(),"Harap pilih tipe search!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"No Search Type !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent i = new Intent(MainActivity.this, SearchActivity.class);
-        i.putExtra("tipe", searchType);
+        i.putExtra("type", searchType);
         i.putExtra("searchFor", query);
         startActivity(i);
     }

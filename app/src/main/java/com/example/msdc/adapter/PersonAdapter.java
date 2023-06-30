@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,11 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.msdc.R;
 import com.example.msdc.api.PersonResult;
-import com.example.msdc.api.TVResult;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
-
-import com.makeramen.roundedimageview.RoundedImageView;
 
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder>{
     private final List<PersonResult> personResults;
@@ -60,6 +59,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
                 ImageAdapter.setProfileLogoURL(profilePath, personResult.getPosterPath());
             } else {
                 profilePath.setImageResource(R.drawable.ic_android);
+                profilePath.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
             personName.setText(personResult.getName());
 

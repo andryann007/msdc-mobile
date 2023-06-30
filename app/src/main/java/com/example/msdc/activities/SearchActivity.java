@@ -54,9 +54,9 @@ public class SearchActivity extends AppCompatActivity {
         query = getIntent().getStringExtra("searchFor");
         toolbar.setTitle(HtmlCompat.fromHtml("You searched for : <b>" + query + "</b>",
                 HtmlCompat.FROM_HTML_MODE_LEGACY));
-        String tipe = getIntent().getStringExtra("tipe");
+        String type = getIntent().getStringExtra("type");
 
-        switch(tipe){
+        switch(type){
             case "Movies" :
                 searchForMovies();
                 binding.rvSearch.setAdapter(movieSearchAdapter);
@@ -72,7 +72,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchForMovies() {
-        Call<MovieResponse> call = apiService.searchMovie(MainActivity.MYAPI_KEY, MainActivity.LANGUAGE, query, currentPage);
+        Call<MovieResponse> call = apiService.searchMovie(MainActivity.MY_API_KEY, MainActivity.LANGUAGE, query, currentPage);
         call.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
@@ -100,7 +100,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchForTV() {
-        Call<TVResponse> call = apiService.searchTv(MainActivity.MYAPI_KEY, MainActivity.LANGUAGE, query, currentPage);
+        Call<TVResponse> call = apiService.searchTv(MainActivity.MY_API_KEY, MainActivity.LANGUAGE, query, currentPage);
         call.enqueue(new Callback<TVResponse>() {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {

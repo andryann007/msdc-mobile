@@ -46,9 +46,12 @@ public class MovieUpcomingFragment extends Fragment {
     private MovieGridAdapter movieUpcomingAdapter;
     private final List<MovieResult> movieUpcomingResults = new ArrayList<>();
 
-    public static final String MYAPI_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
+    private RecyclerView rvMovieUpcoming;
+
+    public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
     public static final String LANGUAGE = "en-US";
+    private int page = 1;
 
     private String searchType = null;
     private FragmentMovieUpcomingBinding binding;
@@ -88,8 +91,8 @@ public class MovieUpcomingFragment extends Fragment {
         if(dialogSearch.getWindow() != null){
             dialogSearch.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
-            radioGroup.setOnCheckedChangeListener((group, checkedid) -> {
-                if(checkedid == R.id.radioButtonMovie){
+            radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                if(checkedId == R.id.radioButtonMovie){
                     searchType = radioButtonMovie.getText().toString();
                 } else {
                     searchType = radioButtonTV.getText().toString();
@@ -97,8 +100,8 @@ public class MovieUpcomingFragment extends Fragment {
             });
             imageDoSearch.setOnClickListener(view -> doSearch(inputSearch.getText().toString()));
 
-            inputSearch.setOnEditorActionListener((v1, actionid, event) -> {
-                if(actionid == EditorInfo.IME_ACTION_GO){
+            inputSearch.setOnEditorActionListener((v1, actionId, event) -> {
+                if(actionId == EditorInfo.IME_ACTION_GO){
                     doSearch(inputSearch.getText().toString());
                 }
                 return false;
@@ -108,15 +111,15 @@ public class MovieUpcomingFragment extends Fragment {
 
     private void doSearch(String query) {
         if(query.isEmpty()){
-            Toast.makeText(getContext(),"Tidak ada inputan!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"No Input !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         if(searchType == null){
-            Toast.makeText(getContext(),"Harap pilih tipe search!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"No Search Type !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent i = new Intent(getContext(), SearchActivity.class);
-        i.putExtra("tipe", searchType);
+        i.putExtra("type", searchType);
         i.putExtra("searchFor", query);
         startActivity(i);
     }
@@ -126,19 +129,30 @@ public class MovieUpcomingFragment extends Fragment {
         String title = "Upcoming Movies";
         textTitle.setText(title);
 
-        RecyclerView rvMovieUpcoming = view.findViewById(R.id.rvMovieVertical);
+        rvMovieUpcoming = view.findViewById(R.id.rvMovieVertical);
         movieUpcomingAdapter = new MovieGridAdapter(movieUpcomingResults, getContext());
         loadingMovieUpcoming = view.findViewById(R.id.loadingMovieVertical);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvMovieUpcoming.setLayoutManager(gridLayoutManager);
         rvMovieUpcoming.setAdapter(movieUpcomingAdapter);
-        getUpcomingMovies();
+        getUpcomingMovies(page);
+
+        rvMovieUpcoming.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(!rvMovieUpcoming.canScrollVertically(1)){
+                    page++;
+                    getUpcomingMovies(page);
+                }
+            }
+        });
     }
 
-    private void getUpcomingMovies(){
-        int currentPageUpcomingMovie = 1;
-        Call<MovieResponse> call = apiService.getUpcomingMovies(MYAPI_KEY, LANGUAGE, currentPageUpcomingMovie);
+    private void getUpcomingMovies(int PAGE){
+        Call<MovieResponse> call = apiService.getUpcomingMovies(MY_API_KEY, LANGUAGE, PAGE);
         call.enqueue(new Callback<MovieResponse>(){
 
             @Override
@@ -146,16 +160,19 @@ public class MovieUpcomingFragment extends Fragment {
                 if(response.body() != null){
                     if(response.body().getResult()!=null){
                         loadingMovieUpcoming.setVisibility(View.GONE);
+                        rvMovieUpcoming.setVisibility(View.VISIBLE);
+
                         int oldCount = movieUpcomingResults.size();
                         movieUpcomingResults.addAll(response.body().getResult());
-                        movieUpcomingAdapter.notifyItemChanged(oldCount, movieUpcomingResults.size());
+                        movieUpcomingAdapter.notifyItemRangeInserted(oldCount, movieUpcomingResults.size());
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
-
+                loadingMovieUpcoming.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "Failed To Fetch Upcoming Movie !!!", Toast.LENGTH_SHORT).show();
             }
         });
     }

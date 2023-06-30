@@ -2,16 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="10dp"
+    android:layout_marginHorizontal="5dp"
     android:orientation="horizontal"
-    android:background="@android:color/background_light">
+    android:background="@drawable/bg_credit">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/creditProfilePath"
         android:layout_width="92.5dp"
         android:layout_height="139dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="5dp"
         android:scaleType="fitXY"/>
 
     <LinearLayout
@@ -19,39 +17,38 @@
         android:layout_height="139dp"
         android:gravity="center_vertical"
         android:weightSum="3"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="5dp"
+        android:layout_margin="2dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textCastOrCrewName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="start|center_vertical"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/background_dark"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/textGender"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="start|center_vertical"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/background_dark"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/textDepartement"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="start|center_vertical"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/background_dark"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textSize="14sp"/>
 
     </LinearLayout>
 
