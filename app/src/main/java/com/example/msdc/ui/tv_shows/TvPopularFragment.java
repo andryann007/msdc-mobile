@@ -92,8 +92,9 @@ public class TvPopularFragment extends Fragment {
         });
     }
 
-    private void getPopularTV(int PAGE){
-        Call<TVResponse> call = apiService.getTvPopular(MY_API_KEY, LANGUAGE, PAGE);
+    private void getPopularTV(int page){
+        int limit = 9;
+        Call<TVResponse> call = apiService.getTvPopular(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<TVResponse>(){
 
             @Override

@@ -67,19 +67,92 @@
     <string name="credit_gender">Gender</string>
     <string name="credit_departement">Departement</string>
     <string name="title_activity_discover">DiscoverActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_discovered">DiscoveredActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
     <string name="search_data">Search Data</string>
     <string name="input_query">Input Query</string>
     <string name="input_search_query">Input Search Query :</string>
     <string name="select_search_type">Select Search Type :</string>
+    <string name="select_filter_type">Select Filter Type :</string>
+    <string name="filter_movie_or_tv_shows">Filter Movie or TV Shows</string>
+    <string name="genre">Genre :</string>
+    <string name="select_genre_type">Select Genre Type</string>
+    <string name="filter_data">Filter Data</string>
+    <string name="sort_by">Sort By :</string>
+    <string name="select_region">Select Region</string>
+    <string name="region">Region :</string>
+    <string name="select_release_year">Select Release Year</string>
+    <string name="year">Year :</string>
+    <string name="filter">Filter</string>
+    <string name="text_no_filter">No Filter Result, Try Again Later</string>
+
+    <string-array name="movieGenreList">
+        <item>Action</item>
+        <item>Adventure</item>
+        <item>Animation</item>
+        <item>Comedy</item>
+        <item>Crime</item>
+        <item>Documentary</item>
+        <item>Drama</item>
+        <item>Family</item>
+        <item>Fantasy</item>
+        <item>History</item>
+        <item>Horror</item>
+        <item>Music</item>
+        <item>Mystery</item>
+        <item>Romance</item>
+        <item>Science Fiction</item>
+        <item>TV Movie</item>
+        <item>Thriller</item>
+        <item>War</item>
+        <item>Western</item>
+    </string-array>
+
+    <string-array name="tvGenreList">
+        <item>Action Adventure</item>
+        <item>Animation</item>
+        <item>Comedy</item>
+        <item>Crime</item>
+        <item>Documentary</item>
+        <item>Drama</item>
+        <item>Family</item>
+        <item>Kids</item>
+        <item>Mystery</item>
+        <item>News</item>
+        <item>Reality</item>
+        <item>Sci-Fi and Fantasy</item>
+        <item>Soap</item>
+        <item>Talk</item>
+        <item>War and Politics</item>
+        <item>Western</item>
+    </string-array>
+
+    <string-array name="regionList">
+        <item>Australia</item>
+        <item>China</item>
+        <item>England</item>
+        <item>France</item>
+        <item>Germany</item>
+        <item>Hong Kong</item>
+        <item>India</item>
+        <item>Indonesia</item>
+        <item>Japan</item>
+        <item>Russia</item>
+        <item>South Korea</item>
+        <item>Taiwan</item>
+        <item>Thailand</item>
+        <item>United Kingdom</item>
+        <item>United States</item>
+    </string-array>
+
+    <string-array name="sortList">
+        <item>Popularity (Ascending)</item>
+        <item>Popularity (Descending)</item>
+        <item>Revenue (Ascending)</item>
+        <item>Revenue (Descending)</item>
+        <item>Release Date (Ascending)</item>
+        <item>Release Date (Descending)</item>
+        <item>Vote Average (Ascending)</item>
+        <item>Vote Average (Descending)</item>
+        <item>Vote Count (Ascending)</item>
+        <item>Vote Count (Descending)</item>
+    </string-array>
 </resources>

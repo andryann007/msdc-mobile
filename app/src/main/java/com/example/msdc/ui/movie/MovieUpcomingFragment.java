@@ -91,8 +91,9 @@ public class MovieUpcomingFragment extends Fragment {
         });
     }
 
-    private void getUpcomingMovies(int PAGE){
-        Call<MovieResponse> call = apiService.getUpcomingMovies(MY_API_KEY, LANGUAGE, PAGE);
+    private void getUpcomingMovies(int page){
+        int limit = 9;
+        Call<MovieResponse> call = apiService.getUpcomingMovies(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<MovieResponse>(){
 
             @Override

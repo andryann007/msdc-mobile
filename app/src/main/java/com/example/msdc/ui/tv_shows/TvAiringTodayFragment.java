@@ -93,8 +93,9 @@ public class TvAiringTodayFragment extends Fragment {
         });
     }
 
-    private void getOnAiringTV(int PAGE){
-        Call<TVResponse> call = apiService.getTvAiringToday(MY_API_KEY, LANGUAGE, PAGE);
+    private void getOnAiringTV(int page){
+        int limit = 9;
+        Call<TVResponse> call = apiService.getTvAiringToday(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<TVResponse>(){
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {

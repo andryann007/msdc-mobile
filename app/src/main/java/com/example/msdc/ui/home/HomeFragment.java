@@ -75,6 +75,8 @@ public class HomeFragment extends Fragment {
     public static final String TIME_WINDOW = "week";
 
     private int page = 1;
+
+    private final int limit = 9;
     private FragmentHomeBinding binding;
 
     public HomeFragment() {
@@ -131,8 +133,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void getTopRatedMovies(int PAGE){
-        Call<MovieResponse> call = apiService.getTopRatedMovies(MY_API_KEY, LANGUAGE, PAGE);
+    private void getTopRatedMovies(int page){
+        Call<MovieResponse> call = apiService.getTopRatedMovies(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<MovieResponse>(){
 
             @Override
@@ -179,8 +181,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void getUpcomingMovies(int PAGE){
-        Call<MovieResponse> call = apiService.getUpcomingMovies(MY_API_KEY, LANGUAGE, PAGE);
+    private void getUpcomingMovies(int page){
+        Call<MovieResponse> call = apiService.getUpcomingMovies(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<MovieResponse>(){
 
             @Override
@@ -227,8 +229,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void getNowPlayingMovies(int PAGE){
-        Call<MovieResponse> call = apiService.getNowPlayingMovies(MY_API_KEY, LANGUAGE, PAGE);
+    private void getNowPlayingMovies(int page){
+        Call<MovieResponse> call = apiService.getNowPlayingMovies(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<MovieResponse>(){
 
             @Override
@@ -275,8 +277,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void getPopularMovies(int PAGE){
-        Call<MovieResponse> call = apiService.getPopularMovies(MY_API_KEY, LANGUAGE, PAGE);
+    private void getPopularMovies(int page){
+        Call<MovieResponse> call = apiService.getPopularMovies(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<MovieResponse>(){
 
             @Override
@@ -323,8 +325,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void getOnAirTV(int PAGE){
-        Call<TVResponse> call = apiService.getTvOnAir(MY_API_KEY, LANGUAGE, PAGE);
+    private void getOnAirTV(int page){
+        Call<TVResponse> call = apiService.getTvOnAir(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<TVResponse>(){
 
             @Override
@@ -371,8 +373,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void getTopRatedTV(int PAGE){
-        Call<TVResponse> call = apiService.getTvTopRated(MY_API_KEY, LANGUAGE, PAGE);
+    private void getTopRatedTV(int page){
+        Call<TVResponse> call = apiService.getTvTopRated(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<TVResponse>(){
 
             @Override
@@ -419,8 +421,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void getPopularTV(int PAGE){
-        Call<TVResponse> call = apiService.getTvPopular(MY_API_KEY, LANGUAGE, PAGE);
+    private void getPopularTV(int page){
+        Call<TVResponse> call = apiService.getTvPopular(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<TVResponse>(){
 
             @Override
@@ -467,8 +469,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void getOnAiringTV(int PAGE){
-        Call<TVResponse> call = apiService.getTvAiringToday(MY_API_KEY, LANGUAGE, PAGE);
+    private void getOnAiringTV(int page){
+        Call<TVResponse> call = apiService.getTvAiringToday(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<TVResponse>(){
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {

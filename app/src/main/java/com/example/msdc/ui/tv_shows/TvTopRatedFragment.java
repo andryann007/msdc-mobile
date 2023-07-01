@@ -92,8 +92,9 @@ public class TvTopRatedFragment extends Fragment {
         });
     }
 
-    private void getTopRatedTV(int PAGE){
-        Call<TVResponse> call = apiService.getTvTopRated(MY_API_KEY, LANGUAGE, PAGE);
+    private void getTopRatedTV(int page){
+        int limit = 9;
+        Call<TVResponse> call = apiService.getTvTopRated(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<TVResponse>(){
 
             @Override

@@ -7,37 +7,15 @@
     android:fitsSystemWindows="true"
     android:background="@drawable/background"
     android:statusBarColor ="@android:color/transparent"
-    android:alpha="0.80"
+    android:alpha="0.70"
     tools:context=".activities.LoginActivity">
-
-    <!-- RelativeLayout : Toolbar / Header -->
-    <RelativeLayout
-        android:id="@+id/toolbarRl"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/black">
-
-        <!-- TextView : Title -->
-        <TextView
-            android:id="@+id/label1Tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:fontFamily="sans-serif"
-            android:text="@string/login_title"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-    </RelativeLayout>
 
     <!-- RelativeLayout : Login Content -->
     <RelativeLayout
         android:id="@+id/containerLoginContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"

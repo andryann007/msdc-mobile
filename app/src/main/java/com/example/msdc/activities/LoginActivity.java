@@ -20,8 +20,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
@@ -190,23 +188,17 @@ public class LoginActivity extends AppCompatActivity {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(uid)
                 .setValue(mHashmap)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        //data added to db
-                        progressDialog.dismiss();
-                        //since user account is created so start dashboard of user
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        Toast.makeText(LoginActivity.this, "Successfully Sign In With Google !!!", Toast.LENGTH_SHORT).show();
-                    }
+                .addOnSuccessListener(unused -> {
+                    //data added to db
+                    progressDialog.dismiss();
+                    //since user account is created so start dashboard of user
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    Toast.makeText(LoginActivity.this, "Successfully Sign In With Google !!!", Toast.LENGTH_SHORT).show();
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(Exception e) {
-                        //data failed adding to db
-                        progressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                .addOnFailureListener(e -> {
+                    //data failed adding to db
+                    progressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 }

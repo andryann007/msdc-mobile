@@ -14,15 +14,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.msdc.R;
 import com.example.msdc.databinding.ActivityRegisterBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,7 +43,9 @@ public class RegisterActivity extends AppCompatActivity {
     //progress dialog
     private ProgressDialog progressDialog;
 
-    private String username="", email="", password="", password_confirmation="";
+    private String username="";
+    private String email="";
+    private String password="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         binding.registerBtn.setOnClickListener(view -> validateData());
         binding.clearBtn.setOnClickListener(view -> clear());
-        binding.backBtn.setOnClickListener(view -> back());
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id))
@@ -86,7 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
         username = Objects.requireNonNull(binding.nameEt.getText()).toString().trim();
         email = Objects.requireNonNull(binding.emailEt.getText()).toString().trim();
         password = Objects.requireNonNull(binding.passwordEt.getText()).toString().trim();
-        password_confirmation = Objects.requireNonNull(binding.cPasswordEt.getText()).toString().trim();
+        String password_confirmation = Objects.requireNonNull(binding.cPasswordEt.getText()).toString().trim();
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             binding.emailEt.setError("Invalid email format !!!");
@@ -151,24 +149,18 @@ public class RegisterActivity extends AppCompatActivity {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(uid)
                 .setValue(mHashmap)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        //data added to db
-                        progressDialog.dismiss();
-                        Toast.makeText(RegisterActivity.this, "Successfully Created Account!!!", Toast.LENGTH_SHORT).show();
-                        //since user account is created so start dashboard of user
-                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                        finish();
-                    }
+                .addOnSuccessListener(unused -> {
+                    //data added to db
+                    progressDialog.dismiss();
+                    Toast.makeText(RegisterActivity.this, "Successfully Created Account!!!", Toast.LENGTH_SHORT).show();
+                    //since user account is created so start dashboard of user
+                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    finish();
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(Exception e) {
-                        //data failed adding to db
-                        progressDialog.dismiss();
-                        Toast.makeText(RegisterActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                .addOnFailureListener(e -> {
+                    //data failed adding to db
+                    progressDialog.dismiss();
+                    Toast.makeText(RegisterActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -176,10 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
         Objects.requireNonNull(binding.emailEt.getText()).clear();
         Objects.requireNonNull(binding.passwordEt.getText()).clear();
     }
-    public void back(){
-        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-        finish();
-    }
+
     private void SignIn(){
         Intent intent = gsc.getSignInIntent();
         startActivityForResult(intent, 100);
@@ -238,23 +227,17 @@ public class RegisterActivity extends AppCompatActivity {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(uid)
                 .setValue(mHashmap)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        //data added to db
-                        progressDialog.dismiss();
-                        //since user account is created so start dashboard of user
-                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                        Toast.makeText(RegisterActivity.this, "Successfully Sign In With Google !!!", Toast.LENGTH_SHORT).show();
-                    }
+                .addOnSuccessListener(unused -> {
+                    //data added to db
+                    progressDialog.dismiss();
+                    //since user account is created so start dashboard of user
+                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    Toast.makeText(RegisterActivity.this, "Successfully Sign In With Google !!!", Toast.LENGTH_SHORT).show();
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(Exception e) {
-                        //data failed adding to db
-                        progressDialog.dismiss();
-                        Toast.makeText(RegisterActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                .addOnFailureListener(e -> {
+                    //data failed adding to db
+                    progressDialog.dismiss();
+                    Toast.makeText(RegisterActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 }

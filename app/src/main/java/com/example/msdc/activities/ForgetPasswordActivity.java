@@ -1,7 +1,6 @@
 package com.example.msdc.activities;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.WindowManager;
@@ -42,7 +41,6 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
 
         binding.submitBtn.setOnClickListener(view -> validateData());
-        binding.backBtn.setOnClickListener(view -> back());
     }
 
     private void validateData() {
@@ -78,9 +76,5 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     Toast.makeText(ForgetPasswordActivity.this, "Failed to send due to "+e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
-    }
-    public void back(){
-        startActivity(new Intent(ForgetPasswordActivity.this, LoginActivity.class));
-        finish();
     }
 }

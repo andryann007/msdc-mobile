@@ -41,6 +41,7 @@ public class MovieNowPlayingFragment extends Fragment {
 
     public static final String LANGUAGE = "en-US";
     private int page = 1;
+
     private FragmentMovieNowPlayingBinding binding;
 
     public MovieNowPlayingFragment() {
@@ -90,8 +91,9 @@ public class MovieNowPlayingFragment extends Fragment {
         });
     }
 
-    private void getNowPlayingMovies(int PAGE){
-        Call<MovieResponse> call = apiService.getNowPlayingMovies(MY_API_KEY, LANGUAGE, PAGE);
+    private void getNowPlayingMovies(int page){
+        int limit = 9;
+        Call<MovieResponse> call = apiService.getNowPlayingMovies(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<MovieResponse>(){
 
             @Override

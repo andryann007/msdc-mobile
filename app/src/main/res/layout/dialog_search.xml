@@ -22,7 +22,7 @@
             android:text="@string/search_movie_or_tvshows"
             android:textAlignment="center"
             android:fontFamily="sans-serif"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"/>
 
@@ -34,7 +34,7 @@
             android:layout_marginHorizontal="5dp"
             android:text="@string/select_search_type"
             android:fontFamily="sans-serif"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp"/>
 
         <RadioGroup
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/movies"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
 
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/tv_shows"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
 
@@ -75,7 +75,7 @@
             android:layout_marginHorizontal="5dp"
             android:text="@string/input_search_query"
             android:fontFamily="sans-serif"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp"/>
 
         <com.google.android.material.textfield.TextInputLayout
