@@ -15,8 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         LayoutInflater inflater = getLayoutInflater();
         View v = inflater.inflate(R.layout.dialog_search, null);
         EditText inputSearch = v.findViewById(R.id.inputSearch);
-        ImageView imageDoSearch = v.findViewById(R.id.imageDoSearch);
+        Button btnSearch = v.findViewById(R.id.btnSearch);
         RadioGroup radioGroup = v.findViewById(R.id.radioGroup);
         RadioButton radioButtonMovie = v.findViewById(R.id.radioButtonMovie);
         RadioButton radioButtonTV = v.findViewById(R.id.radioButtonTV);
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     searchType = radioButtonTV.getText().toString();
                 }
             });
-            imageDoSearch.setOnClickListener(view -> doSearch(inputSearch.getText().toString()));
+            btnSearch.setOnClickListener(view -> doSearch(inputSearch.getText().toString()));
 
             inputSearch.setOnEditorActionListener((v1, actionId, event) -> {
                 if(actionId == EditorInfo.IME_ACTION_GO){

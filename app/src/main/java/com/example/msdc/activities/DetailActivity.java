@@ -1,11 +1,20 @@
 package com.example.msdc.activities;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +90,8 @@ public class DetailActivity extends AppCompatActivity {
     private final List<TVResult> tvSimilarResult = new ArrayList<>();
     private final List<CreditCastResult> tvCreditCastResult = new ArrayList<>();
     private final List<CreditCrewResult> tvCreditCrewResult = new ArrayList<>();
+
+    private String searchType = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,6 +197,55 @@ public class DetailActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Fail to Fetch Detail Data !!!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void dialogSearch() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View v = inflater.inflate(R.layout.dialog_search, null);
+        EditText inputSearch = v.findViewById(R.id.inputSearch);
+        Button btnSearch = v.findViewById(R.id.btnSearch);
+        RadioGroup radioGroup = v.findViewById(R.id.radioGroup);
+        RadioButton radioButtonMovie = v.findViewById(R.id.radioButtonMovie);
+        RadioButton radioButtonTV = v.findViewById(R.id.radioButtonTV);
+
+        builder.setView(v);
+        AlertDialog dialogSearch = builder.create();
+        if(dialogSearch.getWindow() != null){
+            dialogSearch.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+            radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                if(checkedId == R.id.radioButtonMovie){
+                    searchType = radioButtonMovie.getText().toString();
+                } else {
+                    searchType = radioButtonTV.getText().toString();
+                }
+            });
+            btnSearch.setOnClickListener(view -> doSearch(inputSearch.getText().toString()));
+
+            inputSearch.setOnEditorActionListener((v1, actionId, event) -> {
+                if(actionId == EditorInfo.IME_ACTION_GO){
+                    doSearch(inputSearch.getText().toString());
+                }
+                return false;
+            });
+            dialogSearch.show();
+        }
+    }
+
+    private void doSearch(String query) {
+        if(query.isEmpty()){
+            Toast.makeText(getApplicationContext(),"No Input !!!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(searchType == null){
+            Toast.makeText(getApplicationContext(),"No Search Type !!!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent i = new Intent(DetailActivity.this, SearchActivity.class);
+        i.putExtra("type", searchType);
+        i.putExtra("searchFor", query);
+        startActivity(i);
     }
 
     private void setGenresMovie(){
@@ -663,17 +723,14 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.favorite_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-
-        if (item.getItemId() == R.id.nav_favorite) {
-            item.setIcon(R.drawable.ic_favorite);
-            Toast.makeText(DetailActivity.this, "Favorite Added...", Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.nav_search) {
+            dialogSearch();
         }
         return super.onOptionsItemSelected(item);
     }

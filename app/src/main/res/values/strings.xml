@@ -78,4 +78,8 @@
     <string name="title_activity_discovered">DiscoveredActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="search_data">Search Data</string>
+    <string name="input_query">Input Query</string>
+    <string name="input_search_query">Input Search Query :</string>
+    <string name="select_search_type">Select Search Type :</string>
 </resources>
