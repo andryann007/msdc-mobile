@@ -81,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
@@ -93,7 +93,7 @@
                         android:layout_marginTop="2dp"
                         android:fontFamily="sans-serif"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="20sp"/>
 
                     <TextView
@@ -104,7 +104,7 @@
                         android:fontFamily="sans-serif"
                         android:drawablePadding="5dp"
                         android:includeFontPadding="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:drawableStartCompat="@drawable/ic_star" />
@@ -126,7 +126,7 @@
                         android:fontFamily="sans-serif"
                         android:includeFontPadding="false"
                         android:text="@string/overview"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"/>
 
@@ -138,7 +138,7 @@
                         android:alpha="0.6"
                         android:fontFamily="sans-serif"
                         android:includeFontPadding="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="18sp" />
 
                     <TextView
@@ -147,7 +147,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="sans-serif"
                         android:includeFontPadding="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -167,7 +167,7 @@
                         android:layout_weight="1"
                         android:fontFamily="sans-serif"
                         android:includeFontPadding="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16sp" />
 
                     <TextView
@@ -177,7 +177,7 @@
                         android:layout_weight="1"
                         android:fontFamily="sans-serif"
                         android:includeFontPadding="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -197,7 +197,7 @@
                         android:layout_weight="1"
                         android:fontFamily="sans-serif"
                         android:includeFontPadding="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16sp" />
 
                     <TextView
@@ -207,7 +207,7 @@
                         android:layout_weight="1"
                         android:fontFamily="sans-serif"
                         android:includeFontPadding="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -228,7 +228,7 @@
                         android:layout_weight="1"
                         android:fontFamily="sans-serif"
                         android:includeFontPadding="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16sp" />
 
                     <TextView
@@ -238,7 +238,7 @@
                         android:layout_weight="1"
                         android:fontFamily="sans-serif"
                         android:includeFontPadding="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -251,7 +251,7 @@
                     android:layout_marginHorizontal="5dp"
                     android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <TextView
@@ -262,7 +262,7 @@
                     android:layout_marginHorizontal="5dp"
                     android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <TextView
@@ -271,9 +271,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginHorizontal="5dp"
-                    android:text="Genres"
+                    android:text="@string/text_genres"
                     android:fontFamily="sans-serif"
-                    android:textColor="@android:color/background_dark"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -295,9 +295,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginHorizontal="5dp"
-                    android:text="Keywords"
+                    android:text="@string/text_keywords"
                     android:fontFamily="sans-serif"
-                    android:textColor="@android:color/background_dark"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -319,9 +319,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="Images Gallery"
+                    android:text="@string/text_images_gallery"
                     android:fontFamily="sans-serif"
-                    android:textColor="@android:color/background_dark"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -345,8 +345,8 @@
                     android:layout_marginHorizontal="5dp"
                     android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
-                    android:text="Movie Credit Cast"
-                    android:textColor="@color/black"
+                    android:text="@string/text_movie_credit_cast"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -369,8 +369,8 @@
                     android:layout_marginHorizontal="5dp"
                     android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
-                    android:text="Movie Credit Crew"
-                    android:textColor="@color/black"
+                    android:text="@string/text_movie_credit_crew"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -394,7 +394,7 @@
                     android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
                     android:text="@string/movie_recommendations"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -418,7 +418,7 @@
                     android:fontFamily="sans-serif"
                     android:includeFontPadding="false"
                     android:text="@string/similar_movies"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 

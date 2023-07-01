@@ -378,8 +378,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     movieGenre.addAll(response.body().getGenres());
                     genreAdapter.notifyItemChanged(oldCount, movieGenre.size());
                 } else if(movieGenre.isEmpty()){
-                    TextView tvGenresResult = findViewById(R.id.textGenreList);
-                    tvGenresResult.setVisibility(View.GONE);
+                    binding.textGenreList.setVisibility(View.GONE);
                 }
             }
 
@@ -410,8 +409,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     movieKeyword.addAll(response.body().getKeywords());
                     keywordAdapter.notifyItemChanged(oldCount, movieKeyword.size());
                 } else if(movieKeyword.isEmpty()){
-                    TextView tvKeywordsResult = findViewById(R.id.textKeywordList);
-                    tvKeywordsResult.setVisibility(View.GONE);
+                    binding.textKeywordList.setVisibility(View.GONE);
                 }
             }
 
@@ -441,8 +439,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     movieImagesList.addAll(response.body().getResults());
                     movieImagesAdapter.notifyItemChanged(oldCount, movieImagesList.size());
                 } else if(movieImagesList.isEmpty()){
-                    TextView tvImagesListResult = findViewById(R.id.textImageList);
-                    tvImagesListResult.setVisibility(View.GONE);
+                    binding.textImageList.setVisibility(View.GONE);
                 }
             }
 
@@ -473,8 +470,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     movieCreditCastResult.addAll(response.body().getCast());
                     creditCastAdapter.notifyItemChanged(oldCount, movieCreditCastResult.size());
                 } else if(movieCreditCastResult.isEmpty()){
-                    TextView tvCreditCastResult = findViewById(R.id.textMovieCreditCast);
-                    tvCreditCastResult.setVisibility(View.GONE);
+                    binding.textMovieCreditCast.setVisibility(View.GONE);
                 }
             }
 
@@ -505,8 +501,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     movieCreditCrewResult.addAll(response.body().getCrew());
                     creditCrewAdapter.notifyItemChanged(oldCount, movieCreditCrewResult.size());
                 } else if(movieCreditCrewResult.isEmpty()){
-                    TextView tvCreditCrewResult = findViewById(R.id.textMovieCreditCrew);
-                    tvCreditCrewResult.setVisibility(View.GONE);
+                    binding.textMovieCreditCrew.setVisibility(View.GONE);
                 }
             }
 
@@ -536,8 +531,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     movieRecommendationsResult.addAll(response.body().getResult());
                     movieRecommendationsAdapter.notifyItemChanged(oldCount, movieRecommendationsResult.size());
                 } else if(movieRecommendationsResult.isEmpty()){
-                    TextView tvRecommendationResult = findViewById(R.id.textMovieRecommendations);
-                    tvRecommendationResult.setVisibility(View.GONE);
+                    binding.textMovieRecommendations.setVisibility(View.GONE);
                 }
             }
 
@@ -567,8 +561,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     movieSimilarResult.addAll(response.body().getResult());
                     movieSimilarAdapter.notifyItemChanged(oldCount, movieSimilarResult.size());
                 } else if(movieSimilarResult.isEmpty()){
-                    TextView tvSimilarResult = findViewById(R.id.textMovieSimilar);
-                    tvSimilarResult.setVisibility(View.GONE);
+                    binding.textMovieSimilar.setVisibility(View.GONE);
                 }
             }
 
@@ -599,7 +592,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     ImageAdapter.setPosterURL(binding.imagePoster, response.body().getPosterPath());
                     setTitleText(binding.textTitleReleaseDate, response.body().getName(),
                             response.body().getFirstAirDate() + " - " + response.body().getLastAirDate());
-                    setHtmlText(binding.textRunTime, "Episode Runtime",  Arrays.toString(response.body().getEpisodeRuntime()) + "Episodes");
+                    setHtmlText(binding.textRunTime, "Episode Runtime",  Arrays.toString(response.body().getEpisodeRuntime()) + " Episodes");
 
                     binding.textOverview.setText(response.body().getOverview());
 
@@ -677,8 +670,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     tvGenre.addAll(response.body().getGenres());
                     genreAdapter.notifyItemChanged(oldCount, tvGenre.size());
                 } else if(tvGenre.isEmpty()){
-                    TextView tvGenres = findViewById(R.id.textGenreList);
-                    tvGenres.setVisibility(View.GONE);
+                    binding.textGenreList.setVisibility(View.GONE);
                 }
             }
 
@@ -709,8 +701,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     tvKeyword.addAll(response.body().getKeywords());
                     keywordAdapter.notifyItemChanged(oldCount, tvKeyword.size());
                 } else if(tvKeyword.isEmpty()){
-                    TextView tvKeywords = findViewById(R.id.textKeywordList);
-                    tvKeywords.setVisibility(View.GONE);
+                    binding.textKeywordList.setVisibility(View.GONE);
                 }
             }
 
@@ -740,8 +731,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     tvImagesList.addAll(response.body().getResults());
                     tvImagesAdapter.notifyItemChanged(oldCount, tvImagesList.size());
                 } else if(tvImagesList.isEmpty()){
-                    TextView tvImageList = findViewById(R.id.textImageList);
-                    tvImageList.setVisibility(View.GONE);
+                    binding.textImageList.setVisibility(View.GONE);
                 }
             }
             @Override
@@ -770,8 +760,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     tvCreditCastResult.addAll(response.body().getCast());
                     creditCastAdapter.notifyItemChanged(oldCount, tvCreditCastResult.size());
                 } else if(tvCreditCastResult.isEmpty()){
-                    TextView tvCreditCast = findViewById(R.id.textMovieCreditCast);
-                    tvCreditCast.setVisibility(View.GONE);
+                    binding.textMovieCreditCast.setVisibility(View.GONE);
                 }
             }
             @Override
@@ -800,8 +789,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     tvCreditCrewResult.addAll(response.body().getCrew());
                     creditCrewAdapter.notifyItemChanged(oldCount, tvCreditCrewResult.size());
                 } else if(tvCreditCrewResult.isEmpty()){
-                    TextView tvCreditCrewResult = findViewById(R.id.textMovieCreditCrew);
-                    tvCreditCrewResult.setVisibility(View.GONE);
+                    binding.textMovieCreditCrew.setVisibility(View.GONE);
                 }
             }
             @Override
@@ -830,8 +818,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     tvRecommendationsResult.addAll(response.body().getResult());
                     tvRecommendationsAdapter.notifyItemChanged(oldCount, tvRecommendationsResult.size());
                 } else if(tvRecommendationsResult.isEmpty()){
-                    TextView tvRecommendationResult = findViewById(R.id.textMovieRecommendations);
-                    tvRecommendationResult.setVisibility(View.GONE);
+                    binding.textMovieRecommendations.setVisibility(View.GONE);
                 }
             }
 
@@ -861,8 +848,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     tvSimilarResult.addAll(response.body().getResult());
                     tvSimilarAdapter.notifyItemChanged(oldCount, tvSimilarResult.size());
                 } else if(tvSimilarResult.isEmpty()){
-                    TextView tvSimilarResult = findViewById(R.id.textMovieSimilar);
-                    tvSimilarResult.setVisibility(View.GONE);
+                    binding.textMovieSimilar.setVisibility(View.GONE);
                 }
             }
 
@@ -875,22 +861,22 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void setHtmlText(TextView tv, String textColored, String textValue){
-        tv.setText(HtmlCompat.fromHtml("<font color='#059142'>" + textColored + "</font> : " +
+        tv.setText(HtmlCompat.fromHtml("<font color='#FFFFFF'>" + textColored + "</font> : " +
                 "<b>" + textValue + "</b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 
     private void setHtmlEmptyText(TextView tv, String textColored, String textValue){
-        tv.setText(HtmlCompat.fromHtml("<font color='#059142'>" + textColored + "</font> : " +
+        tv.setText(HtmlCompat.fromHtml("<font color='#FFFFFF'>" + textColored + "</font> : " +
                 "<b> <font color='#FF0000'>" + textValue + "</font> </b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 
     private void setHtmlLinkText(TextView tv, String textLink, String textValue){
-        tv.setText(HtmlCompat.fromHtml("<font color='#059142'>" + "Homepage" + "</font> : " +
+        tv.setText(HtmlCompat.fromHtml("<font color='#FFFFFF'>" + "Homepage" + "</font> : " +
                 "<b> <a href='" + textLink + "'>" + textValue +"</a> </b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 
     private void setTitleText(TextView tv, String textTitle, String textReleaseData){
-        tv.setText(HtmlCompat.fromHtml("<b>" + textTitle + "</b><font color='#808080'> ("
+        tv.setText(HtmlCompat.fromHtml("<b>" + textTitle + "</b><font color='#FFFFFF'> ("
                 + textReleaseData + ") </font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 

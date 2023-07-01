@@ -76,6 +76,10 @@ public class MovieNowPlayingFragment extends Fragment {
 
         rvMovieNowPlaying.setLayoutManager(gridLayoutManager);
         rvMovieNowPlaying.setAdapter(movieNowPlayingAdapter);
+        rvMovieNowPlaying.setHasFixedSize(true);
+        rvMovieNowPlaying.setItemViewCacheSize(9);
+        rvMovieNowPlaying.setDrawingCacheEnabled(true);
+        rvMovieNowPlaying.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         getNowPlayingMovies(page);
 
         rvMovieNowPlaying.addOnScrollListener(new RecyclerView.OnScrollListener() {

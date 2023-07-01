@@ -77,6 +77,10 @@ public class TvTopRatedFragment extends Fragment {
 
         rvTvTopRated.setLayoutManager(gridLayoutManager);
         rvTvTopRated.setAdapter(tvTopRatedAdapter);
+        rvTvTopRated.setHasFixedSize(true);
+        rvTvTopRated.setItemViewCacheSize(9);
+        rvTvTopRated.setDrawingCacheEnabled(true);
+        rvTvTopRated.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         getTopRatedTV(page);
 
         rvTvTopRated.addOnScrollListener(new RecyclerView.OnScrollListener() {

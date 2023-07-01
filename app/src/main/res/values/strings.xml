@@ -83,6 +83,11 @@
     <string name="year">Year :</string>
     <string name="filter">Filter</string>
     <string name="text_no_filter">No Filter Result, Try Again Later</string>
+    <string name="text_genres">Genres</string>
+    <string name="text_keywords">Keywords</string>
+    <string name="text_images_gallery">Images Gallery</string>
+    <string name="text_movie_credit_cast">Movie Credit Cast</string>
+    <string name="text_movie_credit_crew">Movie Credit Crew</string>
 
     <string-array name="movieGenreList">
         <item>Action</item>

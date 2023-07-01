@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.msdc.R;
 import com.example.msdc.adapter.MovieAdapter;
 import com.example.msdc.adapter.TVAdapter;
+import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
 import com.example.msdc.api.MovieResponse;
 import com.example.msdc.api.MovieResult;
@@ -29,6 +30,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class FilterActivity extends AppCompatActivity {
     public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
@@ -80,6 +82,9 @@ public class FilterActivity extends AppCompatActivity {
 
         filterToolbar.setTitle("Filter " + filterType + " Results :");
         setSupportActionBar(filterToolbar);
+
+        Retrofit retrofit = ApiClient.getClient();
+        apiService = retrofit.create(ApiService.class);
 
         GridLayoutManager mLayoutManager = new GridLayoutManager(this, 3);
 

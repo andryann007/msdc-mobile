@@ -77,6 +77,10 @@ public class TvPopularFragment extends Fragment {
 
         rvTvPopular.setLayoutManager(gridLayoutManager);
         rvTvPopular.setAdapter(tvPopularAdapter);
+        rvTvPopular.setHasFixedSize(true);
+        rvTvPopular.setItemViewCacheSize(9);
+        rvTvPopular.setDrawingCacheEnabled(true);
+        rvTvPopular.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         getPopularTV(page);
 
         rvTvPopular.addOnScrollListener(new RecyclerView.OnScrollListener() {

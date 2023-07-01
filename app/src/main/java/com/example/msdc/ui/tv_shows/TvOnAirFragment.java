@@ -78,6 +78,10 @@ public class TvOnAirFragment extends Fragment {
 
         rvTvOnAir.setLayoutManager(gridLayoutManager);
         rvTvOnAir.setAdapter(tvOnAirAdapter);
+        rvTvOnAir.setHasFixedSize(true);
+        rvTvOnAir.setItemViewCacheSize(9);
+        rvTvOnAir.setDrawingCacheEnabled(true);
+        rvTvOnAir.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         getOnAirTV(page);
 
         rvTvOnAir.addOnScrollListener(new RecyclerView.OnScrollListener() {

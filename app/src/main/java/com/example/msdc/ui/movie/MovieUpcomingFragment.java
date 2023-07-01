@@ -76,6 +76,10 @@ public class MovieUpcomingFragment extends Fragment {
 
         rvMovieUpcoming.setLayoutManager(gridLayoutManager);
         rvMovieUpcoming.setAdapter(movieUpcomingAdapter);
+        rvMovieUpcoming.setHasFixedSize(true);
+        rvMovieUpcoming.setItemViewCacheSize(9);
+        rvMovieUpcoming.setDrawingCacheEnabled(true);
+        rvMovieUpcoming.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         getUpcomingMovies(page);
 
         rvMovieUpcoming.addOnScrollListener(new RecyclerView.OnScrollListener() {

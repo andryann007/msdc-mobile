@@ -75,6 +75,10 @@ public class MovieTopRatedFragment extends Fragment {
 
         rvMovieTopRated.setLayoutManager(gridLayoutManager);
         rvMovieTopRated.setAdapter(movieTopRatedAdapter);
+        rvMovieTopRated.setHasFixedSize(true);
+        rvMovieTopRated.setItemViewCacheSize(9);
+        rvMovieTopRated.setDrawingCacheEnabled(true);
+        rvMovieTopRated.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         getTopRatedMovies(page);
 
         rvMovieTopRated.addOnScrollListener(new RecyclerView.OnScrollListener() {

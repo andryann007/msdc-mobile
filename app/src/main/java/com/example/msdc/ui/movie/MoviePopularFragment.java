@@ -73,6 +73,10 @@ public class MoviePopularFragment extends Fragment {
 
         rvMoviePopular.setLayoutManager(gridLayoutManager);
         rvMoviePopular.setAdapter(moviePopularAdapter);
+        rvMoviePopular.setHasFixedSize(true);
+        rvMoviePopular.setItemViewCacheSize(9);
+        rvMoviePopular.setDrawingCacheEnabled(true);
+        rvMoviePopular.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         getPopularMovies(page);
 
         rvMoviePopular.addOnScrollListener(new RecyclerView.OnScrollListener() {

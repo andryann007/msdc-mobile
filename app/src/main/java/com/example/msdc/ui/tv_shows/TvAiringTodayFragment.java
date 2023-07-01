@@ -78,6 +78,10 @@ public class TvAiringTodayFragment extends Fragment {
 
         rvTvAiringToday.setLayoutManager(gridLayoutManager);
         rvTvAiringToday.setAdapter(tvAiringTodayAdapter);
+        rvTvAiringToday.setHasFixedSize(true);
+        rvTvAiringToday.setItemViewCacheSize(9);
+        rvTvAiringToday.setDrawingCacheEnabled(true);
+        rvTvAiringToday.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         getOnAiringTV(page);
 
         rvTvAiringToday.addOnScrollListener(new RecyclerView.OnScrollListener() {
