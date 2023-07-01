@@ -344,6 +344,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                 i.putExtra("year", year);
                 i.putExtra("region", region);
                 i.putExtra("sortBy", sortBy);
+                startActivity(i);
                 break;
 
             case "tv" :
@@ -352,6 +353,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                 i.putExtra("year", year);
                 i.putExtra("region", region);
                 i.putExtra("sortBy", sortBy);
+                startActivity(i);
                 break;
         }
     }

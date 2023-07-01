@@ -23,7 +23,7 @@
         android:paddingHorizontal="5dp"
         android:gravity="start|center_vertical"
         android:maxLines="1"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold"/>
 

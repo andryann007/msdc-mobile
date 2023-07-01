@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
@@ -10,14 +11,14 @@
         android:id="@+id/creditProfilePath"
         android:layout_width="92.5dp"
         android:layout_height="139dp"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        app:riv_corner_radius="5dp"/>
 
     <LinearLayout
         android:layout_width="150dp"
         android:layout_height="139dp"
         android:gravity="center_vertical"
         android:weightSum="3"
-        android:layout_margin="2dp"
         android:orientation="vertical">
 
         <TextView
@@ -25,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_marginHorizontal="10dp"
             android:gravity="start|center_vertical"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/background_dark"
@@ -35,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_marginHorizontal="10dp"
             android:gravity="start|center_vertical"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/background_dark"
@@ -45,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_marginHorizontal="10dp"
             android:gravity="start|center_vertical"
             android:fontFamily="sans-serif"
             android:textColor="@android:color/background_dark"

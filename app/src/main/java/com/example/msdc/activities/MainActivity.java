@@ -249,6 +249,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 i.putExtra("year", year);
                 i.putExtra("region", region);
                 i.putExtra("sortBy", sortBy);
+                startActivity(i);
                 break;
 
             case "tv" :
@@ -257,6 +258,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 i.putExtra("year", year);
                 i.putExtra("region", region);
                 i.putExtra("sortBy", sortBy);
+                startActivity(i);
                 break;
         }
     }

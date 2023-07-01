@@ -24,7 +24,7 @@
         android:alpha="0.6"
         android:gravity="start|center_vertical"
         android:maxLines="1"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="12sp"
         android:textStyle="bold"/>
 
