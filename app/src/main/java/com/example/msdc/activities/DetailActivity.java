@@ -203,7 +203,8 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onFailure(@NonNull Call<MovieDetails> call, @NonNull Throwable t) {
                 binding.loadingDetails.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Detail Data !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Detail Data !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -374,11 +375,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieGenre.size();
                     movieGenre.addAll(response.body().getGenres());
                     genreAdapter.notifyItemChanged(oldCount, movieGenre.size());
+                } else if(movieGenre.isEmpty()){
+                    TextView tvGenresResult = findViewById(R.id.textGenreList);
+                    tvGenresResult.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieDetails> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Genres List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -401,11 +407,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieKeyword.size();
                     movieKeyword.addAll(response.body().getKeywords());
                     keywordAdapter.notifyItemChanged(oldCount, movieKeyword.size());
+                } else if(movieKeyword.isEmpty()){
+                    TextView tvKeywordsResult = findViewById(R.id.textKeywordList);
+                    tvKeywordsResult.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<KeywordResponse> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Keywords List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -427,11 +438,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieImagesList.size();
                     movieImagesList.addAll(response.body().getResults());
                     movieImagesAdapter.notifyItemChanged(oldCount, movieImagesList.size());
+                } else if(movieImagesList.isEmpty()){
+                    TextView tvImagesListResult = findViewById(R.id.textImageList);
+                    tvImagesListResult.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ImageResponse> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Images List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -454,12 +470,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieCreditCastResult.size();
                     movieCreditCastResult.addAll(response.body().getCast());
                     creditCastAdapter.notifyItemChanged(oldCount, movieCreditCastResult.size());
+                } else if(movieCreditCastResult.isEmpty()){
+                    TextView tvCreditCastResult = findViewById(R.id.textMovieCreditCast);
+                    tvCreditCastResult.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
-
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Credit Cast List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -482,12 +502,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieCreditCrewResult.size();
                     movieCreditCrewResult.addAll(response.body().getCrew());
                     creditCrewAdapter.notifyItemChanged(oldCount, movieCreditCrewResult.size());
+                } else if(movieCreditCrewResult.isEmpty()){
+                    TextView tvCreditCrewResult = findViewById(R.id.textMovieCreditCrew);
+                    tvCreditCrewResult.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
-
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Credit Crew List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -509,11 +533,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieRecommendationsResult.size();
                     movieRecommendationsResult.addAll(response.body().getResult());
                     movieRecommendationsAdapter.notifyItemChanged(oldCount, movieRecommendationsResult.size());
+                } else if(movieRecommendationsResult.isEmpty()){
+                    TextView tvRecommendationResult = findViewById(R.id.textMovieRecommendations);
+                    tvRecommendationResult.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Recommendations Movies List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -535,11 +564,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieSimilarResult.size();
                     movieSimilarResult.addAll(response.body().getResult());
                     movieSimilarAdapter.notifyItemChanged(oldCount, movieSimilarResult.size());
+                } else if(movieSimilarResult.isEmpty()){
+                    TextView tvSimilarResult = findViewById(R.id.textMovieSimilar);
+                    tvSimilarResult.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Similar Movies List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -616,7 +650,8 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onFailure(@NonNull Call<TVDetails> call, @NonNull Throwable t) {
                 binding.loadingDetails.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Detail Data !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Detail Data !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -639,11 +674,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvGenre.size();
                     tvGenre.addAll(response.body().getGenres());
                     genreAdapter.notifyItemChanged(oldCount, tvGenre.size());
+                } else if(tvGenre.isEmpty()){
+                    TextView tvGenres = findViewById(R.id.textGenreList);
+                    tvGenres.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<TVDetails> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Genres List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -666,11 +706,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvKeyword.size();
                     tvKeyword.addAll(response.body().getKeywords());
                     keywordAdapter.notifyItemChanged(oldCount, tvKeyword.size());
+                } else if(tvKeyword.isEmpty()){
+                    TextView tvKeywords = findViewById(R.id.textKeywordList);
+                    tvKeywords.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<KeywordResponse> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Keywords List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -692,10 +737,15 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvImagesList.size();
                     tvImagesList.addAll(response.body().getResults());
                     tvImagesAdapter.notifyItemChanged(oldCount, tvImagesList.size());
+                } else if(tvImagesList.isEmpty()){
+                    TextView tvImageList = findViewById(R.id.textImageList);
+                    tvImageList.setVisibility(View.GONE);
                 }
             }
             @Override
             public void onFailure(@NonNull Call<ImageResponse> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Images List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -717,10 +767,15 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvCreditCastResult.size();
                     tvCreditCastResult.addAll(response.body().getCast());
                     creditCastAdapter.notifyItemChanged(oldCount, tvCreditCastResult.size());
+                } else if(tvCreditCastResult.isEmpty()){
+                    TextView tvCreditCast = findViewById(R.id.textMovieCreditCast);
+                    tvCreditCast.setVisibility(View.GONE);
                 }
             }
             @Override
             public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Credit Cast List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -742,11 +797,15 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvCreditCrewResult.size();
                     tvCreditCrewResult.addAll(response.body().getCrew());
                     creditCrewAdapter.notifyItemChanged(oldCount, tvCreditCrewResult.size());
+                } else if(tvCreditCrewResult.isEmpty()){
+                    TextView tvCreditCrewResult = findViewById(R.id.textMovieCreditCrew);
+                    tvCreditCrewResult.setVisibility(View.GONE);
                 }
             }
             @Override
             public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
-
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Credit Crew List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -768,11 +827,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvRecommendationsResult.size();
                     tvRecommendationsResult.addAll(response.body().getResult());
                     tvRecommendationsAdapter.notifyItemChanged(oldCount, tvRecommendationsResult.size());
+                } else if(tvRecommendationsResult.isEmpty()){
+                    TextView tvRecommendationResult = findViewById(R.id.textMovieRecommendations);
+                    tvRecommendationResult.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Recommendation TV Shows List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -794,11 +858,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvSimilarResult.size();
                     tvSimilarResult.addAll(response.body().getResult());
                     tvSimilarAdapter.notifyItemChanged(oldCount, tvSimilarResult.size());
+                } else if(tvSimilarResult.isEmpty()){
+                    TextView tvSimilarResult = findViewById(R.id.textMovieSimilar);
+                    tvSimilarResult.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Similar TV Shows List !!!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

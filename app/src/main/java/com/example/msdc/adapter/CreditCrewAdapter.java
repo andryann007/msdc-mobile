@@ -62,7 +62,7 @@ public class CreditCrewAdapter extends RecyclerView.Adapter<CreditCrewAdapter.Cr
                 ImageAdapter.setProfileLogoURL(creditPersonImage, creditCrewResult.getProfilePath());
             } else {
                 creditPersonImage.setImageResource(R.drawable.ic_android);
-                creditPersonImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                creditPersonImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
 
             setNameText(textPersonName, creditCrewResult.getName());
