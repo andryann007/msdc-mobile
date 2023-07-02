@@ -83,9 +83,6 @@ public class FilterActivity extends AppCompatActivity {
 
         mYear = Integer.parseInt(year);
 
-        filterToolbar.setTitle("Filter " + filterType + " Results :");
-        setSupportActionBar(filterToolbar);
-
         Retrofit retrofit = ApiClient.getClient();
         apiService = retrofit.create(ApiService.class);
 
@@ -103,6 +100,9 @@ public class FilterActivity extends AppCompatActivity {
         setSortTypeText(sortBy, sortName);
 
         if(filterType.equalsIgnoreCase("movie")){
+            filterToolbar.setTitle("Filter Movies Results :");
+            setSupportActionBar(filterToolbar);
+
             setMovieGenreText(filterGenre, genreName);
 
             filterMovieAdapter = new MovieAdapter(filterMovieResults, this);
@@ -123,6 +123,9 @@ public class FilterActivity extends AppCompatActivity {
 
 
         } else if(filterType.equalsIgnoreCase("tv")){
+            filterToolbar.setTitle("Filter TV Shows Results :");
+            setSupportActionBar(filterToolbar);
+
             setTvGenreText(filterGenre, genreName);
 
             filterTvAdapter = new TVAdapter(filterTvResults, this);
