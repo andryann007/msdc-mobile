@@ -58,7 +58,7 @@ public class TVGridAdapter extends RecyclerView.Adapter<TVGridAdapter.TvViewHold
             if(!TextUtils.isEmpty(tvResult.getPosterPath())){
                 ImageAdapter.setPosterURL(imageItemPoster, tvResult.getPosterPath());
             } else {
-                imageItemPoster.setImageResource(R.drawable.ic_android);
+                imageItemPoster.setImageResource(R.drawable.ic_no_image);
                 imageItemPoster.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
             textItemName.setText(tvResult.getName());

@@ -30,18 +30,19 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MovieUpcomingFragment extends Fragment {
-
     private ApiService apiService;
-    private ProgressBar loadingMovieUpcoming;
     private MovieGridAdapter movieUpcomingAdapter;
     private final List<MovieResult> movieUpcomingResults = new ArrayList<>();
 
     private RecyclerView rvMovieUpcoming;
+    private ProgressBar loadingMovieUpcoming;
+    private TextView textNoResult;
 
     public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
     public static final String LANGUAGE = "en-US";
     private int page = 1;
+
     private FragmentMovieUpcomingBinding binding;
 
     public MovieUpcomingFragment() {
@@ -65,13 +66,11 @@ public class MovieUpcomingFragment extends Fragment {
     }
 
     private void setUpcomingMovies(View view) {
-        TextView textTitle = view.findViewById(R.id.textMovieVertical);
-        String title = "Upcoming Movies";
-        textTitle.setText(title);
+        rvMovieUpcoming = view.findViewById(R.id.rvMovieUpcomingList);
+        loadingMovieUpcoming = view.findViewById(R.id.loadingMovieUpcomingList);
+        textNoResult = view.findViewById(R.id.textNoMovieUpcomingResult);
 
-        rvMovieUpcoming = view.findViewById(R.id.rvMovieVertical);
         movieUpcomingAdapter = new MovieGridAdapter(movieUpcomingResults, getContext());
-        loadingMovieUpcoming = view.findViewById(R.id.loadingMovieVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvMovieUpcoming.setLayoutManager(gridLayoutManager);
@@ -103,14 +102,15 @@ public class MovieUpcomingFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
-                        loadingMovieUpcoming.setVisibility(View.GONE);
-                        rvMovieUpcoming.setVisibility(View.VISIBLE);
+                    loadingMovieUpcoming.setVisibility(View.GONE);
+                    rvMovieUpcoming.setVisibility(View.VISIBLE);
 
-                        int oldCount = movieUpcomingResults.size();
-                        movieUpcomingResults.addAll(response.body().getResult());
-                        movieUpcomingAdapter.notifyItemRangeInserted(oldCount, movieUpcomingResults.size());
-                    }
+                    int oldCount = movieUpcomingResults.size();
+                    movieUpcomingResults.addAll(response.body().getResult());
+                    movieUpcomingAdapter.notifyItemRangeInserted(oldCount, movieUpcomingResults.size());
+                } else if(movieUpcomingResults.isEmpty()){
+                    loadingMovieUpcoming.setVisibility(View.GONE);
+                    textNoResult.setVisibility(View.VISIBLE);
                 }
             }
 

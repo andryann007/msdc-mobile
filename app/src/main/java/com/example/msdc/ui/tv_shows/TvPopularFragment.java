@@ -30,13 +30,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class TvPopularFragment extends Fragment {
-
     private ApiService apiService;
-    private ProgressBar loadingTvPopular;
     private TVGridAdapter tvPopularAdapter;
     private final List<TVResult> tvPopularResults = new ArrayList<>();
 
     private RecyclerView rvTvPopular;
+    private ProgressBar loadingTvPopular;
+    private TextView textNoResult;
 
     public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -47,7 +47,6 @@ public class TvPopularFragment extends Fragment {
     public TvPopularFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -66,13 +65,11 @@ public class TvPopularFragment extends Fragment {
     }
 
     private void setPopularTV(View view) {
-        TextView textTitle = view.findViewById(R.id.textTvVertical);
-        String title = "Popular TV SHows";
-        textTitle.setText(title);
+        rvTvPopular = view.findViewById(R.id.rvTvPopularList);
+        loadingTvPopular = view.findViewById(R.id.loadingTvPopularList);
+        textNoResult = view.findViewById(R.id.textNoTvPopularResult);
 
-        rvTvPopular = view.findViewById(R.id.rvTvVertical);
         tvPopularAdapter = new TVGridAdapter(tvPopularResults, getContext());
-        loadingTvPopular = view.findViewById(R.id.loadingTvVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvTvPopular.setLayoutManager(gridLayoutManager);
@@ -104,14 +101,15 @@ public class TvPopularFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
-                        loadingTvPopular.setVisibility(View.GONE);
-                        rvTvPopular.setVisibility(View.VISIBLE);
+                    loadingTvPopular.setVisibility(View.GONE);
+                    rvTvPopular.setVisibility(View.VISIBLE);
 
-                        int oldCount = tvPopularResults.size();
-                        tvPopularResults.addAll(response.body().getResult());
-                        tvPopularAdapter.notifyItemRangeInserted(oldCount, tvPopularResults.size());
-                    }
+                    int oldCount = tvPopularResults.size();
+                    tvPopularResults.addAll(response.body().getResult());
+                    tvPopularAdapter.notifyItemRangeInserted(oldCount, tvPopularResults.size());
+                } else if(tvPopularResults.isEmpty()){
+                    loadingTvPopular.setVisibility(View.GONE);
+                    textNoResult.setVisibility(View.VISIBLE);
                 }
             }
 

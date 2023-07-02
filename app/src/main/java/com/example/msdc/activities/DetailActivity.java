@@ -377,7 +377,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieGenre.size();
                     movieGenre.addAll(response.body().getGenres());
                     genreAdapter.notifyItemChanged(oldCount, movieGenre.size());
-                } else if(movieGenre.isEmpty()){
+                } else {
                     binding.textGenreList.setVisibility(View.GONE);
                 }
             }
@@ -408,7 +408,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieKeyword.size();
                     movieKeyword.addAll(response.body().getKeywords());
                     keywordAdapter.notifyItemChanged(oldCount, movieKeyword.size());
-                } else if(movieKeyword.isEmpty()){
+                } else {
                     binding.textKeywordList.setVisibility(View.GONE);
                 }
             }
@@ -438,7 +438,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieImagesList.size();
                     movieImagesList.addAll(response.body().getResults());
                     movieImagesAdapter.notifyItemChanged(oldCount, movieImagesList.size());
-                } else if(movieImagesList.isEmpty()){
+                } else {
                     binding.textImageList.setVisibility(View.GONE);
                 }
             }
@@ -469,7 +469,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieCreditCastResult.size();
                     movieCreditCastResult.addAll(response.body().getCast());
                     creditCastAdapter.notifyItemChanged(oldCount, movieCreditCastResult.size());
-                } else if(movieCreditCastResult.isEmpty()){
+                } else {
                     binding.textMovieCreditCast.setVisibility(View.GONE);
                 }
             }
@@ -500,7 +500,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieCreditCrewResult.size();
                     movieCreditCrewResult.addAll(response.body().getCrew());
                     creditCrewAdapter.notifyItemChanged(oldCount, movieCreditCrewResult.size());
-                } else if(movieCreditCrewResult.isEmpty()){
+                } else {
                     binding.textMovieCreditCrew.setVisibility(View.GONE);
                 }
             }
@@ -530,7 +530,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieRecommendationsResult.size();
                     movieRecommendationsResult.addAll(response.body().getResult());
                     movieRecommendationsAdapter.notifyItemChanged(oldCount, movieRecommendationsResult.size());
-                } else if(movieRecommendationsResult.isEmpty()){
+                } else {
                     binding.textMovieRecommendations.setVisibility(View.GONE);
                 }
             }
@@ -560,7 +560,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = movieSimilarResult.size();
                     movieSimilarResult.addAll(response.body().getResult());
                     movieSimilarAdapter.notifyItemChanged(oldCount, movieSimilarResult.size());
-                } else if(movieSimilarResult.isEmpty()){
+                } else {
                     binding.textMovieSimilar.setVisibility(View.GONE);
                 }
             }
@@ -669,7 +669,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvGenre.size();
                     tvGenre.addAll(response.body().getGenres());
                     genreAdapter.notifyItemChanged(oldCount, tvGenre.size());
-                } else if(tvGenre.isEmpty()){
+                } else {
                     binding.textGenreList.setVisibility(View.GONE);
                 }
             }
@@ -700,7 +700,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvKeyword.size();
                     tvKeyword.addAll(response.body().getKeywords());
                     keywordAdapter.notifyItemChanged(oldCount, tvKeyword.size());
-                } else if(tvKeyword.isEmpty()){
+                } else {
                     binding.textKeywordList.setVisibility(View.GONE);
                 }
             }
@@ -730,7 +730,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvImagesList.size();
                     tvImagesList.addAll(response.body().getResults());
                     tvImagesAdapter.notifyItemChanged(oldCount, tvImagesList.size());
-                } else if(tvImagesList.isEmpty()){
+                } else {
                     binding.textImageList.setVisibility(View.GONE);
                 }
             }
@@ -759,7 +759,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvCreditCastResult.size();
                     tvCreditCastResult.addAll(response.body().getCast());
                     creditCastAdapter.notifyItemChanged(oldCount, tvCreditCastResult.size());
-                } else if(tvCreditCastResult.isEmpty()){
+                } else {
                     binding.textMovieCreditCast.setVisibility(View.GONE);
                 }
             }
@@ -788,7 +788,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvCreditCrewResult.size();
                     tvCreditCrewResult.addAll(response.body().getCrew());
                     creditCrewAdapter.notifyItemChanged(oldCount, tvCreditCrewResult.size());
-                } else if(tvCreditCrewResult.isEmpty()){
+                } else {
                     binding.textMovieCreditCrew.setVisibility(View.GONE);
                 }
             }
@@ -817,7 +817,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvRecommendationsResult.size();
                     tvRecommendationsResult.addAll(response.body().getResult());
                     tvRecommendationsAdapter.notifyItemChanged(oldCount, tvRecommendationsResult.size());
-                } else if(tvRecommendationsResult.isEmpty()){
+                } else {
                     binding.textMovieRecommendations.setVisibility(View.GONE);
                 }
             }
@@ -847,7 +847,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     int oldCount = tvSimilarResult.size();
                     tvSimilarResult.addAll(response.body().getResult());
                     tvSimilarAdapter.notifyItemChanged(oldCount, tvSimilarResult.size());
-                } else if(tvSimilarResult.isEmpty()){
+                } else {
                     binding.textMovieSimilar.setVisibility(View.GONE);
                 }
             }
@@ -1212,10 +1212,6 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
 
             case("china") :
                 region = "CN";
-                break;
-
-            case("england") :
-                region = "GB";
                 break;
 
             case("france") :

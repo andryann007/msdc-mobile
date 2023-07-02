@@ -58,7 +58,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             if(!TextUtils.isEmpty(movieResult.getPosterPath())){
                 ImageAdapter.setPosterLogoURL(imageItemPoster, movieResult.getPosterPath());
             } else {
-                imageItemPoster.setImageResource(R.drawable.ic_android);
+                imageItemPoster.setImageResource(R.drawable.ic_no_image);
                 imageItemPoster.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
             textItemName.setText(movieResult.getTitle());

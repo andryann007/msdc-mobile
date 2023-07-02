@@ -31,11 +31,12 @@ import retrofit2.Retrofit;
 
 public class MovieNowPlayingFragment extends Fragment {
     private ApiService apiService;
-    private ProgressBar loadingMovieNowPlaying;
     private MovieGridAdapter movieNowPlayingAdapter;
     private final List<MovieResult> movieNowPlayingResults = new ArrayList<>();
 
+    private ProgressBar loadingMovieNowPlaying;
     private RecyclerView rvMovieNowPlaying;
+    private TextView textNoResult;
 
     public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -65,13 +66,11 @@ public class MovieNowPlayingFragment extends Fragment {
     }
 
     private void setNowPlayingMovies(View view) {
-        TextView textTitle = view.findViewById(R.id.textMovieVertical);
-        String title = "Now Playing Movies";
-        textTitle.setText(title);
+        rvMovieNowPlaying = view.findViewById(R.id.rvMovieNowPlayingList);
+        loadingMovieNowPlaying = view.findViewById(R.id.loadingMovieNowPlayingList);
+        textNoResult = view.findViewById(R.id.textNoMovieNowPlayingResult);
 
-        rvMovieNowPlaying = view.findViewById(R.id.rvMovieVertical);
         movieNowPlayingAdapter = new MovieGridAdapter(movieNowPlayingResults, getContext());
-        loadingMovieNowPlaying = view.findViewById(R.id.loadingMovieVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvMovieNowPlaying.setLayoutManager(gridLayoutManager);
@@ -103,14 +102,15 @@ public class MovieNowPlayingFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
-                        loadingMovieNowPlaying.setVisibility(View.GONE);
-                        rvMovieNowPlaying.setVisibility(View.VISIBLE);
+                    loadingMovieNowPlaying.setVisibility(View.GONE);
+                    rvMovieNowPlaying.setVisibility(View.VISIBLE);
 
-                        int oldCount = movieNowPlayingResults.size();
-                        movieNowPlayingResults.addAll(response.body().getResult());
-                        movieNowPlayingAdapter.notifyItemRangeInserted(oldCount, movieNowPlayingResults.size());
-                    }
+                    int oldCount = movieNowPlayingResults.size();
+                    movieNowPlayingResults.addAll(response.body().getResult());
+                    movieNowPlayingAdapter.notifyItemRangeInserted(oldCount, movieNowPlayingResults.size());
+                } else if(movieNowPlayingResults.isEmpty()) {
+                    loadingMovieNowPlaying.setVisibility(View.GONE);
+                    textNoResult.setVisibility(View.VISIBLE);
                 }
             }
 

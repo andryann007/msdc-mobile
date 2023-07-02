@@ -61,7 +61,7 @@ public class TVSearchAdapter extends RecyclerView.Adapter<TVSearchAdapter.TvView
             if(!TextUtils.isEmpty(TVResult.getPosterPath())){
                 ImageAdapter.setSearchImageBaseURL(imageItemPoster, TVResult.getPosterPath());
             } else {
-                imageItemPoster.setImageResource(R.drawable.ic_android);
+                imageItemPoster.setImageResource(R.drawable.ic_no_image);
                 imageItemPoster.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
             textItemName.setText(TVResult.getName());

@@ -30,18 +30,19 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MovieTopRatedFragment extends Fragment {
-
     private ApiService apiService;
-    private ProgressBar loadingMovieTopRated;
     private MovieGridAdapter movieTopRatedAdapter;
     private final List<MovieResult> movieTopRatedResults = new ArrayList<>();
 
     private RecyclerView rvMovieTopRated;
+    private ProgressBar loadingMovieTopRated;
+    private TextView textNoResult;
 
     public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
     public static final String LANGUAGE = "en-US";
     private int page = 1;
+
     private FragmentMovieTopRatedBinding binding;
 
     public MovieTopRatedFragment() {
@@ -58,19 +59,18 @@ public class MovieTopRatedFragment extends Fragment {
 
         Retrofit retrofit = ApiClient.getClient();
         apiService = retrofit.create(ApiService.class);
+
         setTopRatedMovies(root);
 
         return root;
     }
 
     private void setTopRatedMovies(View view) {
-        TextView textTitle = view.findViewById(R.id.textMovieVertical);
-        String title = "Top Rated Movies";
-        textTitle.setText(title);
+        rvMovieTopRated = view.findViewById(R.id.rvMovieTopRatedList);
+        loadingMovieTopRated = view.findViewById(R.id.loadingMovieTopRatedList);
+        textNoResult = view.findViewById(R.id.textNoMovieTopRatedResult);
 
-        rvMovieTopRated = view.findViewById(R.id.rvMovieVertical);
         movieTopRatedAdapter = new MovieGridAdapter(movieTopRatedResults, getContext());
-        loadingMovieTopRated = view.findViewById(R.id.loadingMovieVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvMovieTopRated.setLayoutManager(gridLayoutManager);
@@ -102,14 +102,15 @@ public class MovieTopRatedFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
-                        loadingMovieTopRated.setVisibility(View.GONE);
-                        rvMovieTopRated.setVisibility(View.VISIBLE);
+                    loadingMovieTopRated.setVisibility(View.GONE);
+                    rvMovieTopRated.setVisibility(View.VISIBLE);
 
-                        int oldCount = movieTopRatedResults.size();
-                        movieTopRatedResults.addAll(response.body().getResult());
-                        movieTopRatedAdapter.notifyItemRangeInserted(oldCount, movieTopRatedResults.size());
-                    }
+                    int oldCount = movieTopRatedResults.size();
+                    movieTopRatedResults.addAll(response.body().getResult());
+                    movieTopRatedAdapter.notifyItemRangeInserted(oldCount, movieTopRatedResults.size());
+                } else if(movieTopRatedResults.isEmpty()){
+                    loadingMovieTopRated.setVisibility(View.GONE);
+                    textNoResult.setVisibility(View.VISIBLE);
                 }
             }
 

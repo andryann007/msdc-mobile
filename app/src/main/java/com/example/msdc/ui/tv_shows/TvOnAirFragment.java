@@ -30,13 +30,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class TvOnAirFragment extends Fragment {
-
     private ApiService apiService;
-    private ProgressBar loadingTvOnAir;
     private TVGridAdapter tvOnAirAdapter;
     private final List<TVResult> tvOnAirResults = new ArrayList<>();
 
     private RecyclerView rvTvOnAir;
+    private ProgressBar loadingTvOnAir;
+    private TextView textNoResult;
 
     public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -48,7 +48,6 @@ public class TvOnAirFragment extends Fragment {
     public TvOnAirFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -67,13 +66,11 @@ public class TvOnAirFragment extends Fragment {
     }
 
     private void setOnAirTV(View view) {
-        TextView textTitle = view.findViewById(R.id.textTvVertical);
-        String title = "On Air TV Shows";
-        textTitle.setText(title);
+        rvTvOnAir = view.findViewById(R.id.rvTvOnAirList);
+        loadingTvOnAir = view.findViewById(R.id.loadingTvOnAirList);
+        textNoResult = view.findViewById(R.id.textNoTvOnAirResult);
 
-        rvTvOnAir = view.findViewById(R.id.rvTvVertical);
         tvOnAirAdapter = new TVGridAdapter(tvOnAirResults, getContext());
-        loadingTvOnAir = view.findViewById(R.id.loadingTvVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvTvOnAir.setLayoutManager(gridLayoutManager);
@@ -105,14 +102,15 @@ public class TvOnAirFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
-                        loadingTvOnAir.setVisibility(View.GONE);
-                        rvTvOnAir.setVisibility(View.VISIBLE);
+                    loadingTvOnAir.setVisibility(View.GONE);
+                    rvTvOnAir.setVisibility(View.VISIBLE);
 
-                        int oldCount = tvOnAirResults.size();
-                        tvOnAirResults.addAll(response.body().getResult());
-                        tvOnAirAdapter.notifyItemRangeInserted(oldCount, tvOnAirResults.size());
-                    }
+                    int oldCount = tvOnAirResults.size();
+                    tvOnAirResults.addAll(response.body().getResult());
+                    tvOnAirAdapter.notifyItemRangeInserted(oldCount, tvOnAirResults.size());
+                } else if(tvOnAirResults.isEmpty()){
+                    loadingTvOnAir.setVisibility(View.GONE);
+                    textNoResult.setVisibility(View.VISIBLE);
                 }
             }
 

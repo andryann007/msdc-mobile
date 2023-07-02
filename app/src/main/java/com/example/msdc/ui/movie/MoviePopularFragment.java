@@ -30,17 +30,19 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MoviePopularFragment extends Fragment {
-
     private ApiService apiService;
-    private ProgressBar loadingMoviePopular;
     private MovieGridAdapter moviePopularAdapter;
     private final List<MovieResult> moviePopularResults = new ArrayList<>();
 
+    private ProgressBar loadingMoviePopular;
     private RecyclerView rvMoviePopular;
+    private TextView textNoResult;
+
     public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
     public static final String LANGUAGE = "en-US";
     private int page = 1;
+
     private FragmentMoviePopularBinding binding;
 
     public MoviePopularFragment() {
@@ -58,17 +60,16 @@ public class MoviePopularFragment extends Fragment {
         apiService = retrofit.create(ApiService.class);
 
         setPopularMovies(root);
+
         return root;
     }
 
     private void setPopularMovies(View view) {
-        TextView textTitle = view.findViewById(R.id.textMovieVertical);
-        String title = "Popular Movies";
-        textTitle.setText(title);
+        rvMoviePopular = view.findViewById(R.id.rvMoviePopularList);
+        loadingMoviePopular = view.findViewById(R.id.loadingMoviePopularList);
+        textNoResult = view.findViewById(R.id.textNoMoviePopularResult);
 
-        rvMoviePopular = view.findViewById(R.id.rvMovieVertical);
         moviePopularAdapter = new MovieGridAdapter(moviePopularResults, getContext());
-        loadingMoviePopular = view.findViewById(R.id.loadingMovieVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvMoviePopular.setLayoutManager(gridLayoutManager);
@@ -100,14 +101,15 @@ public class MoviePopularFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
-                        loadingMoviePopular.setVisibility(View.GONE);
-                        rvMoviePopular.setVisibility(View.VISIBLE);
+                    loadingMoviePopular.setVisibility(View.GONE);
+                    rvMoviePopular.setVisibility(View.VISIBLE);
 
-                        int oldCount = moviePopularResults.size();
-                        moviePopularResults.addAll(response.body().getResult());
-                        moviePopularAdapter.notifyItemRangeInserted(oldCount, moviePopularResults.size());
-                    }
+                    int oldCount = moviePopularResults.size();
+                    moviePopularResults.addAll(response.body().getResult());
+                    moviePopularAdapter.notifyItemRangeInserted(oldCount, moviePopularResults.size());
+                } else {
+                    loadingMoviePopular.setVisibility(View.GONE);
+                    textNoResult.setVisibility(View.VISIBLE);
                 }
             }
 

@@ -30,13 +30,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class TvAiringTodayFragment extends Fragment {
-
     private ApiService apiService;
-    private ProgressBar loadingTvAiringToday;
     private TVGridAdapter tvAiringTodayAdapter;
     private final List<TVResult> tvAiringTodayResults = new ArrayList<>();
 
     private RecyclerView rvTvAiringToday;
+    private ProgressBar loadingTvAiringToday;
+    private TextView textNoResult;
 
     public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -48,7 +48,6 @@ public class TvAiringTodayFragment extends Fragment {
     public TvAiringTodayFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -67,13 +66,11 @@ public class TvAiringTodayFragment extends Fragment {
     }
 
     private void setOnAiringTV(View view) {
-        TextView textTitle = view.findViewById(R.id.textTvVertical);
-        String title = "Airing Today TV Shows";
-        textTitle.setText(title);
+        rvTvAiringToday = view.findViewById(R.id.rvTvAiringTodayList);
+        loadingTvAiringToday = view.findViewById(R.id.loadingTvAiringTodayList);
+        textNoResult = view.findViewById(R.id.textNoTvAiringTodayResult);
 
-        rvTvAiringToday = view.findViewById(R.id.rvTvVertical);
         tvAiringTodayAdapter = new TVGridAdapter(tvAiringTodayResults, getContext());
-        loadingTvAiringToday = view.findViewById(R.id.loadingTvVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvTvAiringToday.setLayoutManager(gridLayoutManager);
@@ -104,14 +101,15 @@ public class TvAiringTodayFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
-                        loadingTvAiringToday.setVisibility(View.GONE);
-                        rvTvAiringToday.setVisibility(View.VISIBLE);
+                    loadingTvAiringToday.setVisibility(View.GONE);
+                    rvTvAiringToday.setVisibility(View.VISIBLE);
 
-                        int oldCount = tvAiringTodayResults.size();
-                        tvAiringTodayResults.addAll(response.body().getResult());
-                        tvAiringTodayAdapter.notifyItemRangeInserted(oldCount, tvAiringTodayResults.size());
-                    }
+                    int oldCount = tvAiringTodayResults.size();
+                    tvAiringTodayResults.addAll(response.body().getResult());
+                    tvAiringTodayAdapter.notifyItemRangeInserted(oldCount, tvAiringTodayResults.size());
+                } else if(tvAiringTodayResults.isEmpty()){
+                    loadingTvAiringToday.setVisibility(View.GONE);
+                    textNoResult.setVisibility(View.VISIBLE);
                 }
             }
 

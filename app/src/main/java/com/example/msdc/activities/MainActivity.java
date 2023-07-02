@@ -688,10 +688,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 region = "CN";
                 break;
 
-            case("england") :
-                region = "GB";
-                break;
-
             case("france") :
                 region = "FR";
                 break;

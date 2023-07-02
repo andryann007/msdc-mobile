@@ -105,7 +105,7 @@
         android:overScrollMode="never"
         app:spanCount="3"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_container_search"
+        tools:listitem="@layout/item_container_vertical"
         android:visibility="gone"/>
 
     <ProgressBar

@@ -58,7 +58,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
             if(!TextUtils.isEmpty(personResult.getPosterPath())){
                 ImageAdapter.setProfileLogoURL(profilePath, personResult.getPosterPath());
             } else {
-                profilePath.setImageResource(R.drawable.ic_android);
+                profilePath.setImageResource(R.drawable.ic_no_image);
                 profilePath.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
             personName.setText(personResult.getName());

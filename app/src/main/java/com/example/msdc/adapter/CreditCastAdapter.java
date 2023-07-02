@@ -61,7 +61,7 @@ public class CreditCastAdapter extends RecyclerView.Adapter<CreditCastAdapter.Cr
             if(!TextUtils.isEmpty(creditCastResult.getProfilePath())){
                 ImageAdapter.setProfileLogoURL(creditPersonImage, creditCastResult.getProfilePath());
             } else {
-                creditPersonImage.setImageResource(R.drawable.ic_android);
+                creditPersonImage.setImageResource(R.drawable.ic_no_image);
                 creditPersonImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
 

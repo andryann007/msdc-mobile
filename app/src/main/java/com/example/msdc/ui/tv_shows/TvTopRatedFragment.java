@@ -30,13 +30,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class TvTopRatedFragment extends Fragment {
-
     private ApiService apiService;
-    private ProgressBar loadingTvTopRated;
     private TVGridAdapter tvTopRatedAdapter;
     private final List<TVResult> tvTopRatedResults = new ArrayList<>();
 
     private RecyclerView rvTvTopRated;
+    private ProgressBar loadingTvTopRated;
+    private TextView textNoResult;
 
     public static final String MY_API_KEY = "9bfd8a12ca22a52a4787b3fd80269ea9";
 
@@ -66,13 +66,11 @@ public class TvTopRatedFragment extends Fragment {
     }
 
     private void setTopRatedTV(View view) {
-        TextView textTitle = view.findViewById(R.id.textTvVertical);
-        String title = "Top Rated TV Shows";
-        textTitle.setText(title);
+        rvTvTopRated = view.findViewById(R.id.rvTvTopRatedList);
+        loadingTvTopRated = view.findViewById(R.id.loadingTvTopRatedList);
+        textNoResult = view.findViewById(R.id.textNoTvTopRatedResult);
 
-        rvTvTopRated = view.findViewById(R.id.rvTvVertical);
         tvTopRatedAdapter = new TVGridAdapter(tvTopRatedResults, getContext());
-        loadingTvTopRated = view.findViewById(R.id.loadingTvVertical);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvTvTopRated.setLayoutManager(gridLayoutManager);
@@ -104,14 +102,15 @@ public class TvTopRatedFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
-                        loadingTvTopRated.setVisibility(View.GONE);
-                        rvTvTopRated.setVisibility(View.VISIBLE);
+                    loadingTvTopRated.setVisibility(View.GONE);
+                    rvTvTopRated.setVisibility(View.VISIBLE);
 
-                        int oldCount = tvTopRatedResults.size();
-                        tvTopRatedResults.addAll(response.body().getResult());
-                        tvTopRatedAdapter.notifyItemRangeInserted(oldCount, tvTopRatedResults.size());
-                    }
+                    int oldCount = tvTopRatedResults.size();
+                    tvTopRatedResults.addAll(response.body().getResult());
+                    tvTopRatedAdapter.notifyItemRangeInserted(oldCount, tvTopRatedResults.size());
+                } else if(tvTopRatedResults.isEmpty()){
+                    loadingTvTopRated.setVisibility(View.GONE);
+                    textNoResult.setVisibility(View.VISIBLE);
                 }
             }
 

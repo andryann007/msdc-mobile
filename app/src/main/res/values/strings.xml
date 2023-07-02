@@ -88,6 +88,15 @@
     <string name="text_images_gallery">Images Gallery</string>
     <string name="text_movie_credit_cast">Movie Credit Cast</string>
     <string name="text_movie_credit_crew">Movie Credit Crew</string>
+    <string name="text_now_playing_movies">Now Playing Movies</string>
+    <string name="text_no_result">No Result, Try Again Later</string>
+    <string name="text_popular_movies">Popular Movies</string>
+    <string name="text_top_rated_movies">Top Rated Movies</string>
+    <string name="text_upcoming_movies">Upcoming Movies</string>
+    <string name="text_airing_today_tv_shows">Airing Today TV Shows</string>
+    <string name="text_on_air_tv_shows">On Air TV Shows</string>
+    <string name="text_popular_tv_shows">Popular TV Shows</string>
+    <string name="text_top_rated_tv_shows">Top Rated TV Shows</string>
 
     <string-array name="movieGenreList">
         <item>Action</item>
@@ -133,7 +142,6 @@
     <string-array name="regionList">
         <item>Australia</item>
         <item>China</item>
-        <item>England</item>
         <item>France</item>
         <item>Germany</item>
         <item>Hong Kong</item>
