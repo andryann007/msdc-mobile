@@ -1,6 +1,5 @@
 package com.example.msdc.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,9 @@ import java.util.List;
 
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHolder>{
     private final List<GenreResult> genreResults;
-    private final Context context;
 
-    public GenreAdapter(List<GenreResult> genreResults, Context context){
+    public GenreAdapter(List<GenreResult> genreResults){
         this.genreResults = genreResults;
-        this.context = context;
     }
 
     @NonNull
@@ -32,7 +29,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
 
     @Override
     public void onBindViewHolder(@NonNull GenreAdapter.GenreViewHolder holder, int position) {
-        holder.bindItem(genreResults.get(position), context);
+        holder.bindItem(genreResults.get(position));
     }
 
     @Override
@@ -49,7 +46,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
             textGenres = itemView.findViewById(R.id.textGenres);
         }
 
-        public void bindItem(GenreResult genreResult, Context context){
+        public void bindItem(GenreResult genreResult){
             textGenres.setText(genreResult.getName());
         }
     }

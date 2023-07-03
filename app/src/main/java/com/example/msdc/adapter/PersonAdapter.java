@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,11 +20,9 @@ import java.util.List;
 
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder>{
     private final List<PersonResult> personResults;
-    private final Context context;
 
-    public PersonAdapter(List<PersonResult> personResults, Context context) {
+    public PersonAdapter(List<PersonResult> personResults) {
         this.personResults = personResults;
-        this.context = context;
     }
 
     @NonNull
@@ -35,7 +34,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
     @Override
     public void onBindViewHolder(@NonNull PersonAdapter.PersonViewHolder holder, int position) {
-        holder.bindItem(personResults.get(position), context);
+        holder.bindItem(personResults.get(position));
     }
 
     @Override
@@ -44,20 +43,24 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
     }
 
     static class PersonViewHolder extends RecyclerView.ViewHolder{
+        private final ProgressBar loadingPersonImage;
         private final RoundedImageView profilePath;
         private final TextView personName;
 
         PersonViewHolder(@NonNull View itemView){
             super(itemView);
 
+            loadingPersonImage = itemView.findViewById(R.id.loadingPersonImage);
             profilePath = itemView.findViewById(R.id.profilePath);
             personName = itemView.findViewById(R.id.textPersonName);
         }
 
-        void bindItem(PersonResult personResult, Context context){
+        void bindItem(PersonResult personResult){
             if(!TextUtils.isEmpty(personResult.getPosterPath())){
+                loadingPersonImage.setVisibility(View.GONE);
                 ImageAdapter.setProfileLogoURL(profilePath, personResult.getPosterPath());
             } else {
+                loadingPersonImage.setVisibility(View.GONE);
                 profilePath.setImageResource(R.drawable.ic_no_image);
                 profilePath.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }

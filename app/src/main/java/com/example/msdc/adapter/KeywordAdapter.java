@@ -1,6 +1,5 @@
 package com.example.msdc.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,9 @@ import java.util.List;
 
 public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordViewHolder>{
     private final List<KeywordResult> keywordResults;
-    private final Context context;
 
-    public KeywordAdapter(List<KeywordResult> keywordResults, Context context){
+    public KeywordAdapter(List<KeywordResult> keywordResults){
         this.keywordResults = keywordResults;
-        this.context = context;
     }
 
     @NonNull
@@ -32,7 +29,7 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordV
 
     @Override
     public void onBindViewHolder(@NonNull KeywordAdapter.KeywordViewHolder holder, int position) {
-        holder.bindItem(keywordResults.get(position), context);
+        holder.bindItem(keywordResults.get(position));
     }
 
     @Override
@@ -49,7 +46,7 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordV
             textKeywords = itemView.findViewById(R.id.textKeywords);
         }
 
-        public void bindItem(KeywordResult keywordResult, Context context){
+        public void bindItem(KeywordResult keywordResult){
             textKeywords.setText(keywordResult.getName());
         }
     }

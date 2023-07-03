@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,20 +47,24 @@ public class MovieSearchAdapter extends RecyclerView.Adapter<MovieSearchAdapter.
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder{
+        private final ProgressBar loadingSearchItemImage;
         private final RoundedImageView imageItemPoster;
         private final TextView textItemName;
 
         MovieViewHolder(@NonNull View itemView){
             super(itemView);
 
+            loadingSearchItemImage = itemView.findViewById(R.id.loadingSearchItemImage);
             imageItemPoster = itemView.findViewById(R.id.imageItemPoster);
             textItemName = itemView.findViewById(R.id.textItemName);
         }
 
         void bindItem(MovieResult movieResult, Context context){
             if(!TextUtils.isEmpty(movieResult.getPosterPath())){
+                loadingSearchItemImage.setVisibility(View.GONE);
                 ImageAdapter.setSearchImageBaseURL(imageItemPoster, movieResult.getPosterPath());
             } else {
+                loadingSearchItemImage.setVisibility(View.GONE);
                 imageItemPoster.setImageResource(R.drawable.ic_no_image);
                 imageItemPoster.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }

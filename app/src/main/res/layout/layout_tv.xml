@@ -22,7 +22,6 @@
             android:textColor="@android:color/background_light"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/rvTVPopular"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -37,7 +36,7 @@
             android:orientation="horizontal"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTVPopular"
             tools:listitem="@layout/item_container"
             android:visibility="gone"/>
@@ -47,10 +46,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
-			android:layout_alignParentEnd="true"
-            app:layout_constraintBottom_toBottomOf="@+id/rvTVPopular"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/rvTVPopular"/>
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/textTVPopular"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -70,7 +68,6 @@
             android:textColor="@android:color/background_light"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/rvTVAiring"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -85,7 +82,7 @@
             android:orientation="horizontal"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTVAiring"
             tools:listitem="@layout/item_container"
             android:visibility="gone"/>
@@ -95,10 +92,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
-			android:layout_alignParentEnd="true"
-            app:layout_constraintBottom_toBottomOf="@+id/rvTVAiring"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/rvTVAiring"/>
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/textTVAiring"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -118,7 +114,6 @@
             android:textColor="@android:color/background_light"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/rvTVOnAir"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -132,7 +127,7 @@
             android:orientation="horizontal"
             android:scrollbars="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTVOnAir"
             tools:listitem="@layout/item_container"
             android:visibility="gone"/>
@@ -142,10 +137,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
-            android:layout_alignParentEnd="true"
-            app:layout_constraintBottom_toBottomOf="@+id/rvTVOnAir"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/rvTVOnAir" />
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/textTVOnAir"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 	
 	<androidx.constraintlayout.widget.ConstraintLayout
@@ -164,7 +158,6 @@
             android:textColor="@android:color/background_light"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/rvTVTopRated"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -178,7 +171,7 @@
             android:scrollbars="horizontal"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTVTopRated"
             tools:listitem="@layout/item_container"
             android:visibility="gone"/>
@@ -188,10 +181,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
-			android:layout_alignParentEnd="true"
-            app:layout_constraintBottom_toBottomOf="@+id/rvTVTopRated"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/rvTVTopRated"/>
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/textTVTopRated"
+            app:layout_constraintStart_toStartOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

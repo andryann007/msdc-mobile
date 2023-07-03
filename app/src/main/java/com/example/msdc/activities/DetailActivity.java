@@ -360,7 +360,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
 
 
     private void setGenresMovie(){
-        genreAdapter = new GenreAdapter(movieGenre, this);
+        genreAdapter = new GenreAdapter(movieGenre);
 
         getGenresMovie();
         binding.rvGenreList.setAdapter(genreAdapter);
@@ -391,7 +391,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void setKeywordsMovie(){
-        keywordAdapter = new KeywordAdapter(movieKeyword, this);
+        keywordAdapter = new KeywordAdapter(movieKeyword);
 
         getKeywordsMovie();
         binding.rvKeywordList.setAdapter(keywordAdapter);
@@ -422,7 +422,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void setImagesMovie(){
-        movieImagesAdapter = new ImageListAdapter(movieImagesList, this);
+        movieImagesAdapter = new ImageListAdapter(movieImagesList);
 
         getImagesMovie();
         binding.rvImagesList.setAdapter(movieImagesAdapter);
@@ -452,7 +452,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void setMovieCast(){
-        creditCastAdapter = new CreditCastAdapter(movieCreditCastResult, this);
+        creditCastAdapter = new CreditCastAdapter(movieCreditCastResult);
 
         getMovieCast();
         binding.rvCreditCast.setAdapter(creditCastAdapter);
@@ -483,7 +483,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void setMovieCrew(){
-        creditCrewAdapter = new CreditCrewAdapter(movieCreditCrewResult, this);
+        creditCrewAdapter = new CreditCrewAdapter(movieCreditCrewResult);
 
         getMovieCrew();
         binding.rvCreditCrew.setAdapter(creditCrewAdapter);
@@ -652,7 +652,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void setGenresTV(){
-        genreAdapter = new GenreAdapter(tvGenre, this);
+        genreAdapter = new GenreAdapter(tvGenre);
 
         getGenresTV();
         binding.rvGenreList.setAdapter(genreAdapter);
@@ -683,7 +683,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void setKeywordsTV(){
-        keywordAdapter = new KeywordAdapter(tvKeyword, this);
+        keywordAdapter = new KeywordAdapter(tvKeyword);
 
         getKeywordsTV();
         binding.rvKeywordList.setAdapter(keywordAdapter);
@@ -714,7 +714,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void setImagesTV(){
-        tvImagesAdapter = new ImageListAdapter(tvImagesList, this);
+        tvImagesAdapter = new ImageListAdapter(tvImagesList);
 
         getImagesTV();
         binding.rvImagesList.setAdapter(tvImagesAdapter);
@@ -743,7 +743,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void setTvCast(){
-        creditCastAdapter = new CreditCastAdapter(tvCreditCastResult, this);
+        creditCastAdapter = new CreditCastAdapter(tvCreditCastResult);
 
         getTvCast();
         binding.rvCreditCast.setAdapter(creditCastAdapter);
@@ -772,7 +772,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void setTvCrew(){
-        creditCrewAdapter = new CreditCrewAdapter(tvCreditCrewResult, this);
+        creditCrewAdapter = new CreditCrewAdapter(tvCreditCrewResult);
 
         getTvCrew();
         binding.rvCreditCrew.setAdapter(creditCrewAdapter);

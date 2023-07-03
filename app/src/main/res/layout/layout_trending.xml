@@ -22,7 +22,6 @@
             android:textColor="@android:color/background_light"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/rvMovieTrending"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -37,7 +36,7 @@
             android:scrollbars="horizontal"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMovieTrending"
             tools:listitem="@layout/item_container"
             android:visibility="gone"/>
@@ -47,10 +46,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
-            android:layout_alignParentEnd="true"
-            app:layout_constraintBottom_toBottomOf="@+id/rvMovieTrending"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/rvMovieTrending"/>
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/textMovieTrending"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -70,7 +68,6 @@
             android:textColor="@android:color/background_light"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/rvTVTrending"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -85,7 +82,7 @@
             android:scrollbars="horizontal"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTVTrending"
             tools:listitem="@layout/item_container"
             android:visibility="gone"/>
@@ -95,10 +92,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
-            android:layout_alignParentEnd="true"
-            app:layout_constraintBottom_toBottomOf="@+id/rvTVTrending"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/rvTVTrending"/>
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/textTVTrending"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -106,7 +102,6 @@
         android:id="@+id/containerPersonTrending"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_marginTop="10dp">
 
         <TextView
@@ -119,7 +114,6 @@
             android:textColor="@android:color/background_light"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/rvPersonTrending"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -134,7 +128,7 @@
             android:scrollbars="horizontal"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textPersonTrending"
             tools:listitem="@layout/person_container"
             android:visibility="gone"/>
@@ -144,10 +138,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
-            android:layout_alignParentEnd="true"
-            app:layout_constraintBottom_toBottomOf="@+id/rvPersonTrending"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/rvPersonTrending"/>
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/textPersonTrending"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

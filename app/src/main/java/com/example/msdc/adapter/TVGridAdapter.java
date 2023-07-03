@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,20 +45,24 @@ public class TVGridAdapter extends RecyclerView.Adapter<TVGridAdapter.TvViewHold
     public int getItemCount(){ return tvResults.size();}
 
     static class TvViewHolder extends RecyclerView.ViewHolder{
+        private final ProgressBar loadingVerticalItemImage;
         private final RoundedImageView imageItemPoster;
         private final TextView textItemName;
 
         TvViewHolder(@NonNull View itemView){
             super(itemView);
 
+            loadingVerticalItemImage = itemView.findViewById(R.id.loadingVerticalItemImage);
             imageItemPoster = itemView.findViewById(R.id.imageItemPoster);
             textItemName = itemView.findViewById(R.id.textItemName);
         }
 
         void bindItem(TVResult tvResult, Context context){
             if(!TextUtils.isEmpty(tvResult.getPosterPath())){
+                loadingVerticalItemImage.setVisibility(View.GONE);
                 ImageAdapter.setPosterURL(imageItemPoster, tvResult.getPosterPath());
             } else {
+                loadingVerticalItemImage.setVisibility(View.GONE);
                 imageItemPoster.setImageResource(R.drawable.ic_no_image);
                 imageItemPoster.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }

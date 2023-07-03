@@ -1,11 +1,11 @@
 package com.example.msdc.adapter;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,11 +20,9 @@ import java.util.List;
 
 public class CreditCastAdapter extends RecyclerView.Adapter<CreditCastAdapter.CreditViewHolder> {
     private final List<CreditCastResult> castResults;
-    private final Context context;
 
-    public CreditCastAdapter(List<CreditCastResult> castResults, Context context){
+    public CreditCastAdapter(List<CreditCastResult> castResults){
         this.castResults = castResults;
-        this.context = context;
     }
 
     @NonNull
@@ -36,7 +34,7 @@ public class CreditCastAdapter extends RecyclerView.Adapter<CreditCastAdapter.Cr
 
     @Override
     public void onBindViewHolder(@NonNull CreditCastAdapter.CreditViewHolder holder, int position) {
-        holder.bindItem(castResults.get(position), context);
+        holder.bindItem(castResults.get(position));
     }
 
     @Override
@@ -45,22 +43,26 @@ public class CreditCastAdapter extends RecyclerView.Adapter<CreditCastAdapter.Cr
     }
 
     static class CreditViewHolder extends RecyclerView.ViewHolder{
+        private final ProgressBar loadingCreditCastImage;
         private final RoundedImageView creditPersonImage;
         private final TextView textPersonName, textPersonGender, textPersonDepartment;
 
         CreditViewHolder(@NonNull View itemView){
             super(itemView);
 
+            loadingCreditCastImage = itemView.findViewById(R.id.loadingCreditCrewOrCastImage);
             creditPersonImage = itemView.findViewById(R.id.creditProfilePath);
             textPersonName = itemView.findViewById(R.id.textCastOrCrewName);
             textPersonGender = itemView.findViewById(R.id.textGender);
             textPersonDepartment = itemView.findViewById(R.id.textDepartement);
         }
 
-        public void bindItem(CreditCastResult creditCastResult, Context context) {
+        public void bindItem(CreditCastResult creditCastResult) {
             if(!TextUtils.isEmpty(creditCastResult.getProfilePath())){
+                loadingCreditCastImage.setVisibility(View.GONE);
                 ImageAdapter.setProfileLogoURL(creditPersonImage, creditCastResult.getProfilePath());
             } else {
+                loadingCreditCastImage.setVisibility(View.GONE);
                 creditPersonImage.setImageResource(R.drawable.ic_no_image);
                 creditPersonImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }

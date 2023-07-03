@@ -1,10 +1,10 @@
 package com.example.msdc.adapter;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,11 +17,9 @@ import java.util.List;
 
 public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.MovieImageViewHolder>{
     private final List<ImageResult> imageResults;
-    private final Context context;
 
-    public ImageListAdapter(List<ImageResult> imageResults, Context context){
+    public ImageListAdapter(List<ImageResult> imageResults){
         this.imageResults = imageResults;
-        this.context = context;
     }
 
     @NonNull
@@ -33,7 +31,7 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Movi
 
     @Override
     public void onBindViewHolder(@NonNull ImageListAdapter.MovieImageViewHolder holder, int position) {
-        holder.bindItem(imageResults.get(position), context);
+        holder.bindItem(imageResults.get(position));
     }
 
     @Override
@@ -42,18 +40,22 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Movi
     }
 
     static class MovieImageViewHolder extends RecyclerView.ViewHolder{
+        private final ProgressBar loadingImagesList;
         private final RoundedImageView imagePath;
 
         MovieImageViewHolder(@NonNull View itemView){
             super(itemView);
 
+            loadingImagesList = itemView.findViewById(R.id.loadingImagesList);
             imagePath = itemView.findViewById(R.id.imagesList);
         }
 
-        public void bindItem(ImageResult imageResult, Context context) {
+        public void bindItem(ImageResult imageResult) {
             if(!TextUtils.isEmpty(imageResult.getFilePath())){
+                loadingImagesList.setVisibility(View.GONE);
                 ImageAdapter.setBackdropListURL(imagePath, imageResult.getFilePath());
             } else {
+                loadingImagesList.setVisibility(View.GONE);
                 imagePath.setImageResource(R.drawable.ic_android);
             }
         }

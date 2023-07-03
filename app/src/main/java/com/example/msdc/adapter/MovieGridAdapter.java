@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,20 +45,24 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
     public int getItemCount(){ return movieResults.size();}
 
     static class MovieViewHolder extends RecyclerView.ViewHolder{
+        private final ProgressBar loadingVerticalItemImage;
         private final RoundedImageView imageItemPoster;
         private final TextView textItemName;
 
         MovieViewHolder(@NonNull View itemView){
             super(itemView);
 
+            loadingVerticalItemImage = itemView.findViewById(R.id.loadingVerticalItemImage);
             imageItemPoster = itemView.findViewById(R.id.imageItemPoster);
             textItemName = itemView.findViewById(R.id.textItemName);
         }
 
         void bindItem(MovieResult movieResult, Context context){
             if(!TextUtils.isEmpty(movieResult.getPosterPath())){
+                loadingVerticalItemImage.setVisibility(View.GONE);
                 ImageAdapter.setPosterURL(imageItemPoster, movieResult.getPosterPath());
             } else {
+                loadingVerticalItemImage.setVisibility(View.GONE);
                 imageItemPoster.setImageResource(R.drawable.ic_no_image);
                 imageItemPoster.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }

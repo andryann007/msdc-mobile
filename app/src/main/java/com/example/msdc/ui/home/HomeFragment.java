@@ -566,7 +566,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setTrendingPerson(View view) {
-        personTrendingAdapter = new PersonAdapter(personTrendingResults, getContext());
+        personTrendingAdapter = new PersonAdapter(personTrendingResults);
 
         loadingPersonTrending = view.findViewById(R.id.loadingPersonTrending);
         rvPersonTrending = view.findViewById(R.id.rvPersonTrending);
