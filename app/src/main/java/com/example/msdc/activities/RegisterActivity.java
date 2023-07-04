@@ -73,6 +73,8 @@ public class RegisterActivity extends AppCompatActivity {
         gsc = GoogleSignIn.getClient(this, gso);
 
         binding.googleBtn.setOnClickListener(v -> SignIn());
+
+        binding.registerToolbar.setOnClickListener(v -> onBackPressed());
     }
     @Override
     public boolean onSupportNavigateUp() {

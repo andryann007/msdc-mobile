@@ -7,8 +7,18 @@
     android:fitsSystemWindows="true"
     android:background="@drawable/background"
     android:statusBarColor ="@android:color/transparent"
-    android:alpha="0.70"
+    android:alpha="0.75"
     tools:context=".activities.LoginActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/registerToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        app:title="Login Menu"
+        app:titleTextColor="#000000">
+    </androidx.appcompat.widget.Toolbar>
 
     <!-- RelativeLayout : Login Content -->
     <RelativeLayout

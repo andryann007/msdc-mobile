@@ -6,8 +6,20 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@drawable/background"
-    android:alpha="0.70"
+    android:alpha="0.75"
     tools:context=".activities.RegisterActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/registerToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        app:logo="@drawable/ic_back_black"
+        app:title="Register Menu"
+        app:titleMarginStart="32dp"
+        app:titleTextColor="#000000">
+    </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
         android:id="@+id/containerRegisterContent"

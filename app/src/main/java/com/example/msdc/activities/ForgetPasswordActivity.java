@@ -41,6 +41,8 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
 
         binding.submitBtn.setOnClickListener(view -> validateData());
+
+        binding.forgetPasswordToolbar.setOnClickListener(view -> onBackPressed());
     }
 
     private void validateData() {

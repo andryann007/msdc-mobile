@@ -18,6 +18,7 @@ import com.example.msdc.api.ApiService;
 import com.example.msdc.api.MovieResponse;
 import com.example.msdc.api.MovieResult;
 import com.example.msdc.api.TVResponse;
+import com.example.msdc.api.TVResult;
 import com.example.msdc.databinding.ActivitySearchBinding;
 
 import java.util.ArrayList;
@@ -28,8 +29,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SearchActivity extends AppCompatActivity {
-    private final List<MovieResult> movieResult = new ArrayList<>();
-    private final List<com.example.msdc.api.TVResult> TVResult = new ArrayList<>();
+    private final List<MovieResult> movieResults = new ArrayList<>();
+    private final List<TVResult> tvResults = new ArrayList<>();
     private String query;
     private MovieSearchAdapter movieSearchAdapter;
     private TVSearchAdapter tvSearchAdapter;
@@ -47,8 +48,8 @@ public class SearchActivity extends AppCompatActivity {
         binding.rvSearch.setLayoutManager(new StaggeredGridLayoutManager(3, RecyclerView.VERTICAL));
         binding.loadingSearch.setVisibility(View.VISIBLE);
 
-        movieSearchAdapter = new MovieSearchAdapter(movieResult, this);
-        tvSearchAdapter = new TVSearchAdapter(TVResult, this);
+        movieSearchAdapter = new MovieSearchAdapter(movieResults, this);
+        tvSearchAdapter = new TVSearchAdapter(tvResults, this);
 
         apiService = ApiClient.getClient().create(ApiService.class);
         query = getIntent().getStringExtra("searchFor");
@@ -79,9 +80,9 @@ public class SearchActivity extends AppCompatActivity {
                 if(response.body() != null){
                     if(response.body().getResult().size() > 0){
                         binding.loadingSearch.setVisibility(View.GONE);
-                        int oldCount = movieResult.size();
-                        movieResult.addAll(response.body().getResult());
-                        movieSearchAdapter.notifyItemRangeInserted(oldCount, movieResult.size());
+                        int oldCount = movieResults.size();
+                        movieResults.addAll(response.body().getResult());
+                        movieSearchAdapter.notifyItemRangeInserted(oldCount, movieResults.size());
                         checkSize(response.body().getResult().size());
                     } else {
                         binding.loadingSearch.setVisibility(View.GONE);
@@ -107,9 +108,9 @@ public class SearchActivity extends AppCompatActivity {
                 if(response.body() != null){
                     if(response.body().getResult().size() > 0){
                         binding.loadingSearch.setVisibility(View.GONE);
-                        int oldCount = TVResult.size();
-                        TVResult.addAll(response.body().getResult());
-                        tvSearchAdapter.notifyItemRangeInserted(oldCount, TVResult.size());
+                        int oldCount = tvResults.size();
+                        tvResults.addAll(response.body().getResult());
+                        tvSearchAdapter.notifyItemRangeInserted(oldCount, tvResults.size());
                         checkSize(response.body().getResult().size());
                     } else {
                         binding.loadingSearch.setVisibility(View.GONE);
