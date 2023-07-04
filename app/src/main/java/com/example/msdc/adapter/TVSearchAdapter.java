@@ -55,7 +55,7 @@ public class TVSearchAdapter extends RecyclerView.Adapter<TVSearchAdapter.TvView
         TvViewHolder(@NonNull View itemView){
             super(itemView);
 
-            loadingSearchItemImage = itemView.findViewById(R.id.loadingVerticalItemImage);
+            loadingSearchItemImage = itemView.findViewById(R.id.loadingSearchItemImage);
             imageItemPoster = itemView.findViewById(R.id.imageItemPoster);
             textItemName = itemView.findViewById(R.id.textItemName);
         }
