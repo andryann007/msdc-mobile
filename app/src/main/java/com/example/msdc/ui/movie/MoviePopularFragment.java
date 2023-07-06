@@ -94,7 +94,8 @@ public class MoviePopularFragment extends Fragment {
     }
 
     private void getPopularMovies(int page){
-        int limit = 9;
+        int limit = 15;
+
         Call<MovieResponse> call = apiService.getPopularMovies(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<MovieResponse>(){
 

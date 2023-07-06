@@ -95,7 +95,8 @@ public class TvOnAirFragment extends Fragment {
     }
 
     private void getOnAirTV(int page){
-        int limit = 9;
+        int limit = 15;
+
         Call<TVResponse> call = apiService.getTvOnAir(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<TVResponse>(){
 

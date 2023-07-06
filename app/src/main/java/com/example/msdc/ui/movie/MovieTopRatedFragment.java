@@ -95,7 +95,8 @@ public class MovieTopRatedFragment extends Fragment {
     }
 
     private void getTopRatedMovies(int page){
-        int limit = 9;
+        int limit = 15;
+
         Call<MovieResponse> call = apiService.getTopRatedMovies(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<MovieResponse>(){
 

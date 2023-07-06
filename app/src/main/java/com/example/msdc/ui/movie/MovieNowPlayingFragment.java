@@ -95,7 +95,8 @@ public class MovieNowPlayingFragment extends Fragment {
     }
 
     private void getNowPlayingMovies(int page){
-        int limit = 9;
+        int limit = 15;
+
         Call<MovieResponse> call = apiService.getNowPlayingMovies(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<MovieResponse>(){
 

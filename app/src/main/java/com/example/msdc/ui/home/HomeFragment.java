@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment {
 
     private int page = 1;
 
-    private final int limit = 9;
+    private final int limit = 15;
     private FragmentHomeBinding binding;
 
     public HomeFragment() {

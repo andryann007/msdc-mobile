@@ -47,7 +47,8 @@ public interface ApiService {
 
     @GET("search/movie")
     Call<MovieResponse> searchMovie(@Query("api_key") String apiKey, @Query("language") String language,
-                                    @Query("query") String query, @Query("page") int page);
+                                    @Query("query") String query, @Query("page") int page,
+                                    @Query("limit") int limit);
 
     @GET("discover/movie")
     Call<MovieResponse> filterMovie(@Query("api_key") String apiKey, @Query("language") String language,
@@ -90,7 +91,8 @@ public interface ApiService {
 
     @GET("search/tv")
     Call<TVResponse> searchTv(@Query("api_key") String apiKey, @Query("language") String language,
-                              @Query("query") String query, @Query("page") int page);
+                              @Query("query") String query, @Query("page") int page,
+                              @Query("limit") int limit);
 
     @GET("discover/tv")
     Call<TVResponse> filterTv(@Query("api_key") String apiKey, @Query("language") String language,

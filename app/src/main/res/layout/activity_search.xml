@@ -45,9 +45,8 @@
         android:gravity="center"
         android:fontFamily="sans-serif"
         android:text="@string/no_results"
-        android:textSize="36sp"
+        android:textSize="24sp"
         android:textColor="@color/black"
         android:visibility="gone"/>
-
 
 </RelativeLayout>

@@ -186,10 +186,6 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     } else{
                         setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
                     }
-
-                    binding.textGenreList.setVisibility(View.GONE);
-                    binding.textKeywordList.setVisibility(View.GONE);
-
                     setGenresMovie();
                     setKeywordsMovie();
                     setImagesMovie();
@@ -372,13 +368,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
                 assert response.body() != null;
-                if(response.body().getGenres()!=null){
+                if(!response.body().getGenres().isEmpty()){
                     binding.textGenreList.setVisibility(View.VISIBLE);
+                    binding.rvGenreList.setVisibility(View.VISIBLE);
+
                     int oldCount = movieGenre.size();
                     movieGenre.addAll(response.body().getGenres());
-                    genreAdapter.notifyItemChanged(oldCount, movieGenre.size());
+                    genreAdapter.notifyItemRangeInserted(oldCount, movieGenre.size());
                 } else {
-                    binding.textGenreList.setVisibility(View.GONE);
+                    setNoText(binding.textGenreList, "No Genres Yet !!!");
+                    binding.textGenreList.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -403,13 +402,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
                 assert response.body() != null;
-                if(response.body().getKeywords()!=null){
+                if(!response.body().getKeywords().isEmpty()){
                     binding.textKeywordList.setVisibility(View.VISIBLE);
+                    binding.rvKeywordList.setVisibility(View.VISIBLE);
+
                     int oldCount = movieKeyword.size();
                     movieKeyword.addAll(response.body().getKeywords());
-                    keywordAdapter.notifyItemChanged(oldCount, movieKeyword.size());
+                    keywordAdapter.notifyItemRangeInserted(oldCount, movieKeyword.size());
                 } else {
-                    binding.textKeywordList.setVisibility(View.GONE);
+                    setNoText(binding.textKeywordList, "No Keywords Yet !!!");
+                    binding.textKeywordList.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -434,12 +436,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
                 assert response.body() != null;
-                if(response.body().getResults()!=null){
+                if(!response.body().getResults().isEmpty()){
+                    binding.textImageList.setVisibility(View.VISIBLE);
+                    binding.rvImagesList.setVisibility(View.VISIBLE);
+
                     int oldCount = movieImagesList.size();
                     movieImagesList.addAll(response.body().getResults());
-                    movieImagesAdapter.notifyItemChanged(oldCount, movieImagesList.size());
+                    movieImagesAdapter.notifyItemRangeInserted(oldCount, movieImagesList.size());
                 } else {
-                    binding.textImageList.setVisibility(View.GONE);
+                    setNoText(binding.textImageList, "No Movie Images Yet !!!");
+                    binding.textImageList.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -465,12 +471,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
                 assert response.body() != null;
-                if(response.body().getCast()!=null){
+                if(!response.body().getCast().isEmpty()){
+                    binding.textMovieCreditCast.setVisibility(View.VISIBLE);
+                    binding.rvCreditCast.setVisibility(View.VISIBLE);
+
                     int oldCount = movieCreditCastResult.size();
                     movieCreditCastResult.addAll(response.body().getCast());
-                    creditCastAdapter.notifyItemChanged(oldCount, movieCreditCastResult.size());
+                    creditCastAdapter.notifyItemRangeInserted(oldCount, movieCreditCastResult.size());
                 } else {
-                    binding.textMovieCreditCast.setVisibility(View.GONE);
+                    setNoText(binding.textMovieCreditCast, "No Movie Credit Cast Yet !!!");
+                    binding.textMovieCreditCast.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -496,12 +506,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
                 assert response.body() != null;
-                if(response.body().getCrew()!=null){
+                if(!response.body().getCrew().isEmpty()){
+                    binding.textMovieCreditCrew.setVisibility(View.VISIBLE);
+                    binding.rvCreditCrew.setVisibility(View.VISIBLE);
+
                     int oldCount = movieCreditCrewResult.size();
                     movieCreditCrewResult.addAll(response.body().getCrew());
-                    creditCrewAdapter.notifyItemChanged(oldCount, movieCreditCrewResult.size());
+                    creditCrewAdapter.notifyItemRangeInserted(oldCount, movieCreditCrewResult.size());
                 } else {
-                    binding.textMovieCreditCrew.setVisibility(View.GONE);
+                    setNoText(binding.textMovieCreditCrew, "No Movie Credit Crew Yet !!!");
+                    binding.textMovieCreditCrew.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -526,12 +540,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 assert response.body() != null;
-                if(response.body().getResult()!=null){
+                if(!response.body().getResult().isEmpty()){
+                    binding.textMovieRecommendations.setVisibility(View.VISIBLE);
+                    binding.rvMovieRecommendations.setVisibility(View.VISIBLE);
+
                     int oldCount = movieRecommendationsResult.size();
                     movieRecommendationsResult.addAll(response.body().getResult());
-                    movieRecommendationsAdapter.notifyItemChanged(oldCount, movieRecommendationsResult.size());
+                    movieRecommendationsAdapter.notifyItemRangeInserted(oldCount, movieRecommendationsResult.size());
                 } else {
-                    binding.textMovieRecommendations.setVisibility(View.GONE);
+                    setNoText(binding.textMovieRecommendations, "No Movie Recommendations Yet !!!");
+                    binding.textMovieRecommendations.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -556,12 +574,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 assert response.body() != null;
-                if(response.body().getResult()!=null){
+                if(!response.body().getResult().isEmpty()){
+                    binding.textMovieSimilar.setVisibility(View.VISIBLE);
+                    binding.rvMovieSimilar.setVisibility(View.VISIBLE);
+
                     int oldCount = movieSimilarResult.size();
                     movieSimilarResult.addAll(response.body().getResult());
-                    movieSimilarAdapter.notifyItemChanged(oldCount, movieSimilarResult.size());
+                    movieSimilarAdapter.notifyItemRangeInserted(oldCount, movieSimilarResult.size());
                 } else {
-                    binding.textMovieSimilar.setVisibility(View.GONE);
+                    setNoText(binding.textMovieSimilar, "No Similar Movie Yet !!");
+                    binding.textMovieSimilar.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -626,12 +648,6 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     } else{
                         setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
                     }
-
-                    binding.textGenreList.setVisibility(View.GONE);
-                    binding.textKeywordList.setVisibility(View.GONE);
-                    binding.textMovieRecommendations.setText("TV Recommendations");
-                    binding.textMovieSimilar.setText("Similar TV");
-
                     setGenresTV();
                     setKeywordsTV();
                     setImagesTV();
@@ -664,13 +680,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<TVDetails> call, @NonNull Response<TVDetails> response) {
                 assert response.body() != null;
-                if(response.body().getGenres()!=null){
+                if(!response.body().getGenres().isEmpty()){
                     binding.textGenreList.setVisibility(View.VISIBLE);
+                    binding.rvGenreList.setVisibility(View.VISIBLE);
+
                     int oldCount = tvGenre.size();
                     tvGenre.addAll(response.body().getGenres());
-                    genreAdapter.notifyItemChanged(oldCount, tvGenre.size());
+                    genreAdapter.notifyItemRangeInserted(oldCount, tvGenre.size());
                 } else {
-                    binding.textGenreList.setVisibility(View.GONE);
+                    setNoText(binding.textGenreList, "No Genres Yet !!!");
+                    binding.textGenreList.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -695,13 +714,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
                 assert response.body() != null;
-                if(response.body().getKeywords()!=null){
+                if(!response.body().getKeywords().isEmpty()){
                     binding.textKeywordList.setVisibility(View.VISIBLE);
+                    binding.rvKeywordList.setVisibility(View.VISIBLE);
+
                     int oldCount = tvKeyword.size();
                     tvKeyword.addAll(response.body().getKeywords());
-                    keywordAdapter.notifyItemChanged(oldCount, tvKeyword.size());
+                    keywordAdapter.notifyItemRangeInserted(oldCount, tvKeyword.size());
                 } else {
-                    binding.textKeywordList.setVisibility(View.GONE);
+                    setNoText(binding.textKeywordList, "No Keywords Yet !!!");
+                    binding.textKeywordList.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -726,12 +748,16 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
                 assert response.body() != null;
-                if(response.body().getResults()!=null){
+                if(!response.body().getResults().isEmpty()){
+                    binding.textImageList.setVisibility(View.VISIBLE);
+                    binding.rvImagesList.setVisibility(View.VISIBLE);
+
                     int oldCount = tvImagesList.size();
                     tvImagesList.addAll(response.body().getResults());
-                    tvImagesAdapter.notifyItemChanged(oldCount, tvImagesList.size());
+                    tvImagesAdapter.notifyItemRangeInserted(oldCount, tvImagesList.size());
                 } else {
-                    binding.textImageList.setVisibility(View.GONE);
+                    setNoText(binding.textImageList, "No TV Shows Images Yet !!!");
+                    binding.textImageList.setVisibility(View.VISIBLE);
                 }
             }
             @Override
@@ -755,12 +781,17 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
                 assert response.body() != null;
-                if(response.body().getCast()!=null){
+                if(!response.body().getCast().isEmpty()){
+                    setNoteText(binding.textMovieCreditCast, "TV Shows Credit Cast");
+                    binding.textMovieCreditCast.setVisibility(View.VISIBLE);
+                    binding.rvCreditCast.setVisibility(View.VISIBLE);
+
                     int oldCount = tvCreditCastResult.size();
                     tvCreditCastResult.addAll(response.body().getCast());
-                    creditCastAdapter.notifyItemChanged(oldCount, tvCreditCastResult.size());
+                    creditCastAdapter.notifyItemRangeInserted(oldCount, tvCreditCastResult.size());
                 } else {
-                    binding.textMovieCreditCast.setVisibility(View.GONE);
+                    setNoText(binding.textMovieCreditCast, "No TV Shows Credit Cast Yet !!!");
+                    binding.textMovieCreditCast.setVisibility(View.VISIBLE);
                 }
             }
             @Override
@@ -784,12 +815,17 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
                 assert response.body() != null;
-                if(response.body().getCrew()!=null){
+                if(!response.body().getCrew().isEmpty()){
+                    setNoteText(binding.textMovieCreditCrew, "TV Shows Credit Crew");
+                    binding.textMovieCreditCrew.setVisibility(View.VISIBLE);
+                    binding.rvCreditCrew.setVisibility(View.VISIBLE);
+
                     int oldCount = tvCreditCrewResult.size();
                     tvCreditCrewResult.addAll(response.body().getCrew());
-                    creditCrewAdapter.notifyItemChanged(oldCount, tvCreditCrewResult.size());
+                    creditCrewAdapter.notifyItemRangeInserted(oldCount, tvCreditCrewResult.size());
                 } else {
-                    binding.textMovieCreditCrew.setVisibility(View.GONE);
+                    setNoText(binding.textMovieCreditCrew, "No TV Shows Credit Crew Yet !!!");
+                    binding.textMovieCreditCrew.setVisibility(View.VISIBLE);
                 }
             }
             @Override
@@ -813,12 +849,17 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 assert response.body() != null;
-                if(response.body().getResult()!=null){
+                if(!response.body().getResult().isEmpty()){
+                    setNoteText(binding.textMovieRecommendations, "TV Shows Recommendations");
+                    binding.textMovieRecommendations.setVisibility(View.VISIBLE);
+                    binding.rvMovieRecommendations.setVisibility(View.VISIBLE);
+
                     int oldCount = tvRecommendationsResult.size();
                     tvRecommendationsResult.addAll(response.body().getResult());
-                    tvRecommendationsAdapter.notifyItemChanged(oldCount, tvRecommendationsResult.size());
+                    tvRecommendationsAdapter.notifyItemRangeInserted(oldCount, tvRecommendationsResult.size());
                 } else {
-                    binding.textMovieRecommendations.setVisibility(View.GONE);
+                    setNoText(binding.textMovieRecommendations, "No Recommendations TV Shows Yet !!!");
+                    binding.textMovieRecommendations.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -843,12 +884,17 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 assert response.body() != null;
-                if(response.body().getResult()!=null){
+                if(!response.body().getResult().isEmpty()){
+                    setNoteText(binding.textMovieSimilar, "Similar TV Shows");
+                    binding.textMovieSimilar.setVisibility(View.VISIBLE);
+                    binding.rvMovieSimilar.setVisibility(View.VISIBLE);
+
                     int oldCount = tvSimilarResult.size();
                     tvSimilarResult.addAll(response.body().getResult());
-                    tvSimilarAdapter.notifyItemChanged(oldCount, tvSimilarResult.size());
+                    tvSimilarAdapter.notifyItemRangeInserted(oldCount, tvSimilarResult.size());
                 } else {
-                    binding.textMovieSimilar.setVisibility(View.GONE);
+                    setNoText(binding.textMovieSimilar, "No Similar TV Shows Yet !!!");
+                    binding.textMovieSimilar.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -878,6 +924,15 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     private void setTitleText(TextView tv, String textTitle, String textReleaseData){
         tv.setText(HtmlCompat.fromHtml("<b>" + textTitle + "</b><font color='#FFFFFF'> ("
                 + textReleaseData + ") </font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+    }
+
+    private void setNoText(TextView tv, String note){
+        tv.setText(HtmlCompat.fromHtml("<font color='#FF2400'><b>" + note + "</b>",
+                HtmlCompat.FROM_HTML_MODE_LEGACY));
+    }
+
+    private void setNoteText(TextView tv, String note){
+        tv.setText(HtmlCompat.fromHtml("<b>" + note + "</b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 
     @Override

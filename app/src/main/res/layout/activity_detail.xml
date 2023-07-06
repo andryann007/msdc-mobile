@@ -37,7 +37,8 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -275,7 +276,8 @@
                     android:fontFamily="sans-serif"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvGenreList"
@@ -287,7 +289,8 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/genre_container" />
+                    tools:listitem="@layout/genre_container"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/textKeywordList"
@@ -299,7 +302,8 @@
                     android:fontFamily="sans-serif"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvKeywordList"
@@ -311,7 +315,8 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/keyword_container" />
+                    tools:listitem="@layout/keyword_container"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/textImageList"
@@ -323,7 +328,8 @@
                     android:fontFamily="sans-serif"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvImagesList"
@@ -335,7 +341,8 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/image_container" />
+                    tools:listitem="@layout/image_container"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/textMovieCreditCast"
@@ -348,7 +355,8 @@
                     android:text="@string/text_movie_credit_cast"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvCreditCast"
@@ -359,7 +367,8 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/credit_container" />
+                    tools:listitem="@layout/credit_container"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/textMovieCreditCrew"
@@ -372,7 +381,8 @@
                     android:text="@string/text_movie_credit_crew"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvCreditCrew"
@@ -383,7 +393,8 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/credit_container" />
+                    tools:listitem="@layout/credit_container"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/textMovieRecommendations"
@@ -396,7 +407,8 @@
                     android:text="@string/movie_recommendations"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvMovieRecommendations"
@@ -407,7 +419,8 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_container" />
+                    tools:listitem="@layout/item_container"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/textMovieSimilar"
@@ -420,7 +433,8 @@
                     android:text="@string/similar_movies"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvMovieSimilar"
@@ -431,7 +445,8 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_container" />
+                    tools:listitem="@layout/item_container"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -441,9 +456,9 @@
 
     <ProgressBar
         android:id="@+id/loadingDetails"
+        style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_centerVertical="true"
-        android:visibility="gone"/>
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"/>
 
 </RelativeLayout>

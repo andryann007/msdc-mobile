@@ -35,7 +35,7 @@ public class SearchActivity extends AppCompatActivity {
     private MovieSearchAdapter movieSearchAdapter;
     private TVSearchAdapter tvSearchAdapter;
     private ApiService apiService;
-    private final int currentPage = 1;
+    private int page = 1;
     private ActivitySearchBinding binding;
 
     @Override
@@ -59,33 +59,60 @@ public class SearchActivity extends AppCompatActivity {
 
         switch(type){
             case "Movies" :
-                searchForMovies();
+                searchForMovies(page);
                 binding.rvSearch.setAdapter(movieSearchAdapter);
+
+                binding.rvSearch.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+
+                        if(!binding.rvSearch.canScrollVertically(1)){
+                            page++;
+                            searchForMovies(page);
+                        }
+                    }
+                });
                 break;
 
             case "TV Shows" :
-                searchForTV();
+                searchForTV(page);
                 binding.rvSearch.setAdapter(tvSearchAdapter);
+
+                binding.rvSearch.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+
+                        if(!binding.rvSearch.canScrollVertically(1)){
+                            page++;
+                            searchForTV(page);
+                        }
+                    }
+                });
                 break;
         }
 
         toolbar.setOnClickListener(v-> onBackPressed());
     }
 
-    private void searchForMovies() {
-        Call<MovieResponse> call = apiService.searchMovie(MainActivity.MY_API_KEY, MainActivity.LANGUAGE, query, currentPage);
+    private void searchForMovies(int page) {
+        int limit = 15;
+
+        Call<MovieResponse> call = apiService.searchMovie(MainActivity.MY_API_KEY, MainActivity.LANGUAGE, query, page, limit);
         call.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult().size() > 0){
+                    if(!response.body().getResult().isEmpty()){
                         binding.loadingSearch.setVisibility(View.GONE);
+
                         int oldCount = movieResults.size();
                         movieResults.addAll(response.body().getResult());
                         movieSearchAdapter.notifyItemRangeInserted(oldCount, movieResults.size());
-                        checkSize(response.body().getResult().size());
                     } else {
                         binding.loadingSearch.setVisibility(View.GONE);
+                        binding.textNoResults.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -94,26 +121,30 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 binding.loadingSearch.setVisibility(View.GONE);
+
+                binding.textNoResults.setText("No Results, Try Search Again !!!");
                 binding.textNoResults.setVisibility(View.VISIBLE);
-                binding.textNoResults.setText("Something wrong, with connection !!!");
             }
         });
     }
 
-    private void searchForTV() {
-        Call<TVResponse> call = apiService.searchTv(MainActivity.MY_API_KEY, MainActivity.LANGUAGE, query, currentPage);
+    private void searchForTV(int page) {
+        int limit = 15;
+
+        Call<TVResponse> call = apiService.searchTv(MainActivity.MY_API_KEY, MainActivity.LANGUAGE, query, page, limit);
         call.enqueue(new Callback<TVResponse>() {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult().size() > 0){
+                    if(!response.body().getResult().isEmpty()){
                         binding.loadingSearch.setVisibility(View.GONE);
+
                         int oldCount = tvResults.size();
                         tvResults.addAll(response.body().getResult());
                         tvSearchAdapter.notifyItemRangeInserted(oldCount, tvResults.size());
-                        checkSize(response.body().getResult().size());
                     } else {
                         binding.loadingSearch.setVisibility(View.GONE);
+                        binding.textNoResults.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -122,17 +153,10 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 binding.loadingSearch.setVisibility(View.GONE);
+
+                binding.textNoResults.setText("No Results, Try Search Again !!!");
                 binding.textNoResults.setVisibility(View.VISIBLE);
-                binding.textNoResults.setText("Something wrong, with connection !!!");
             }
         });
-    }
-
-    private void checkSize(int result){
-        if(result==0){
-            binding.textNoResults.setVisibility(View.VISIBLE);
-        } else {
-            binding.textNoResults.setVisibility(View.GONE);
-        }
     }
 }
