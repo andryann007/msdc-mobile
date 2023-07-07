@@ -29,7 +29,7 @@ public class CreditCrewAdapter extends RecyclerView.Adapter<CreditCrewAdapter.Cr
     @Override
     public CreditCrewAdapter.CreditViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new CreditCrewAdapter.CreditViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.credit_container, parent, false));
+                .inflate(R.layout.container_credit, parent, false));
     }
 
     @Override

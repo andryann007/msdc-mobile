@@ -26,7 +26,7 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Movi
     @Override
     public ImageListAdapter.MovieImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ImageListAdapter.MovieImageViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.image_container, parent, false));
+                .inflate(R.layout.container_image, parent, false));
     }
 
     @Override

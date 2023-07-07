@@ -289,7 +289,7 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/genre_container"
+                    tools:listitem="@layout/container_genre"
                     android:visibility="gone"/>
 
                 <TextView
@@ -315,7 +315,7 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/keyword_container"
+                    tools:listitem="@layout/container_keyword"
                     android:visibility="gone"/>
 
                 <TextView
@@ -341,7 +341,7 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/image_container"
+                    tools:listitem="@layout/container_image"
                     android:visibility="gone"/>
 
                 <TextView
@@ -367,7 +367,7 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/credit_container"
+                    tools:listitem="@layout/container_credit"
                     android:visibility="gone"/>
 
                 <TextView
@@ -393,7 +393,7 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/credit_container"
+                    tools:listitem="@layout/container_credit"
                     android:visibility="gone"/>
 
                 <TextView
@@ -419,7 +419,7 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_container"
+                    tools:listitem="@layout/container_item"
                     android:visibility="gone"/>
 
                 <TextView
@@ -445,7 +445,7 @@
                     android:overScrollMode="never"
                     android:scrollbars="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_container"
+                    tools:listitem="@layout/container_item"
                     android:visibility="gone"/>
 
             </LinearLayout>

@@ -28,7 +28,7 @@
         app:spanCount="3"
         android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-        tools:listitem="@layout/item_container_search"/>
+        tools:listitem="@layout/container_item_search"/>
 
     <ProgressBar
         android:id="@+id/loadingSearch"

@@ -905,7 +905,6 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             }
         });
     }
-
     private void setHtmlText(TextView tv, String textColored, String textValue){
         tv.setText(HtmlCompat.fromHtml("<font color='#FFFFFF'>" + textColored + "</font> : " +
                 "<b>" + textValue + "</b>", HtmlCompat.FROM_HTML_MODE_LEGACY));

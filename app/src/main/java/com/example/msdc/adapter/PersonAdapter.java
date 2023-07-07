@@ -1,6 +1,5 @@
 package com.example.msdc.adapter;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
     @Override
     public PersonAdapter.PersonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new PersonAdapter.PersonViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.person_container, parent, false));
+                .inflate(R.layout.container_person, parent, false));
     }
 
     @Override

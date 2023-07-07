@@ -38,7 +38,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMoviePopular"
-            tools:listitem="@layout/item_container"
+            tools:listitem="@layout/container_item"
             android:visibility="gone"/>
 
         <ProgressBar
@@ -84,7 +84,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMovieNowPlaying"
-            tools:listitem="@layout/item_container"
+            tools:listitem="@layout/container_item"
             android:visibility="gone"/>
 
         <ProgressBar
@@ -130,7 +130,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textUpcomingMovie"
-            tools:listitem="@layout/item_container"
+            tools:listitem="@layout/container_item"
             android:visibility="gone"/>
 
         <ProgressBar
@@ -176,7 +176,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMovieTopRated"
-            tools:listitem="@layout/item_container"
+            tools:listitem="@layout/container_item"
             android:visibility="gone"/>
 
         <ProgressBar

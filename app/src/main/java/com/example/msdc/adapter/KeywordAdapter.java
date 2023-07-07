@@ -24,7 +24,7 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.KeywordV
     @Override
     public KeywordAdapter.KeywordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new KeywordAdapter.KeywordViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.keyword_container, parent, false));
+                .inflate(R.layout.container_keyword, parent, false));
     }
 
     @Override

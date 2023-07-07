@@ -33,7 +33,7 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TvViewHolder>{
     @Override
     public TvViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         return new TvViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_container, parent, false));
+                .inflate(R.layout.container_item, parent, false));
     }
 
     @Override

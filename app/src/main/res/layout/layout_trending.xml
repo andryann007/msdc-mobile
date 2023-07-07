@@ -38,7 +38,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMovieTrending"
-            tools:listitem="@layout/item_container"
+            tools:listitem="@layout/container_item"
             android:visibility="gone"/>
 
         <ProgressBar
@@ -84,7 +84,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTVTrending"
-            tools:listitem="@layout/item_container"
+            tools:listitem="@layout/container_item"
             android:visibility="gone"/>
 
         <ProgressBar
@@ -130,7 +130,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textPersonTrending"
-            tools:listitem="@layout/person_container"
+            tools:listitem="@layout/container_person"
             android:visibility="gone"/>
 
         <ProgressBar
