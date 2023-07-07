@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class KeywordResult {
     @SerializedName("id")
-    private int id;
+    int id;
 
     @SerializedName("name")
-    private String name;
+    String name;
 
     public int getId() {
         return id;

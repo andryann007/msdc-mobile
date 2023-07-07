@@ -9,9 +9,5 @@ public class MovieResponse {
     @SerializedName("results")
     private final List<MovieResult> results = new ArrayList<>();
 
-    @SerializedName("total_pages")
-    int totalPages;
-
     public List<MovieResult> getResult(){ return results; }
-    public int getTotalPages(){ return totalPages; }
 }

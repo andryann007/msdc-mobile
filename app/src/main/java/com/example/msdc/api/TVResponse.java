@@ -9,9 +9,5 @@ public class TVResponse {
     @SerializedName("results")
     private final List<TVResult> results = new ArrayList<>();
 
-    @SerializedName("total_pages")
-    int totalPages;
-
     public List<TVResult> getResult(){ return results; }
-    public int getTotalPages(){ return totalPages; }
 }

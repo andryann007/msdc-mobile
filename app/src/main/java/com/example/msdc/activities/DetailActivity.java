@@ -161,7 +161,9 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     String revenueFormatted = NumberFormat.getCurrencyInstance(Locale.US).format(revenue);
                     setHtmlText(binding.textRevenueOrEpisodes, "Revenue", revenueFormatted);
 
-                    setHtmlText(binding.textPopularity, "Popularity", response.body().getPopularity());
+                    float popularity = Float.parseFloat(response.body().getPopularity());
+                    String mPopularity = String.format(Locale.US, "%.2f", popularity).replace(".",",");
+                    setHtmlText(binding.textPopularity, "Popularity", mPopularity);
 
                     if(response.body().getTagline().isEmpty()){
                         setHtmlEmptyText(binding.textTagline, "Tagline", "No Tagline Yet!!!");
@@ -169,16 +171,20 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         setHtmlText(binding.textTagline, "Tagline", response.body().getTagline());
                     }
 
-                    if(response.body().getVoteCount().isEmpty()){
+                    int voteCount = Integer.parseInt(response.body().getVoteCount());
+                    String mVoteCount = String.format(Locale.US, "%,d", voteCount);
+                    if(voteCount == 0){
                         setHtmlEmptyText(binding.textVoteCount, "Vote Count", "No Vote Count Yet!!!");
                     } else{
-                        setHtmlText(binding.textVoteCount, "Vote Count", response.body().getVoteCount());
+                        setHtmlText(binding.textVoteCount, "Vote Count", mVoteCount);
                     }
 
-                    if(response.body().getVoteAverage() == null){
+                    float voteAverage = Float.parseFloat(response.body().getVoteAverage());
+                    String mVoteAverage = String.format(Locale.US, "%.2f", voteAverage);
+                    if(voteAverage == 0){
                         setHtmlEmptyText(binding.textVoteAverage, "Vote Average", "No Vote Average Yet!!!");
                     } else{
-                        setHtmlText(binding.textVoteAverage, "Vote Average", response.body().getVoteAverage());
+                        setHtmlText(binding.textVoteAverage, "Vote Average", mVoteAverage);
                     }
 
                     if(response.body().getHomepage().isEmpty()){
@@ -614,7 +620,9 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     ImageAdapter.setPosterURL(binding.imagePoster, response.body().getPosterPath());
                     setTitleText(binding.textTitleReleaseDate, response.body().getName(),
                             response.body().getFirstAirDate() + " - " + response.body().getLastAirDate());
-                    setHtmlText(binding.textRunTime, "Episode Runtime",  Arrays.toString(response.body().getEpisodeRuntime()) + " Episodes");
+
+                    String mEpisodeRunTime = Arrays.toString(response.body().getEpisodeRuntime()).replace("[","").replace("]","");
+                    setHtmlText(binding.textRunTime, "Episode Runtime", mEpisodeRunTime + " Episodes");
 
                     binding.textOverview.setText(response.body().getOverview());
 
@@ -623,7 +631,9 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     setHtmlText(binding.textBudgetOrSeasons, "Number of Seasons", String.valueOf(response.body().getNumberOfSeasons()));
                     setHtmlText(binding.textRevenueOrEpisodes, "Number of Episodes", String.valueOf(response.body().getNumberOfEpisodes()));
 
-                    setHtmlText(binding.textPopularity, "Popularity", response.body().getPopularity());
+                    float popularity = Float.parseFloat(response.body().getPopularity());
+                    String mPopularity = String.format(Locale.US, "%.2f", popularity).replace(".",",");
+                    setHtmlText(binding.textPopularity, "Popularity", mPopularity);
 
                     if(response.body().getTagline().isEmpty()){
                         setHtmlEmptyText(binding.textTagline, "Tagline", "No Tagline Yet!!!");
@@ -631,16 +641,20 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         setHtmlText(binding.textTagline, "Tagline", response.body().getTagline());
                     }
 
-                    if(response.body().getVoteCount().isEmpty()){
+                    int voteCount = Integer.parseInt(response.body().getVoteCount());
+                    String mVoteCount = String.format(Locale.US, "%,d", voteCount);
+                    if(voteCount == 0){
                         setHtmlEmptyText(binding.textVoteCount, "Vote Count", "No Vote Count Yet!!!");
                     } else{
-                        setHtmlText(binding.textVoteCount, "Vote Count", response.body().getVoteCount());
+                        setHtmlText(binding.textVoteCount, "Vote Count", mVoteCount);
                     }
 
-                    if(response.body().getVoteAverage().isEmpty()){
+                    float voteAverage = Float.parseFloat(response.body().getVoteAverage());
+                    String mVoteAverage = String.format(Locale.US, "%.2f", voteAverage);
+                    if(voteAverage == 0){
                         setHtmlEmptyText(binding.textVoteAverage, "Vote Average", "No Vote Average Yet!!!");
                     } else{
-                        setHtmlText(binding.textVoteAverage, "Vote Average", response.body().getVoteAverage());
+                        setHtmlText(binding.textVoteAverage, "Vote Average", mVoteAverage);
                     }
 
                     if(response.body().getHomepage().isEmpty()){

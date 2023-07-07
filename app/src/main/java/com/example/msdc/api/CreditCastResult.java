@@ -6,9 +6,6 @@ public class CreditCastResult {
     @SerializedName("id")
     int id;
 
-    @SerializedName("credit_id")
-    String creditId;
-
     @SerializedName("name")
     String name;
 
@@ -23,10 +20,6 @@ public class CreditCastResult {
 
     public int getId() {
         return id;
-    }
-
-    public String getCreditId() {
-        return creditId;
     }
 
     public String getName() {

@@ -9,14 +9,7 @@ public class PersonResponse {
     @SerializedName("results")
     private final List<PersonResult> results = new ArrayList<>();
 
-    @SerializedName("total_pages")
-    int totalPages;
-
     public List<PersonResult> getResults() {
         return results;
-    }
-
-    public int getTotalPages() {
-        return totalPages;
     }
 }
