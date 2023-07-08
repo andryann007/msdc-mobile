@@ -53,10 +53,10 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Movi
         public void bindItem(ImageResult imageResult) {
             if(!TextUtils.isEmpty(imageResult.getFilePath())){
                 loadingImagesList.setVisibility(View.GONE);
-                ImageAdapter.setBackdropListURL(imagePath, imageResult.getFilePath());
+                ImageAdapter.setPosterURL(imagePath, imageResult.getFilePath());
             } else {
                 loadingImagesList.setVisibility(View.GONE);
-                imagePath.setImageResource(R.drawable.ic_android);
+                imagePath.setImageResource(R.drawable.ic_no_image);
             }
         }
     }

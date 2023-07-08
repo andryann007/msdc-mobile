@@ -28,22 +28,22 @@ public interface ApiService {
                                           @Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}")
-    Call<MovieDetails> getMovieDetails(@Path("movie_id") String id, @Query("api_key") String apiKey);
+    Call<MovieDetails> getMovieDetails(@Path("movie_id") int id, @Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}/recommendations")
-    Call<MovieResponse> getMovieRecommendations(@Path("movie_id") String id, @Query("api_key") String apiKey);
+    Call<MovieResponse> getMovieRecommendations(@Path("movie_id") int id, @Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}/similar")
-    Call<MovieResponse> getMovieSimilar(@Path("movie_id") String id, @Query("api_key") String apiKey);
+    Call<MovieResponse> getMovieSimilar(@Path("movie_id") int id, @Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}/images")
-    Call<ImageResponse> getMovieImages(@Path("movie_id") String id, @Query("api_key") String apiKey);
+    Call<ImageResponse> getMovieImages(@Path("movie_id") int id, @Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}/credits")
-    Call<CreditResponse> getMovieCredit(@Path("movie_id") String id, @Query("api_key") String apiKey);
+    Call<CreditResponse> getMovieCredit(@Path("movie_id") int id, @Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}/keywords")
-    Call<KeywordResponse> getMovieKeywords(@Path("movie_id") String id, @Query("api_key") String apiKey);
+    Call<KeywordResponse> getMovieKeywords(@Path("movie_id") int id, @Query("api_key") String apiKey);
 
     @GET("search/movie")
     Call<MovieResponse> searchMovie(@Query("api_key") String apiKey, @Query("language") String language,
@@ -77,17 +77,21 @@ public interface ApiService {
                                    @Path("time_window") String timeWindow,
                                    @Query("api_key") String apiKey);
 
-    @GET("tv/{tv_id}")
-    Call<TVDetails> getTvDetails(@Path("tv_id") String id, @Query("api_key") String apiKey);
+    @GET("tv/{series_id}")
+    Call<TVDetails> getTvDetails(@Path("series_id") int id, @Query("api_key") String apiKey);
 
-    @GET("tv/{tv_id}/images")
-    Call<ImageResponse> getTvImages(@Path("tv_id") String id, @Query("api_key") String apiKey);
+    @GET("tv/{series_id}/images")
+    Call<ImageResponse> getTvImages(@Path("series_id") int id, @Query("api_key") String apiKey);
 
-    @GET("tv/{tv_id}/keywords")
-    Call<KeywordResponse> getTvKeywords(@Path("tv_id") String id, @Query("api_key") String apiKey);
+    @GET("tv/{series_id}/keywords")
+    Call<KeywordResponse> getTvKeywords(@Path("series_id") int id, @Query("api_key") String apiKey);
 
-    @GET("tv/{tv_id}/credits")
-    Call<CreditResponse> getTvCredit(@Path("tv_id") String id, @Query("api_key") String apiKey);
+    @GET("tv/{series_id}/credits")
+    Call<CreditResponse> getTvCredit(@Path("series_id") int id, @Query("api_key") String apiKey);
+
+    @GET("tv/{series_id}/season/{season_number}")
+    Call<SeasonResponse> getTvSeasonAndEpisode(@Path("series_id") int id, @Path("season_number")
+                                                int seasonNumber, @Query("api_key") String apiKey);
 
     @GET("search/tv")
     Call<TVResponse> searchTv(@Query("api_key") String apiKey, @Query("language") String language,
@@ -106,11 +110,11 @@ public interface ApiService {
                                            @Query("api_key") String apiKey);
 
     @GET("person/{person_id}")
-    Call<PersonResponse> getPersonDetails(@Path("person_id") String id, @Query("api_key") String apiKey);
+    Call<PersonResponse> getPersonDetails(@Path("person_id") int id, @Query("api_key") String apiKey);
 
-    @GET("tv/{tv_id}/recommendations")
-    Call<TVResponse> getTVRecommendations(@Path("tv_id") String id, @Query("api_key") String apiKey);
+    @GET("tv/{series_id}/recommendations")
+    Call<TVResponse> getTVRecommendations(@Path("series_id") int id, @Query("api_key") String apiKey);
 
-    @GET("tv/{tv_id}/similar")
-    Call<TVResponse> getTVSimilar(@Path("tv_id") String id, @Query("api_key") String apiKey);
+    @GET("tv/{series_id}/similar")
+    Call<TVResponse> getTVSimilar(@Path("series_id") int id, @Query("api_key") String apiKey);
 }

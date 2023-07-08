@@ -448,6 +448,32 @@
                     tools:listitem="@layout/container_item"
                     android:visibility="gone"/>
 
+                <TextView
+                    android:id="@+id/textTvSeasonAndEpisodeList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:fontFamily="sans-serif"
+                    android:includeFontPadding="false"
+                    android:text="Episodes List :"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTvSeasonAndEpisodeList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    android:overScrollMode="never"
+                    android:scrollbars="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/container_tv_episodes"
+                    android:visibility="gone"/>
+
             </LinearLayout>
 
         </RelativeLayout>

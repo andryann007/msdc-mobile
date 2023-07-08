@@ -34,12 +34,14 @@ import com.example.msdc.adapter.ImageAdapter;
 import com.example.msdc.adapter.ImageListAdapter;
 import com.example.msdc.adapter.KeywordAdapter;
 import com.example.msdc.adapter.MovieAdapter;
+import com.example.msdc.adapter.SeasonAdapter;
 import com.example.msdc.adapter.TVAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
 import com.example.msdc.api.CreditCastResult;
 import com.example.msdc.api.CreditCrewResult;
 import com.example.msdc.api.CreditResponse;
+import com.example.msdc.api.EpisodeResult;
 import com.example.msdc.api.GenreResult;
 import com.example.msdc.api.ImageResponse;
 import com.example.msdc.api.ImageResult;
@@ -48,6 +50,7 @@ import com.example.msdc.api.KeywordResult;
 import com.example.msdc.api.MovieDetails;
 import com.example.msdc.api.MovieResponse;
 import com.example.msdc.api.MovieResult;
+import com.example.msdc.api.SeasonResponse;
 import com.example.msdc.api.TVDetails;
 import com.example.msdc.api.TVResponse;
 import com.example.msdc.api.TVResult;
@@ -69,7 +72,7 @@ import retrofit2.Retrofit;
 public class DetailActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private ApiService apiService;
     private int movie_id;
-    private int tv_id;
+    private int series_id;
     private ActivityDetailBinding binding;
     private MovieAdapter movieRecommendationsAdapter, movieSimilarAdapter;
     private TVAdapter tvRecommendationsAdapter, tvSimilarAdapter;
@@ -78,6 +81,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     private ImageListAdapter movieImagesAdapter, tvImagesAdapter;
     private CreditCastAdapter creditCastAdapter;
     private CreditCrewAdapter creditCrewAdapter;
+    private SeasonAdapter tvSeasonAdapter;
 
     private final List<GenreResult> movieGenre = new ArrayList<>();
     private final List<KeywordResult> movieKeyword = new ArrayList<>();
@@ -94,6 +98,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     private final List<TVResult> tvSimilarResult = new ArrayList<>();
     private final List<CreditCastResult> tvCreditCastResult = new ArrayList<>();
     private final List<CreditCrewResult> tvCreditCrewResult = new ArrayList<>();
+    private final ArrayList<EpisodeResult> episodeResults = new ArrayList<>();
 
     private String searchType = null;
     private String filterType = null;
@@ -101,6 +106,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     private String year = null;
     private String region = null;
     private String sortBy = null;
+    private int season = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +126,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             setMovieDetails();
 
         } else if(Objects.equals(type, "tv")){
-            tv_id = getIntent().getIntExtra("tv_id", 0);
+            series_id = getIntent().getIntExtra("series_id", 0);
             setTVDetails();
         }
 
@@ -129,7 +135,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
 
     private void setMovieDetails(){
         binding.loadingDetails.setVisibility(View.VISIBLE);
-        Call<MovieDetails> call = apiService.getMovieDetails(String.valueOf(movie_id), MainActivity.MY_API_KEY);
+        Call<MovieDetails> call = apiService.getMovieDetails(movie_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<MovieDetails>(){
 
             @SuppressLint("SetTextI18n")
@@ -143,7 +149,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
 
                     ImageAdapter.setPosterURL(binding.imagePosterBack, response.body().getPosterPath());
                     ImageAdapter.setBackdropURL(binding.imageBackdrop, response.body().getBackdropPath());
-                    ImageAdapter.setPosterLogoDetailURL(binding.imagePoster, response.body().getPosterPath());
+                    ImageAdapter.setPosterLogoURL(binding.imagePoster, response.body().getPosterPath());
                     setTitleText(binding.textTitleReleaseDate, response.body().getTitle(),
                             response.body().getReleaseDate());
                     setHtmlText(binding.textRunTime, "Runtime", response.body().getRuntime() + " Minutes");
@@ -192,13 +198,20 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     } else{
                         setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
                     }
-                    setGenresMovie();
-                    setKeywordsMovie();
-                    setImagesMovie();
-                    setMovieCast();
-                    setMovieCrew();
-                    setRecommendationsMovie();
-                    setSimilarMovie();
+                    getKeywordsMovie();
+                    getImagesMovie();
+                    getMovieCast();
+                    getMovieCrew();
+                    getRecommendationsMovie();
+                    getSimilarMovie();
+
+                    String movieGenre = String.valueOf(response.body().getGenres());
+                    if(!movieGenre.isEmpty()){
+                        getGenresMovie();
+                    } else {
+                        binding.textGenreList.setVisibility(View.GONE);
+                        binding.rvGenreList.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -361,15 +374,10 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
 
-    private void setGenresMovie(){
+    private void getGenresMovie(){
         genreAdapter = new GenreAdapter(movieGenre);
 
-        getGenresMovie();
-        binding.rvGenreList.setAdapter(genreAdapter);
-    }
-
-    private void getGenresMovie(){
-        Call<MovieDetails> call = apiService.getMovieDetails(String.valueOf(movie_id), MainActivity.MY_API_KEY);
+        Call<MovieDetails> call = apiService.getMovieDetails(movie_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<MovieDetails>() {
             @Override
             public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
@@ -393,17 +401,14 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
-    private void setKeywordsMovie(){
-        keywordAdapter = new KeywordAdapter(movieKeyword);
-
-        getKeywordsMovie();
-        binding.rvKeywordList.setAdapter(keywordAdapter);
+        binding.rvGenreList.setAdapter(genreAdapter);
     }
 
     private void getKeywordsMovie(){
-        Call<KeywordResponse> call = apiService.getMovieKeywords(String.valueOf(movie_id), MainActivity.MY_API_KEY);
+        keywordAdapter = new KeywordAdapter(movieKeyword);
+
+        Call<KeywordResponse> call = apiService.getMovieKeywords(movie_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<KeywordResponse>() {
             @Override
             public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
@@ -427,17 +432,14 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
-    private void setImagesMovie(){
-        movieImagesAdapter = new ImageListAdapter(movieImagesList);
-
-        getImagesMovie();
-        binding.rvImagesList.setAdapter(movieImagesAdapter);
+        binding.rvKeywordList.setAdapter(keywordAdapter);
     }
 
     private void getImagesMovie(){
-        Call<ImageResponse> call = apiService.getMovieImages(String.valueOf(movie_id), MainActivity.MY_API_KEY);
+        movieImagesAdapter = new ImageListAdapter(movieImagesList);
+
+        Call<ImageResponse> call = apiService.getMovieImages(movie_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<ImageResponse>() {
             @Override
             public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
@@ -461,17 +463,14 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
-    private void setMovieCast(){
-        creditCastAdapter = new CreditCastAdapter(movieCreditCastResult);
-
-        getMovieCast();
-        binding.rvCreditCast.setAdapter(creditCastAdapter);
+        binding.rvImagesList.setAdapter(movieImagesAdapter);
     }
 
     private void getMovieCast(){
-        Call<CreditResponse> call = apiService.getMovieCredit(String.valueOf(movie_id), MainActivity.MY_API_KEY);
+        creditCastAdapter = new CreditCastAdapter(movieCreditCastResult);
+
+        Call<CreditResponse> call = apiService.getMovieCredit(movie_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<CreditResponse>() {
 
             @Override
@@ -496,17 +495,14 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
-    private void setMovieCrew(){
-        creditCrewAdapter = new CreditCrewAdapter(movieCreditCrewResult);
-
-        getMovieCrew();
-        binding.rvCreditCrew.setAdapter(creditCrewAdapter);
+        binding.rvCreditCast.setAdapter(creditCastAdapter);
     }
 
     private void getMovieCrew(){
-        Call<CreditResponse> call = apiService.getMovieCredit(String.valueOf(movie_id), MainActivity.MY_API_KEY);
+        creditCrewAdapter = new CreditCrewAdapter(movieCreditCrewResult);
+
+        Call<CreditResponse> call = apiService.getMovieCredit(movie_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<CreditResponse>() {
 
             @Override
@@ -531,17 +527,14 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
-    private void setRecommendationsMovie(){
-        movieRecommendationsAdapter = new MovieAdapter(movieRecommendationsResult, this);
-
-        getRecommendationsMovie();
-        binding.rvMovieRecommendations.setAdapter(movieRecommendationsAdapter);
+        binding.rvCreditCrew.setAdapter(creditCrewAdapter);
     }
 
     private void getRecommendationsMovie(){
-        Call<MovieResponse> call = apiService.getMovieRecommendations(String.valueOf(movie_id), MainActivity.MY_API_KEY);
+        movieRecommendationsAdapter = new MovieAdapter(movieRecommendationsResult, this);
+
+        Call<MovieResponse> call = apiService.getMovieRecommendations(movie_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
@@ -565,17 +558,14 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
-    private void setSimilarMovie(){
-        movieSimilarAdapter = new MovieAdapter(movieSimilarResult, this);
-
-        getSimilarMovie();
-        binding.rvMovieSimilar.setAdapter(movieSimilarAdapter);
+        binding.rvMovieRecommendations.setAdapter(movieRecommendationsAdapter);
     }
 
     private void getSimilarMovie(){
-        Call<MovieResponse> call = apiService.getMovieSimilar(String.valueOf(movie_id), MainActivity.MY_API_KEY);
+        movieSimilarAdapter = new MovieAdapter(movieSimilarResult, this);
+
+        Call<MovieResponse> call = apiService.getMovieSimilar(movie_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
@@ -599,11 +589,13 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+        binding.rvMovieSimilar.setAdapter(movieSimilarAdapter);
     }
 
     private void setTVDetails(){
         binding.loadingDetails.setVisibility(View.VISIBLE);
-        Call<TVDetails> call = apiService.getTvDetails(String.valueOf(tv_id), MainActivity.MY_API_KEY);
+        Call<TVDetails> call = apiService.getTvDetails(series_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<TVDetails>(){
 
             @SuppressLint("SetTextI18n")
@@ -617,7 +609,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
 
                     ImageAdapter.setPosterURL(binding.imagePosterBack, response.body().getPosterPath());
                     ImageAdapter.setBackdropURL(binding.imageBackdrop, response.body().getBackdropPath());
-                    ImageAdapter.setPosterURL(binding.imagePoster, response.body().getPosterPath());
+                    ImageAdapter.setPosterLogoURL(binding.imagePoster, response.body().getPosterPath());
                     setTitleText(binding.textTitleReleaseDate, response.body().getName(),
                             response.body().getFirstAirDate() + " - " + response.body().getLastAirDate());
 
@@ -662,13 +654,32 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     } else{
                         setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
                     }
-                    setGenresTV();
-                    setKeywordsTV();
-                    setImagesTV();
-                    setTvCast();
-                    setTvCrew();
-                    setRecommendationsTV();
-                    setSimilarTV();
+                    getKeywordsTV();
+                    getImagesTV();
+                    getTvCast();
+                    getTvCrew();
+                    getRecommendationsTV();
+                    getSimilarTV();
+
+                    String tvGenre = String.valueOf(response.body().getGenres());
+                    if(!tvGenre.isEmpty()){
+                        getGenresTV();
+                    } else {
+                        binding.textGenreList.setVisibility(View.GONE);
+                        binding.rvGenreList.setVisibility(View.GONE);
+                    }
+
+                    int numberOfSeasons = response.body().getNumberOfSeasons();
+                    if(numberOfSeasons == 1){
+                        getTVEpisodes(numberOfSeasons);
+                    } else if(numberOfSeasons > 1){
+                        for(season = 1; season <= numberOfSeasons; season++){
+                            getTVEpisodes(season);
+                        }
+                    } else {
+                        binding.textTvSeasonAndEpisodeList.setVisibility(View.GONE);
+                        binding.rvTvSeasonAndEpisodeList.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -681,15 +692,10 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
         });
     }
 
-    private void setGenresTV(){
+    private void getGenresTV(){
         genreAdapter = new GenreAdapter(tvGenre);
 
-        getGenresTV();
-        binding.rvGenreList.setAdapter(genreAdapter);
-    }
-
-    private void getGenresTV(){
-        Call<TVDetails> call = apiService.getTvDetails(String.valueOf(tv_id), MainActivity.MY_API_KEY);
+        Call<TVDetails> call = apiService.getTvDetails(series_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<TVDetails>() {
             @Override
             public void onResponse(@NonNull Call<TVDetails> call, @NonNull Response<TVDetails> response) {
@@ -713,17 +719,14 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
-    private void setKeywordsTV(){
-        keywordAdapter = new KeywordAdapter(tvKeyword);
-
-        getKeywordsTV();
-        binding.rvKeywordList.setAdapter(keywordAdapter);
+        binding.rvGenreList.setAdapter(genreAdapter);
     }
 
     private void getKeywordsTV(){
-        Call<KeywordResponse> call = apiService.getTvKeywords(String.valueOf(tv_id), MainActivity.MY_API_KEY);
+        keywordAdapter = new KeywordAdapter(tvKeyword);
+
+        Call<KeywordResponse> call = apiService.getTvKeywords(series_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<KeywordResponse>() {
             @Override
             public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
@@ -747,17 +750,14 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
-    private void setImagesTV(){
-        tvImagesAdapter = new ImageListAdapter(tvImagesList);
-
-        getImagesTV();
-        binding.rvImagesList.setAdapter(tvImagesAdapter);
+        binding.rvKeywordList.setAdapter(keywordAdapter);
     }
 
     private void getImagesTV(){
-        Call<ImageResponse> call = apiService.getTvImages(String.valueOf(tv_id), MainActivity.MY_API_KEY);
+        tvImagesAdapter = new ImageListAdapter(tvImagesList);
+
+        Call<ImageResponse> call = apiService.getTvImages(series_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<ImageResponse>() {
             @Override
             public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
@@ -780,17 +780,14 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
-    private void setTvCast(){
-        creditCastAdapter = new CreditCastAdapter(tvCreditCastResult);
-
-        getTvCast();
-        binding.rvCreditCast.setAdapter(creditCastAdapter);
+        binding.rvImagesList.setAdapter(tvImagesAdapter);
     }
 
     private void getTvCast(){
-        Call<CreditResponse> call = apiService.getTvCredit(String.valueOf(tv_id), MainActivity.MY_API_KEY);
+        creditCastAdapter = new CreditCastAdapter(tvCreditCastResult);
+
+        Call<CreditResponse> call = apiService.getTvCredit(series_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<CreditResponse>() {
             @Override
             public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
@@ -814,17 +811,14 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
-    private void setTvCrew(){
-        creditCrewAdapter = new CreditCrewAdapter(tvCreditCrewResult);
-
-        getTvCrew();
-        binding.rvCreditCrew.setAdapter(creditCrewAdapter);
+        binding.rvCreditCast.setAdapter(creditCastAdapter);
     }
 
     private void getTvCrew(){
-        Call<CreditResponse> call = apiService.getTvCredit(String.valueOf(tv_id), MainActivity.MY_API_KEY);
+        creditCrewAdapter = new CreditCrewAdapter(tvCreditCrewResult);
+
+        Call<CreditResponse> call = apiService.getTvCredit(series_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<CreditResponse>() {
             @Override
             public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
@@ -848,17 +842,14 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
-    private void setRecommendationsTV(){
-        tvRecommendationsAdapter = new TVAdapter(tvRecommendationsResult, this);
-
-        getRecommendationsTV();
-        binding.rvMovieRecommendations.setAdapter(tvRecommendationsAdapter);
+        binding.rvCreditCrew.setAdapter(creditCrewAdapter);
     }
 
     private void getRecommendationsTV(){
-        Call<TVResponse> call = apiService.getTVRecommendations(String.valueOf(tv_id), MainActivity.MY_API_KEY);
+        tvRecommendationsAdapter = new TVAdapter(tvRecommendationsResult, this);
+
+        Call<TVResponse> call = apiService.getTVRecommendations(series_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<TVResponse>() {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
@@ -883,17 +874,14 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
-    private void setSimilarTV(){
-        tvSimilarAdapter = new TVAdapter(tvSimilarResult, this);
-
-        getSimilarTV();
-        binding.rvMovieSimilar.setAdapter(tvSimilarAdapter);
+        binding.rvMovieRecommendations.setAdapter(tvRecommendationsAdapter);
     }
 
     private void getSimilarTV(){
-        Call<TVResponse> call = apiService.getTVSimilar(String.valueOf(tv_id), MainActivity.MY_API_KEY);
+        tvSimilarAdapter = new TVAdapter(tvSimilarResult, this);
+
+        Call<TVResponse> call = apiService.getTVSimilar(series_id, MainActivity.MY_API_KEY);
         call.enqueue(new Callback<TVResponse>() {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
@@ -918,7 +906,40 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+        binding.rvMovieSimilar.setAdapter(tvSimilarAdapter);
     }
+
+    private void getTVEpisodes(int season){
+        tvSeasonAdapter = new SeasonAdapter(episodeResults);
+
+        Call<SeasonResponse> call = apiService.getTvSeasonAndEpisode(series_id, season, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<SeasonResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SeasonResponse> call, @NonNull Response<SeasonResponse> response) {
+                if(response.body()!=null) {
+                    binding.textTvSeasonAndEpisodeList.setVisibility(View.VISIBLE);
+                    binding.rvTvSeasonAndEpisodeList.setVisibility(View.VISIBLE);
+
+                    int oldCount = episodeResults.size();
+                    episodeResults.addAll(response.body().getEpisodeResults());
+                    tvSeasonAdapter.notifyItemRangeInserted(oldCount, episodeResults.size());
+                } else {
+                    setNoText(binding.textTvSeasonAndEpisodeList, "No Episodes List Yet !!!");
+                    binding.textTvSeasonAndEpisodeList.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SeasonResponse> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail to Fetch Episodes List !!!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvTvSeasonAndEpisodeList.setAdapter(tvSeasonAdapter);
+    }
+
     private void setHtmlText(TextView tv, String textColored, String textValue){
         tv.setText(HtmlCompat.fromHtml("<font color='#FFFFFF'>" + textColored + "</font> : " +
                 "<b>" + textValue + "</b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
