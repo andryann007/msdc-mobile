@@ -168,7 +168,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     setHtmlText(binding.textRevenueOrEpisodes, "Revenue", revenueFormatted);
 
                     float popularity = Float.parseFloat(response.body().getPopularity());
-                    String mPopularity = String.format(Locale.US, "%.2f", popularity).replace(".",",");
+                    String mPopularity = String.format(Locale.US, "%.2f", popularity);
                     setHtmlText(binding.textPopularity, "Popularity", mPopularity);
 
                     if(response.body().getTagline().isEmpty()){
@@ -178,7 +178,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     }
 
                     int voteCount = Integer.parseInt(response.body().getVoteCount());
-                    String mVoteCount = String.format(Locale.US, "%,d", voteCount);
+                    String mVoteCount = String.format(Locale.US, "%,d", voteCount).replace(",",".");
                     if(voteCount == 0){
                         setHtmlEmptyText(binding.textVoteCount, "Vote Count", "No Vote Count Yet!!!");
                     } else{
@@ -624,7 +624,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     setHtmlText(binding.textRevenueOrEpisodes, "Number of Episodes", String.valueOf(response.body().getNumberOfEpisodes()));
 
                     float popularity = Float.parseFloat(response.body().getPopularity());
-                    String mPopularity = String.format(Locale.US, "%.2f", popularity).replace(".",",");
+                    String mPopularity = String.format(Locale.US, "%.2f", popularity);
                     setHtmlText(binding.textPopularity, "Popularity", mPopularity);
 
                     if(response.body().getTagline().isEmpty()){
@@ -634,7 +634,7 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     }
 
                     int voteCount = Integer.parseInt(response.body().getVoteCount());
-                    String mVoteCount = String.format(Locale.US, "%,d", voteCount);
+                    String mVoteCount = String.format(Locale.US, "%,d", voteCount).replace(",",".");
                     if(voteCount == 0){
                         setHtmlEmptyText(binding.textVoteCount, "Vote Count", "No Vote Count Yet!!!");
                     } else{
