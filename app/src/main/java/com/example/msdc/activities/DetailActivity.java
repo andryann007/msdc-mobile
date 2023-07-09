@@ -197,6 +197,12 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         setHtmlEmptyText(binding.textHomePage, "Homepage", "No Website Homepage Yet!!!");
                     } else{
                         setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
+
+                        binding.textHomePage.setOnClickListener(v -> {
+                            Intent webView = new Intent(DetailActivity.this, WebViewActivity.class);
+                            webView.putExtra("url", response.body().getHomepage());
+                            startActivity(webView);
+                        });
                     }
                     getKeywordsMovie();
                     getImagesMovie();
@@ -653,6 +659,12 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                         setHtmlEmptyText(binding.textHomePage, "Homepage", "No Website Homepage Yet!!!");
                     } else{
                         setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
+
+                        binding.textHomePage.setOnClickListener(v -> {
+                            Intent webView = new Intent(DetailActivity.this, WebViewActivity.class);
+                            webView.putExtra("url", response.body().getHomepage());
+                            startActivity(webView);
+                        });
                     }
                     getKeywordsTV();
                     getImagesTV();
