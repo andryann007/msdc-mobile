@@ -95,7 +95,7 @@ public class MovieNowPlayingFragment extends Fragment {
     }
 
     private void getNowPlayingMovies(int page){
-        int limit = 15;
+        final int limit = 15;
 
         Call<MovieResponse> call = apiService.getNowPlayingMovies(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<MovieResponse>(){
@@ -103,22 +103,25 @@ public class MovieNowPlayingFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    loadingMovieNowPlaying.setVisibility(View.GONE);
-                    rvMovieNowPlaying.setVisibility(View.VISIBLE);
+                    if(!response.body().getResult().isEmpty()){
+                        loadingMovieNowPlaying.setVisibility(View.GONE);
+                        rvMovieNowPlaying.setVisibility(View.VISIBLE);
 
-                    int oldCount = movieNowPlayingResults.size();
-                    movieNowPlayingResults.addAll(response.body().getResult());
-                    movieNowPlayingAdapter.notifyItemRangeInserted(oldCount, movieNowPlayingResults.size());
-                } else if(movieNowPlayingResults.isEmpty()) {
-                    loadingMovieNowPlaying.setVisibility(View.GONE);
-                    textNoResult.setVisibility(View.VISIBLE);
+                        int oldCount = movieNowPlayingResults.size();
+                        movieNowPlayingResults.addAll(response.body().getResult());
+                        movieNowPlayingAdapter.notifyItemRangeInserted(oldCount, movieNowPlayingResults.size());
+                    } else {
+                        loadingMovieNowPlaying.setVisibility(View.GONE);
+                        textNoResult.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 loadingMovieNowPlaying.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Now Playing Movie !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : " + t.getCause(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

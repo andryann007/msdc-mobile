@@ -224,10 +224,596 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onFailure(@NonNull Call<MovieDetails> call, @NonNull Throwable t) {
                 binding.loadingDetails.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Detail Data !!!",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void getGenresMovie(){
+        genreAdapter = new GenreAdapter(movieGenre);
+
+        Call<MovieDetails> call = apiService.getMovieDetails(movie_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<MovieDetails>() {
+            @Override
+            public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
+                if(response.body() != null){
+                    if(!response.body().getGenres().isEmpty()){
+                        binding.textGenreList.setVisibility(View.VISIBLE);
+                        binding.rvGenreList.setVisibility(View.VISIBLE);
+
+                        int oldCount = movieGenre.size();
+                        movieGenre.addAll(response.body().getGenres());
+                        genreAdapter.notifyItemRangeInserted(oldCount, movieGenre.size());
+                    } else {
+                        setNoText(binding.textGenreList, "No Genres Yet !!!");
+                        binding.textGenreList.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MovieDetails> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvGenreList.setAdapter(genreAdapter);
+    }
+
+    private void getKeywordsMovie(){
+        keywordAdapter = new KeywordAdapter(movieKeyword);
+
+        Call<KeywordResponse> call = apiService.getMovieKeywords(movie_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<KeywordResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
+                if(response.body() != null){
+                    if(!response.body().getKeywords().isEmpty()){
+                        binding.textKeywordList.setVisibility(View.VISIBLE);
+                        binding.rvKeywordList.setVisibility(View.VISIBLE);
+
+                        int oldCount = movieKeyword.size();
+                        movieKeyword.addAll(response.body().getKeywords());
+                        keywordAdapter.notifyItemRangeInserted(oldCount, movieKeyword.size());
+                    } else {
+                        setNoText(binding.textKeywordList, "No Keywords Yet !!!");
+                        binding.textKeywordList.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<KeywordResponse> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvKeywordList.setAdapter(keywordAdapter);
+    }
+
+    private void getImagesMovie(){
+        movieImagesAdapter = new ImageListAdapter(movieImagesList);
+
+        Call<ImageResponse> call = apiService.getMovieImages(movie_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
+                if(response.body() != null){
+                    if(!response.body().getResults().isEmpty()){
+                        binding.textImageList.setVisibility(View.VISIBLE);
+                        binding.rvImagesList.setVisibility(View.VISIBLE);
+
+                        int oldCount = movieImagesList.size();
+                        movieImagesList.addAll(response.body().getResults());
+                        movieImagesAdapter.notifyItemRangeInserted(oldCount, movieImagesList.size());
+                    } else {
+                        setNoText(binding.textImageList, "No Movie Images Yet !!!");
+                        binding.textImageList.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ImageResponse> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvImagesList.setAdapter(movieImagesAdapter);
+    }
+
+    private void getMovieCast(){
+        creditCastAdapter = new CreditCastAdapter(movieCreditCastResult);
+
+        Call<CreditResponse> call = apiService.getMovieCredit(movie_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<CreditResponse>() {
+
+            @Override
+            public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
+                if(response.body() != null){
+                    if(!response.body().getCast().isEmpty()){
+                        binding.textMovieCreditCast.setVisibility(View.VISIBLE);
+                        binding.rvCreditCast.setVisibility(View.VISIBLE);
+
+                        int oldCount = movieCreditCastResult.size();
+                        movieCreditCastResult.addAll(response.body().getCast());
+                        creditCastAdapter.notifyItemRangeInserted(oldCount, movieCreditCastResult.size());
+                    } else {
+                        setNoText(binding.textMovieCreditCast, "No Movie Credit Cast Yet !!!");
+                        binding.textMovieCreditCast.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvCreditCast.setAdapter(creditCastAdapter);
+    }
+
+    private void getMovieCrew(){
+        creditCrewAdapter = new CreditCrewAdapter(movieCreditCrewResult);
+
+        Call<CreditResponse> call = apiService.getMovieCredit(movie_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<CreditResponse>() {
+
+            @Override
+            public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
+                if(response.body() != null){
+                    if(!response.body().getCrew().isEmpty()){
+                        binding.textMovieCreditCrew.setVisibility(View.VISIBLE);
+                        binding.rvCreditCrew.setVisibility(View.VISIBLE);
+
+                        int oldCount = movieCreditCrewResult.size();
+                        movieCreditCrewResult.addAll(response.body().getCrew());
+                        creditCrewAdapter.notifyItemRangeInserted(oldCount, movieCreditCrewResult.size());
+                    } else {
+                        setNoText(binding.textMovieCreditCrew, "No Movie Credit Crew Yet !!!");
+                        binding.textMovieCreditCrew.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvCreditCrew.setAdapter(creditCrewAdapter);
+    }
+
+    private void getRecommendationsMovie(){
+        movieRecommendationsAdapter = new MovieAdapter(movieRecommendationsResult, this);
+
+        Call<MovieResponse> call = apiService.getMovieRecommendations(movie_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
+                if(response.body() != null){
+                    if(!response.body().getResult().isEmpty()){
+                        binding.textMovieRecommendations.setVisibility(View.VISIBLE);
+                        binding.rvMovieRecommendations.setVisibility(View.VISIBLE);
+
+                        int oldCount = movieRecommendationsResult.size();
+                        movieRecommendationsResult.addAll(response.body().getResult());
+                        movieRecommendationsAdapter.notifyItemRangeInserted(oldCount, movieRecommendationsResult.size());
+                    } else {
+                        setNoText(binding.textMovieRecommendations, "No Movie Recommendations Yet !!!");
+                        binding.textMovieRecommendations.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvMovieRecommendations.setAdapter(movieRecommendationsAdapter);
+    }
+
+    private void getSimilarMovie(){
+        movieSimilarAdapter = new MovieAdapter(movieSimilarResult, this);
+
+        Call<MovieResponse> call = apiService.getMovieSimilar(movie_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
+                if(response.body() != null){
+                    if(!response.body().getResult().isEmpty()){
+                        binding.textMovieSimilar.setVisibility(View.VISIBLE);
+                        binding.rvMovieSimilar.setVisibility(View.VISIBLE);
+
+                        int oldCount = movieSimilarResult.size();
+                        movieSimilarResult.addAll(response.body().getResult());
+                        movieSimilarAdapter.notifyItemRangeInserted(oldCount, movieSimilarResult.size());
+                    } else {
+                        setNoText(binding.textMovieSimilar, "No Similar Movie Yet !!");
+                        binding.textMovieSimilar.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvMovieSimilar.setAdapter(movieSimilarAdapter);
+    }
+
+    private void setTVDetails(){
+        binding.loadingDetails.setVisibility(View.VISIBLE);
+        Call<TVDetails> call = apiService.getTvDetails(series_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<TVDetails>(){
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<TVDetails> call, @NonNull Response<TVDetails> response) {
+                if(response.body() != null){
+                    Objects.requireNonNull(getSupportActionBar()).setTitle(response.body().getName());
+                    binding.loadingDetails.setVisibility(View.GONE);
+                    binding.scrollView.setVisibility(View.VISIBLE);
+                    binding.imagePosterBack.setVisibility(View.VISIBLE);
+
+                    ImageAdapter.setPosterURL(binding.imagePosterBack, response.body().getPosterPath());
+                    ImageAdapter.setBackdropURL(binding.imageBackdrop, response.body().getBackdropPath());
+                    ImageAdapter.setPosterLogoURL(binding.imagePoster, response.body().getPosterPath());
+                    setTitleText(binding.textTitleReleaseDate, response.body().getName(),
+                            response.body().getFirstAirDate() + " - " + response.body().getLastAirDate());
+
+                    String mEpisodeRunTime = Arrays.toString(response.body().getEpisodeRuntime()).replace("[","").replace("]","");
+                    setHtmlText(binding.textRunTime, "Episode Runtime", mEpisodeRunTime + " Episodes");
+
+                    binding.textOverview.setText(response.body().getOverview());
+
+                    setHtmlText(binding.textLanguage, "Language", response.body().getOriginalLanguage());
+                    setHtmlText(binding.textStatus, "Status", response.body().getStatus());
+                    setHtmlText(binding.textBudgetOrSeasons, "Number of Seasons", String.valueOf(response.body().getNumberOfSeasons()));
+                    setHtmlText(binding.textRevenueOrEpisodes, "Number of Episodes", String.valueOf(response.body().getNumberOfEpisodes()));
+
+                    float popularity = Float.parseFloat(response.body().getPopularity());
+                    String mPopularity = String.format(Locale.US, "%.2f", popularity);
+                    setHtmlText(binding.textPopularity, "Popularity", mPopularity);
+
+                    if(response.body().getTagline().isEmpty()){
+                        setHtmlEmptyText(binding.textTagline, "Tagline", "No Tagline Yet!!!");
+                    } else{
+                        setHtmlText(binding.textTagline, "Tagline", response.body().getTagline());
+                    }
+
+                    int voteCount = Integer.parseInt(response.body().getVoteCount());
+                    String mVoteCount = String.format(Locale.US, "%,d", voteCount).replace(",",".");
+                    if(voteCount == 0){
+                        setHtmlEmptyText(binding.textVoteCount, "Vote Count", "No Vote Count Yet!!!");
+                    } else{
+                        setHtmlText(binding.textVoteCount, "Vote Count", mVoteCount);
+                    }
+
+                    float voteAverage = Float.parseFloat(response.body().getVoteAverage());
+                    String mVoteAverage = String.format(Locale.US, "%.2f", voteAverage);
+                    if(voteAverage == 0){
+                        setHtmlEmptyText(binding.textVoteAverage, "Vote Average", "No Vote Average Yet!!!");
+                    } else{
+                        setHtmlText(binding.textVoteAverage, "Vote Average", mVoteAverage);
+                    }
+
+                    if(response.body().getHomepage().isEmpty()){
+                        setHtmlEmptyText(binding.textHomePage, "Homepage", "No Website Homepage Yet!!!");
+                    } else{
+                        setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
+
+                        binding.textHomePage.setOnClickListener(v -> {
+                            Intent webView = new Intent(DetailActivity.this, WebViewActivity.class);
+                            webView.putExtra("url", response.body().getHomepage());
+                            startActivity(webView);
+                        });
+                    }
+                    getKeywordsTV();
+                    getImagesTV();
+                    getTvCast();
+                    getTvCrew();
+                    getRecommendationsTV();
+                    getSimilarTV();
+
+                    String tvGenre = String.valueOf(response.body().getGenres());
+                    if(!tvGenre.isEmpty()){
+                        getGenresTV();
+                    } else {
+                        binding.textGenreList.setVisibility(View.GONE);
+                        binding.rvGenreList.setVisibility(View.GONE);
+                    }
+
+                    int numberOfSeasons = response.body().getNumberOfSeasons();
+                    if(numberOfSeasons == 1){
+                        getTVEpisodes(numberOfSeasons);
+                    } else if(numberOfSeasons > 1){
+                        for(season = 1; season <= numberOfSeasons; season++){
+                            getTVEpisodes(season);
+                        }
+                    } else {
+                        binding.textTvSeasonAndEpisodeList.setVisibility(View.GONE);
+                        binding.rvTvSeasonAndEpisodeList.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<TVDetails> call, @NonNull Throwable t) {
+                binding.loadingDetails.setVisibility(View.GONE);
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getGenresTV(){
+        genreAdapter = new GenreAdapter(tvGenre);
+
+        Call<TVDetails> call = apiService.getTvDetails(series_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<TVDetails>() {
+            @Override
+            public void onResponse(@NonNull Call<TVDetails> call, @NonNull Response<TVDetails> response) {
+                if(response.body() != null){
+                    if(!response.body().getGenres().isEmpty()){
+                        binding.textGenreList.setVisibility(View.VISIBLE);
+                        binding.rvGenreList.setVisibility(View.VISIBLE);
+
+                        int oldCount = tvGenre.size();
+                        tvGenre.addAll(response.body().getGenres());
+                        genreAdapter.notifyItemRangeInserted(oldCount, tvGenre.size());
+                    } else {
+                        setNoText(binding.textGenreList, "No Genres Yet !!!");
+                        binding.textGenreList.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<TVDetails> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvGenreList.setAdapter(genreAdapter);
+    }
+
+    private void getKeywordsTV(){
+        keywordAdapter = new KeywordAdapter(tvKeyword);
+
+        Call<KeywordResponse> call = apiService.getTvKeywords(series_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<KeywordResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
+                if(response.body() != null){
+                    if(!response.body().getKeywords().isEmpty()){
+                        binding.textKeywordList.setVisibility(View.VISIBLE);
+                        binding.rvKeywordList.setVisibility(View.VISIBLE);
+
+                        int oldCount = tvKeyword.size();
+                        tvKeyword.addAll(response.body().getKeywords());
+                        keywordAdapter.notifyItemRangeInserted(oldCount, tvKeyword.size());
+                    } else {
+                        setNoText(binding.textKeywordList, "No Keywords Yet !!!");
+                        binding.textKeywordList.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<KeywordResponse> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvKeywordList.setAdapter(keywordAdapter);
+    }
+
+    private void getImagesTV(){
+        tvImagesAdapter = new ImageListAdapter(tvImagesList);
+
+        Call<ImageResponse> call = apiService.getTvImages(series_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
+                if(response.body() != null){
+                    if(!response.body().getResults().isEmpty()){
+                        binding.textImageList.setVisibility(View.VISIBLE);
+                        binding.rvImagesList.setVisibility(View.VISIBLE);
+
+                        int oldCount = tvImagesList.size();
+                        tvImagesList.addAll(response.body().getResults());
+                        tvImagesAdapter.notifyItemRangeInserted(oldCount, tvImagesList.size());
+                    } else {
+                        setNoText(binding.textImageList, "No TV Shows Images Yet !!!");
+                        binding.textImageList.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ImageResponse> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvImagesList.setAdapter(tvImagesAdapter);
+    }
+
+    private void getTvCast(){
+        creditCastAdapter = new CreditCastAdapter(tvCreditCastResult);
+
+        Call<CreditResponse> call = apiService.getTvCredit(series_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<CreditResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
+                if(response.body() != null){
+                    if(!response.body().getCast().isEmpty()){
+                        setNoteText(binding.textMovieCreditCast, "TV Shows Credit Cast");
+                        binding.textMovieCreditCast.setVisibility(View.VISIBLE);
+                        binding.rvCreditCast.setVisibility(View.VISIBLE);
+
+                        int oldCount = tvCreditCastResult.size();
+                        tvCreditCastResult.addAll(response.body().getCast());
+                        creditCastAdapter.notifyItemRangeInserted(oldCount, tvCreditCastResult.size());
+                    } else {
+                        setNoText(binding.textMovieCreditCast, "No TV Shows Credit Cast Yet !!!");
+                        binding.textMovieCreditCast.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvCreditCast.setAdapter(creditCastAdapter);
+    }
+
+    private void getTvCrew(){
+        creditCrewAdapter = new CreditCrewAdapter(tvCreditCrewResult);
+
+        Call<CreditResponse> call = apiService.getTvCredit(series_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<CreditResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
+                if(response.body() != null){
+                    if(!response.body().getCrew().isEmpty()){
+                        setNoteText(binding.textMovieCreditCrew, "TV Shows Credit Crew");
+                        binding.textMovieCreditCrew.setVisibility(View.VISIBLE);
+                        binding.rvCreditCrew.setVisibility(View.VISIBLE);
+
+                        int oldCount = tvCreditCrewResult.size();
+                        tvCreditCrewResult.addAll(response.body().getCrew());
+                        creditCrewAdapter.notifyItemRangeInserted(oldCount, tvCreditCrewResult.size());
+                    } else {
+                        setNoText(binding.textMovieCreditCrew, "No TV Shows Credit Crew Yet !!!");
+                        binding.textMovieCreditCrew.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvCreditCrew.setAdapter(creditCrewAdapter);
+    }
+
+    private void getRecommendationsTV(){
+        tvRecommendationsAdapter = new TVAdapter(tvRecommendationsResult, this);
+
+        Call<TVResponse> call = apiService.getTVRecommendations(series_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<TVResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
+                if(response.body() != null){
+                    if(!response.body().getResult().isEmpty()){
+                        setNoteText(binding.textMovieRecommendations, "TV Shows Recommendations");
+                        binding.textMovieRecommendations.setVisibility(View.VISIBLE);
+                        binding.rvMovieRecommendations.setVisibility(View.VISIBLE);
+
+                        int oldCount = tvRecommendationsResult.size();
+                        tvRecommendationsResult.addAll(response.body().getResult());
+                        tvRecommendationsAdapter.notifyItemRangeInserted(oldCount, tvRecommendationsResult.size());
+                    } else {
+                        setNoText(binding.textMovieRecommendations, "No Recommendations TV Shows Yet !!!");
+                        binding.textMovieRecommendations.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvMovieRecommendations.setAdapter(tvRecommendationsAdapter);
+    }
+
+    private void getSimilarTV(){
+        tvSimilarAdapter = new TVAdapter(tvSimilarResult, this);
+
+        Call<TVResponse> call = apiService.getTVSimilar(series_id, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<TVResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
+                if(response.body() != null){
+                    if(!response.body().getResult().isEmpty()){
+                        setNoteText(binding.textMovieSimilar, "Similar TV Shows");
+                        binding.textMovieSimilar.setVisibility(View.VISIBLE);
+                        binding.rvMovieSimilar.setVisibility(View.VISIBLE);
+
+                        int oldCount = tvSimilarResult.size();
+                        tvSimilarResult.addAll(response.body().getResult());
+                        tvSimilarAdapter.notifyItemRangeInserted(oldCount, tvSimilarResult.size());
+                    } else {
+                        setNoText(binding.textMovieSimilar, "No Similar TV Shows Yet !!!");
+                        binding.textMovieSimilar.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvMovieSimilar.setAdapter(tvSimilarAdapter);
+    }
+
+    private void getTVEpisodes(int season){
+        tvSeasonAdapter = new SeasonAdapter(episodeResults);
+
+        Call<SeasonResponse> call = apiService.getTvSeasonAndEpisode(series_id, season, MainActivity.MY_API_KEY);
+        call.enqueue(new Callback<SeasonResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SeasonResponse> call, @NonNull Response<SeasonResponse> response) {
+                if(response.body()!=null) {
+                    binding.textTvSeasonAndEpisodeList.setVisibility(View.VISIBLE);
+                    binding.rvTvSeasonAndEpisodeList.setVisibility(View.VISIBLE);
+
+                    int oldCount = episodeResults.size();
+                    episodeResults.addAll(response.body().getEpisodeResults());
+                    tvSeasonAdapter.notifyItemRangeInserted(oldCount, episodeResults.size());
+                } else {
+                    setNoText(binding.textTvSeasonAndEpisodeList, "No Episodes List Yet !!!");
+                    binding.textTvSeasonAndEpisodeList.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SeasonResponse> call, @NonNull Throwable t) {
+                Toast.makeText(DetailActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.rvTvSeasonAndEpisodeList.setAdapter(tvSeasonAdapter);
     }
 
     private void dialogSearch() {
@@ -266,11 +852,11 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
 
     private void doSearch(String query) {
         if(query.isEmpty()){
-            Toast.makeText(getApplicationContext(),"No Input !!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DetailActivity.this,"No Input !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         if(searchType == null){
-            Toast.makeText(getApplicationContext(),"No Search Type !!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DetailActivity.this,"No Search Type !!!", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent i = new Intent(DetailActivity.this, SearchActivity.class);
@@ -377,579 +963,6 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                 startActivity(i);
                 break;
         }
-    }
-
-
-    private void getGenresMovie(){
-        genreAdapter = new GenreAdapter(movieGenre);
-
-        Call<MovieDetails> call = apiService.getMovieDetails(movie_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<MovieDetails>() {
-            @Override
-            public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
-                assert response.body() != null;
-                if(!response.body().getGenres().isEmpty()){
-                    binding.textGenreList.setVisibility(View.VISIBLE);
-                    binding.rvGenreList.setVisibility(View.VISIBLE);
-
-                    int oldCount = movieGenre.size();
-                    movieGenre.addAll(response.body().getGenres());
-                    genreAdapter.notifyItemRangeInserted(oldCount, movieGenre.size());
-                } else {
-                    setNoText(binding.textGenreList, "No Genres Yet !!!");
-                    binding.textGenreList.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<MovieDetails> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Genres List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvGenreList.setAdapter(genreAdapter);
-    }
-
-    private void getKeywordsMovie(){
-        keywordAdapter = new KeywordAdapter(movieKeyword);
-
-        Call<KeywordResponse> call = apiService.getMovieKeywords(movie_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<KeywordResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
-                assert response.body() != null;
-                if(!response.body().getKeywords().isEmpty()){
-                    binding.textKeywordList.setVisibility(View.VISIBLE);
-                    binding.rvKeywordList.setVisibility(View.VISIBLE);
-
-                    int oldCount = movieKeyword.size();
-                    movieKeyword.addAll(response.body().getKeywords());
-                    keywordAdapter.notifyItemRangeInserted(oldCount, movieKeyword.size());
-                } else {
-                    setNoText(binding.textKeywordList, "No Keywords Yet !!!");
-                    binding.textKeywordList.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<KeywordResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Keywords List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvKeywordList.setAdapter(keywordAdapter);
-    }
-
-    private void getImagesMovie(){
-        movieImagesAdapter = new ImageListAdapter(movieImagesList);
-
-        Call<ImageResponse> call = apiService.getMovieImages(movie_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<ImageResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
-                assert response.body() != null;
-                if(!response.body().getResults().isEmpty()){
-                    binding.textImageList.setVisibility(View.VISIBLE);
-                    binding.rvImagesList.setVisibility(View.VISIBLE);
-
-                    int oldCount = movieImagesList.size();
-                    movieImagesList.addAll(response.body().getResults());
-                    movieImagesAdapter.notifyItemRangeInserted(oldCount, movieImagesList.size());
-                } else {
-                    setNoText(binding.textImageList, "No Movie Images Yet !!!");
-                    binding.textImageList.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ImageResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Images List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvImagesList.setAdapter(movieImagesAdapter);
-    }
-
-    private void getMovieCast(){
-        creditCastAdapter = new CreditCastAdapter(movieCreditCastResult);
-
-        Call<CreditResponse> call = apiService.getMovieCredit(movie_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<CreditResponse>() {
-
-            @Override
-            public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
-                assert response.body() != null;
-                if(!response.body().getCast().isEmpty()){
-                    binding.textMovieCreditCast.setVisibility(View.VISIBLE);
-                    binding.rvCreditCast.setVisibility(View.VISIBLE);
-
-                    int oldCount = movieCreditCastResult.size();
-                    movieCreditCastResult.addAll(response.body().getCast());
-                    creditCastAdapter.notifyItemRangeInserted(oldCount, movieCreditCastResult.size());
-                } else {
-                    setNoText(binding.textMovieCreditCast, "No Movie Credit Cast Yet !!!");
-                    binding.textMovieCreditCast.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Credit Cast List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvCreditCast.setAdapter(creditCastAdapter);
-    }
-
-    private void getMovieCrew(){
-        creditCrewAdapter = new CreditCrewAdapter(movieCreditCrewResult);
-
-        Call<CreditResponse> call = apiService.getMovieCredit(movie_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<CreditResponse>() {
-
-            @Override
-            public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
-                assert response.body() != null;
-                if(!response.body().getCrew().isEmpty()){
-                    binding.textMovieCreditCrew.setVisibility(View.VISIBLE);
-                    binding.rvCreditCrew.setVisibility(View.VISIBLE);
-
-                    int oldCount = movieCreditCrewResult.size();
-                    movieCreditCrewResult.addAll(response.body().getCrew());
-                    creditCrewAdapter.notifyItemRangeInserted(oldCount, movieCreditCrewResult.size());
-                } else {
-                    setNoText(binding.textMovieCreditCrew, "No Movie Credit Crew Yet !!!");
-                    binding.textMovieCreditCrew.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Credit Crew List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvCreditCrew.setAdapter(creditCrewAdapter);
-    }
-
-    private void getRecommendationsMovie(){
-        movieRecommendationsAdapter = new MovieAdapter(movieRecommendationsResult, this);
-
-        Call<MovieResponse> call = apiService.getMovieRecommendations(movie_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<MovieResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
-                assert response.body() != null;
-                if(!response.body().getResult().isEmpty()){
-                    binding.textMovieRecommendations.setVisibility(View.VISIBLE);
-                    binding.rvMovieRecommendations.setVisibility(View.VISIBLE);
-
-                    int oldCount = movieRecommendationsResult.size();
-                    movieRecommendationsResult.addAll(response.body().getResult());
-                    movieRecommendationsAdapter.notifyItemRangeInserted(oldCount, movieRecommendationsResult.size());
-                } else {
-                    setNoText(binding.textMovieRecommendations, "No Movie Recommendations Yet !!!");
-                    binding.textMovieRecommendations.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Recommendations Movies List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvMovieRecommendations.setAdapter(movieRecommendationsAdapter);
-    }
-
-    private void getSimilarMovie(){
-        movieSimilarAdapter = new MovieAdapter(movieSimilarResult, this);
-
-        Call<MovieResponse> call = apiService.getMovieSimilar(movie_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<MovieResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
-                assert response.body() != null;
-                if(!response.body().getResult().isEmpty()){
-                    binding.textMovieSimilar.setVisibility(View.VISIBLE);
-                    binding.rvMovieSimilar.setVisibility(View.VISIBLE);
-
-                    int oldCount = movieSimilarResult.size();
-                    movieSimilarResult.addAll(response.body().getResult());
-                    movieSimilarAdapter.notifyItemRangeInserted(oldCount, movieSimilarResult.size());
-                } else {
-                    setNoText(binding.textMovieSimilar, "No Similar Movie Yet !!");
-                    binding.textMovieSimilar.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Similar Movies List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvMovieSimilar.setAdapter(movieSimilarAdapter);
-    }
-
-    private void setTVDetails(){
-        binding.loadingDetails.setVisibility(View.VISIBLE);
-        Call<TVDetails> call = apiService.getTvDetails(series_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<TVDetails>(){
-
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(@NonNull Call<TVDetails> call, @NonNull Response<TVDetails> response) {
-                if(response.body() != null){
-                    Objects.requireNonNull(getSupportActionBar()).setTitle(response.body().getName());
-                    binding.loadingDetails.setVisibility(View.GONE);
-                    binding.scrollView.setVisibility(View.VISIBLE);
-                    binding.imagePosterBack.setVisibility(View.VISIBLE);
-
-                    ImageAdapter.setPosterURL(binding.imagePosterBack, response.body().getPosterPath());
-                    ImageAdapter.setBackdropURL(binding.imageBackdrop, response.body().getBackdropPath());
-                    ImageAdapter.setPosterLogoURL(binding.imagePoster, response.body().getPosterPath());
-                    setTitleText(binding.textTitleReleaseDate, response.body().getName(),
-                            response.body().getFirstAirDate() + " - " + response.body().getLastAirDate());
-
-                    String mEpisodeRunTime = Arrays.toString(response.body().getEpisodeRuntime()).replace("[","").replace("]","");
-                    setHtmlText(binding.textRunTime, "Episode Runtime", mEpisodeRunTime + " Episodes");
-
-                    binding.textOverview.setText(response.body().getOverview());
-
-                    setHtmlText(binding.textLanguage, "Language", response.body().getOriginalLanguage());
-                    setHtmlText(binding.textStatus, "Status", response.body().getStatus());
-                    setHtmlText(binding.textBudgetOrSeasons, "Number of Seasons", String.valueOf(response.body().getNumberOfSeasons()));
-                    setHtmlText(binding.textRevenueOrEpisodes, "Number of Episodes", String.valueOf(response.body().getNumberOfEpisodes()));
-
-                    float popularity = Float.parseFloat(response.body().getPopularity());
-                    String mPopularity = String.format(Locale.US, "%.2f", popularity);
-                    setHtmlText(binding.textPopularity, "Popularity", mPopularity);
-
-                    if(response.body().getTagline().isEmpty()){
-                        setHtmlEmptyText(binding.textTagline, "Tagline", "No Tagline Yet!!!");
-                    } else{
-                        setHtmlText(binding.textTagline, "Tagline", response.body().getTagline());
-                    }
-
-                    int voteCount = Integer.parseInt(response.body().getVoteCount());
-                    String mVoteCount = String.format(Locale.US, "%,d", voteCount).replace(",",".");
-                    if(voteCount == 0){
-                        setHtmlEmptyText(binding.textVoteCount, "Vote Count", "No Vote Count Yet!!!");
-                    } else{
-                        setHtmlText(binding.textVoteCount, "Vote Count", mVoteCount);
-                    }
-
-                    float voteAverage = Float.parseFloat(response.body().getVoteAverage());
-                    String mVoteAverage = String.format(Locale.US, "%.2f", voteAverage);
-                    if(voteAverage == 0){
-                        setHtmlEmptyText(binding.textVoteAverage, "Vote Average", "No Vote Average Yet!!!");
-                    } else{
-                        setHtmlText(binding.textVoteAverage, "Vote Average", mVoteAverage);
-                    }
-
-                    if(response.body().getHomepage().isEmpty()){
-                        setHtmlEmptyText(binding.textHomePage, "Homepage", "No Website Homepage Yet!!!");
-                    } else{
-                        setHtmlLinkText(binding.textHomePage, response.body().getHomepage(), response.body().getHomepage());
-
-                        binding.textHomePage.setOnClickListener(v -> {
-                            Intent webView = new Intent(DetailActivity.this, WebViewActivity.class);
-                            webView.putExtra("url", response.body().getHomepage());
-                            startActivity(webView);
-                        });
-                    }
-                    getKeywordsTV();
-                    getImagesTV();
-                    getTvCast();
-                    getTvCrew();
-                    getRecommendationsTV();
-                    getSimilarTV();
-
-                    String tvGenre = String.valueOf(response.body().getGenres());
-                    if(!tvGenre.isEmpty()){
-                        getGenresTV();
-                    } else {
-                        binding.textGenreList.setVisibility(View.GONE);
-                        binding.rvGenreList.setVisibility(View.GONE);
-                    }
-
-                    int numberOfSeasons = response.body().getNumberOfSeasons();
-                    if(numberOfSeasons == 1){
-                        getTVEpisodes(numberOfSeasons);
-                    } else if(numberOfSeasons > 1){
-                        for(season = 1; season <= numberOfSeasons; season++){
-                            getTVEpisodes(season);
-                        }
-                    } else {
-                        binding.textTvSeasonAndEpisodeList.setVisibility(View.GONE);
-                        binding.rvTvSeasonAndEpisodeList.setVisibility(View.GONE);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<TVDetails> call, @NonNull Throwable t) {
-                binding.loadingDetails.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Detail Data !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void getGenresTV(){
-        genreAdapter = new GenreAdapter(tvGenre);
-
-        Call<TVDetails> call = apiService.getTvDetails(series_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<TVDetails>() {
-            @Override
-            public void onResponse(@NonNull Call<TVDetails> call, @NonNull Response<TVDetails> response) {
-                assert response.body() != null;
-                if(!response.body().getGenres().isEmpty()){
-                    binding.textGenreList.setVisibility(View.VISIBLE);
-                    binding.rvGenreList.setVisibility(View.VISIBLE);
-
-                    int oldCount = tvGenre.size();
-                    tvGenre.addAll(response.body().getGenres());
-                    genreAdapter.notifyItemRangeInserted(oldCount, tvGenre.size());
-                } else {
-                    setNoText(binding.textGenreList, "No Genres Yet !!!");
-                    binding.textGenreList.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<TVDetails> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Genres List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvGenreList.setAdapter(genreAdapter);
-    }
-
-    private void getKeywordsTV(){
-        keywordAdapter = new KeywordAdapter(tvKeyword);
-
-        Call<KeywordResponse> call = apiService.getTvKeywords(series_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<KeywordResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<KeywordResponse> call, @NonNull Response<KeywordResponse> response) {
-                assert response.body() != null;
-                if(!response.body().getKeywords().isEmpty()){
-                    binding.textKeywordList.setVisibility(View.VISIBLE);
-                    binding.rvKeywordList.setVisibility(View.VISIBLE);
-
-                    int oldCount = tvKeyword.size();
-                    tvKeyword.addAll(response.body().getKeywords());
-                    keywordAdapter.notifyItemRangeInserted(oldCount, tvKeyword.size());
-                } else {
-                    setNoText(binding.textKeywordList, "No Keywords Yet !!!");
-                    binding.textKeywordList.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<KeywordResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Keywords List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvKeywordList.setAdapter(keywordAdapter);
-    }
-
-    private void getImagesTV(){
-        tvImagesAdapter = new ImageListAdapter(tvImagesList);
-
-        Call<ImageResponse> call = apiService.getTvImages(series_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<ImageResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
-                assert response.body() != null;
-                if(!response.body().getResults().isEmpty()){
-                    binding.textImageList.setVisibility(View.VISIBLE);
-                    binding.rvImagesList.setVisibility(View.VISIBLE);
-
-                    int oldCount = tvImagesList.size();
-                    tvImagesList.addAll(response.body().getResults());
-                    tvImagesAdapter.notifyItemRangeInserted(oldCount, tvImagesList.size());
-                } else {
-                    setNoText(binding.textImageList, "No TV Shows Images Yet !!!");
-                    binding.textImageList.setVisibility(View.VISIBLE);
-                }
-            }
-            @Override
-            public void onFailure(@NonNull Call<ImageResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Images List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvImagesList.setAdapter(tvImagesAdapter);
-    }
-
-    private void getTvCast(){
-        creditCastAdapter = new CreditCastAdapter(tvCreditCastResult);
-
-        Call<CreditResponse> call = apiService.getTvCredit(series_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<CreditResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
-                assert response.body() != null;
-                if(!response.body().getCast().isEmpty()){
-                    setNoteText(binding.textMovieCreditCast, "TV Shows Credit Cast");
-                    binding.textMovieCreditCast.setVisibility(View.VISIBLE);
-                    binding.rvCreditCast.setVisibility(View.VISIBLE);
-
-                    int oldCount = tvCreditCastResult.size();
-                    tvCreditCastResult.addAll(response.body().getCast());
-                    creditCastAdapter.notifyItemRangeInserted(oldCount, tvCreditCastResult.size());
-                } else {
-                    setNoText(binding.textMovieCreditCast, "No TV Shows Credit Cast Yet !!!");
-                    binding.textMovieCreditCast.setVisibility(View.VISIBLE);
-                }
-            }
-            @Override
-            public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Credit Cast List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvCreditCast.setAdapter(creditCastAdapter);
-    }
-
-    private void getTvCrew(){
-        creditCrewAdapter = new CreditCrewAdapter(tvCreditCrewResult);
-
-        Call<CreditResponse> call = apiService.getTvCredit(series_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<CreditResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<CreditResponse> call, @NonNull Response<CreditResponse> response) {
-                assert response.body() != null;
-                if(!response.body().getCrew().isEmpty()){
-                    setNoteText(binding.textMovieCreditCrew, "TV Shows Credit Crew");
-                    binding.textMovieCreditCrew.setVisibility(View.VISIBLE);
-                    binding.rvCreditCrew.setVisibility(View.VISIBLE);
-
-                    int oldCount = tvCreditCrewResult.size();
-                    tvCreditCrewResult.addAll(response.body().getCrew());
-                    creditCrewAdapter.notifyItemRangeInserted(oldCount, tvCreditCrewResult.size());
-                } else {
-                    setNoText(binding.textMovieCreditCrew, "No TV Shows Credit Crew Yet !!!");
-                    binding.textMovieCreditCrew.setVisibility(View.VISIBLE);
-                }
-            }
-            @Override
-            public void onFailure(@NonNull Call<CreditResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Credit Crew List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvCreditCrew.setAdapter(creditCrewAdapter);
-    }
-
-    private void getRecommendationsTV(){
-        tvRecommendationsAdapter = new TVAdapter(tvRecommendationsResult, this);
-
-        Call<TVResponse> call = apiService.getTVRecommendations(series_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<TVResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
-                assert response.body() != null;
-                if(!response.body().getResult().isEmpty()){
-                    setNoteText(binding.textMovieRecommendations, "TV Shows Recommendations");
-                    binding.textMovieRecommendations.setVisibility(View.VISIBLE);
-                    binding.rvMovieRecommendations.setVisibility(View.VISIBLE);
-
-                    int oldCount = tvRecommendationsResult.size();
-                    tvRecommendationsResult.addAll(response.body().getResult());
-                    tvRecommendationsAdapter.notifyItemRangeInserted(oldCount, tvRecommendationsResult.size());
-                } else {
-                    setNoText(binding.textMovieRecommendations, "No Recommendations TV Shows Yet !!!");
-                    binding.textMovieRecommendations.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Recommendation TV Shows List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvMovieRecommendations.setAdapter(tvRecommendationsAdapter);
-    }
-
-    private void getSimilarTV(){
-        tvSimilarAdapter = new TVAdapter(tvSimilarResult, this);
-
-        Call<TVResponse> call = apiService.getTVSimilar(series_id, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<TVResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
-                assert response.body() != null;
-                if(!response.body().getResult().isEmpty()){
-                    setNoteText(binding.textMovieSimilar, "Similar TV Shows");
-                    binding.textMovieSimilar.setVisibility(View.VISIBLE);
-                    binding.rvMovieSimilar.setVisibility(View.VISIBLE);
-
-                    int oldCount = tvSimilarResult.size();
-                    tvSimilarResult.addAll(response.body().getResult());
-                    tvSimilarAdapter.notifyItemRangeInserted(oldCount, tvSimilarResult.size());
-                } else {
-                    setNoText(binding.textMovieSimilar, "No Similar TV Shows Yet !!!");
-                    binding.textMovieSimilar.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Similar TV Shows List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvMovieSimilar.setAdapter(tvSimilarAdapter);
-    }
-
-    private void getTVEpisodes(int season){
-        tvSeasonAdapter = new SeasonAdapter(episodeResults);
-
-        Call<SeasonResponse> call = apiService.getTvSeasonAndEpisode(series_id, season, MainActivity.MY_API_KEY);
-        call.enqueue(new Callback<SeasonResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<SeasonResponse> call, @NonNull Response<SeasonResponse> response) {
-                if(response.body()!=null) {
-                    binding.textTvSeasonAndEpisodeList.setVisibility(View.VISIBLE);
-                    binding.rvTvSeasonAndEpisodeList.setVisibility(View.VISIBLE);
-
-                    int oldCount = episodeResults.size();
-                    episodeResults.addAll(response.body().getEpisodeResults());
-                    tvSeasonAdapter.notifyItemRangeInserted(oldCount, episodeResults.size());
-                } else {
-                    setNoText(binding.textTvSeasonAndEpisodeList, "No Episodes List Yet !!!");
-                    binding.textTvSeasonAndEpisodeList.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<SeasonResponse> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail to Fetch Episodes List !!!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.rvTvSeasonAndEpisodeList.setAdapter(tvSeasonAdapter);
     }
 
     private void setHtmlText(TextView tv, String textColored, String textValue){

@@ -1,12 +1,14 @@
 package com.example.msdc.adapter;
 
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class ImageAdapter {
-	public static final String POSTER_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w342";
+	public static final String POSTER_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+
 	public static final String POSTER_IMAGE_LOGO_URL = "https://image.tmdb.org/t/p/w185";
 	
 	public static final String PROFILE_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w185";
@@ -25,6 +27,8 @@ public class ImageAdapter {
 
                 @Override
                 public void onError(Exception e){
+                    Toast.makeText(imageView.getContext(), e.getMessage() + " cause : "
+                            + e.getCause(), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch(Exception ignored){
@@ -40,6 +44,8 @@ public class ImageAdapter {
 
                 @Override
                 public void onError(Exception e){
+                    Toast.makeText(imageView.getContext(), e.getMessage() + " cause : "
+                            + e.getCause(), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch(Exception ignored){
@@ -55,6 +61,8 @@ public class ImageAdapter {
 
                 @Override
                 public void onError(Exception e){
+                    Toast.makeText(imageView.getContext(), e.getMessage() + " cause : "
+                            + e.getCause(), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch(Exception ignored){
@@ -70,6 +78,8 @@ public class ImageAdapter {
 
                 @Override
                 public void onError(Exception e){
+                    Toast.makeText(imageView.getContext(), e.getMessage() + " cause : "
+                            + e.getCause(), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch(Exception ignored){
@@ -85,6 +95,8 @@ public class ImageAdapter {
 
                 @Override
                 public void onError(Exception e){
+                    Toast.makeText(imageView.getContext(), e.getMessage() + " cause : "
+                            + e.getCause(), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch(Exception ignored){

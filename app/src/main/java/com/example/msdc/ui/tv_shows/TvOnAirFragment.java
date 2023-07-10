@@ -103,22 +103,25 @@ public class TvOnAirFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    loadingTvOnAir.setVisibility(View.GONE);
-                    rvTvOnAir.setVisibility(View.VISIBLE);
+                    if(!response.body().getResult().isEmpty()){
+                        loadingTvOnAir.setVisibility(View.GONE);
+                        rvTvOnAir.setVisibility(View.VISIBLE);
 
-                    int oldCount = tvOnAirResults.size();
-                    tvOnAirResults.addAll(response.body().getResult());
-                    tvOnAirAdapter.notifyItemRangeInserted(oldCount, tvOnAirResults.size());
-                } else if(tvOnAirResults.isEmpty()){
-                    loadingTvOnAir.setVisibility(View.GONE);
-                    textNoResult.setVisibility(View.VISIBLE);
+                        int oldCount = tvOnAirResults.size();
+                        tvOnAirResults.addAll(response.body().getResult());
+                        tvOnAirAdapter.notifyItemRangeInserted(oldCount, tvOnAirResults.size());
+                    } else {
+                        loadingTvOnAir.setVisibility(View.GONE);
+                        textNoResult.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 loadingTvOnAir.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch On Air TV Shows !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : " + t.getCause(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

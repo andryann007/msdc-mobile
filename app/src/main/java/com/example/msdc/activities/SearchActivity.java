@@ -1,8 +1,8 @@
 package com.example.msdc.activities;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,11 +31,12 @@ import retrofit2.Response;
 public class SearchActivity extends AppCompatActivity {
     private final List<MovieResult> movieResults = new ArrayList<>();
     private final List<TVResult> tvResults = new ArrayList<>();
-    private String query;
     private MovieSearchAdapter movieSearchAdapter;
     private TVSearchAdapter tvSearchAdapter;
     private ApiService apiService;
     private int page = 1;
+    private final int limit = 15;
+    private String query;
     private ActivitySearchBinding binding;
 
     @Override
@@ -97,8 +98,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchForMovies(int page) {
-        int limit = 15;
-
         Call<MovieResponse> call = apiService.searchMovie(MainActivity.MY_API_KEY, MainActivity.LANGUAGE, query, page, limit);
         call.enqueue(new Callback<MovieResponse>() {
             @Override
@@ -117,20 +116,16 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
 
-            @SuppressLint("SetTextI18n")
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 binding.loadingSearch.setVisibility(View.GONE);
-
-                binding.textNoResults.setText("No Results, Try Search Again !!!");
-                binding.textNoResults.setVisibility(View.VISIBLE);
+                Toast.makeText(SearchActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void searchForTV(int page) {
-        int limit = 15;
-
         Call<TVResponse> call = apiService.searchTv(MainActivity.MY_API_KEY, MainActivity.LANGUAGE, query, page, limit);
         call.enqueue(new Callback<TVResponse>() {
             @Override
@@ -149,13 +144,11 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
 
-            @SuppressLint("SetTextI18n")
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 binding.loadingSearch.setVisibility(View.GONE);
-
-                binding.textNoResults.setText("No Results, Try Search Again !!!");
-                binding.textNoResults.setVisibility(View.VISIBLE);
+                Toast.makeText(SearchActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }

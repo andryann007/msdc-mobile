@@ -140,7 +140,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
+                    if(!response.body().getResult().isEmpty()){
                         loadingMovieTopRated.setVisibility(View.GONE);
                         rvMovieTopRated.setVisibility(View.VISIBLE);
 
@@ -154,7 +154,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 loadingMovieTopRated.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Top Rated Movie !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -188,7 +189,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
+                    if(!response.body().getResult().isEmpty()){
                         loadingMovieUpcoming.setVisibility(View.GONE);
                         rvMovieUpcoming.setVisibility(View.VISIBLE);
 
@@ -202,7 +203,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 loadingMovieUpcoming.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Upcoming Movie !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -236,7 +238,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
+                    if(!response.body().getResult().isEmpty()){
                         loadingMovieNowPlaying.setVisibility(View.GONE);
                         rvMovieNowPlaying.setVisibility(View.VISIBLE);
 
@@ -250,7 +252,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 loadingMovieNowPlaying.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Now Playing Movie !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -284,7 +287,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
+                    if(!response.body().getResult().isEmpty()){
                         loadingMoviePopular.setVisibility(View.GONE);
                         rvMoviePopular.setVisibility(View.VISIBLE);
 
@@ -298,7 +301,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 loadingMoviePopular.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Popular Movie !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -332,7 +336,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
+                    if(!response.body().getResult().isEmpty()){
                         loadingTvOnAir.setVisibility(View.GONE);
                         rvTvOnAir.setVisibility(View.VISIBLE);
 
@@ -346,7 +350,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 loadingTvOnAir.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch On Air TV Shows !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -380,7 +385,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
+                    if(!response.body().getResult().isEmpty()){
                         loadingTvTopRated.setVisibility(View.GONE);
                         rvTvTopRated.setVisibility(View.VISIBLE);
 
@@ -394,7 +399,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 loadingTvTopRated.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Top Rated TV Shows !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -428,7 +434,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
+                    if(!response.body().getResult().isEmpty()){
                         loadingTvPopular.setVisibility(View.GONE);
                         rvTvPopular.setVisibility(View.VISIBLE);
 
@@ -442,7 +448,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 loadingTvPopular.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Popular TV Shows !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -475,7 +482,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
+                    if(!response.body().getResult().isEmpty()){
                         loadingTvAiringToday.setVisibility(View.GONE);
                         rvTvAiringToday.setVisibility(View.VISIBLE);
 
@@ -489,7 +496,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 loadingTvAiringToday.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Airing TV Shows !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -511,7 +519,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult() != null){
+                    if(!response.body().getResult().isEmpty()){
                         loadingMovieTrending.setVisibility(View.GONE);
                         rvMovieTrending.setVisibility(View.VISIBLE);
 
@@ -525,7 +533,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 loadingMovieTrending.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Trending Movie !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -546,7 +555,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResult()!=null){
+                    if(!response.body().getResult().isEmpty()){
                         loadingTvTrending.setVisibility(View.GONE);
                         rvTvTrending.setVisibility(View.VISIBLE);
 
@@ -560,7 +569,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 loadingTvTrending.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Trending TV Shows !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -582,7 +592,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<PersonResponse> call, @NonNull Response<PersonResponse> response) {
                 if(response.body() != null){
-                    if(response.body().getResults()!=null){
+                    if(!response.body().getResults().isEmpty()){
                         loadingPersonTrending.setVisibility(View.GONE);
                         rvPersonTrending.setVisibility(View.VISIBLE);
 
@@ -596,7 +606,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<PersonResponse> call, @NonNull Throwable t) {
                 loadingPersonTrending.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Trending Person !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }

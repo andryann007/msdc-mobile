@@ -3,6 +3,9 @@ package com.example.msdc.api;
 import com.google.gson.annotations.SerializedName;
 
 public class EpisodeResult {
+    @SerializedName("air_date")
+    String airDate;
+
     @SerializedName("episode_number")
     int episodeNumber;
 
@@ -23,6 +26,10 @@ public class EpisodeResult {
 
     @SerializedName("still_path")
     String stillPath;
+
+    public String getAirDate() {
+        return airDate;
+    }
 
     public int getEpisodeNumber() {
         return episodeNumber;

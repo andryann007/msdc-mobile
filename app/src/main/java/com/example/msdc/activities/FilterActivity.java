@@ -50,7 +50,7 @@ public class FilterActivity extends AppCompatActivity {
     private ProgressBar progressFilter;
 
     private int page = 1;
-    private final int limit = 9;
+    private final int limit = 15;
     private String genre = null;
     private String region = null;
     private String sortType = null;
@@ -152,25 +152,25 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    int oldCount = filterMovieResults.size();
-                    progressFilter.setVisibility(View.GONE);
-                    rvFilter.setVisibility(View.VISIBLE);
+                    if(!response.body().getResult().isEmpty()){
+                        int oldCount = filterMovieResults.size();
+                        progressFilter.setVisibility(View.GONE);
+                        rvFilter.setVisibility(View.VISIBLE);
 
-                    filterMovieResults.addAll(response.body().getResult());
-                    filterMovieAdapter.notifyItemRangeInserted(oldCount, filterMovieResults.size());
-                } else if(filterMovieResults.isEmpty()){
-                    progressFilter.setVisibility(View.GONE);
-                    noFilterResult.setVisibility(View.VISIBLE);
-                } else {
-                    progressFilter.setVisibility(View.GONE);
+                        filterMovieResults.addAll(response.body().getResult());
+                        filterMovieAdapter.notifyItemRangeInserted(oldCount, filterMovieResults.size());
+                    } else {
+                        progressFilter.setVisibility(View.GONE);
+                        noFilterResult.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 progressFilter.setVisibility(View.GONE);
-                Toast.makeText(FilterActivity.this, "Fail to Fetch Data !!!",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(FilterActivity.this, t.getMessage() + " cause : "
+                        + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -181,25 +181,25 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    int oldCount = filterTvResults.size();
-                    progressFilter.setVisibility(View.GONE);
-                    rvFilter.setVisibility(View.VISIBLE);
+                    if(!response.body().getResult().isEmpty()){
+                        int oldCount = filterTvResults.size();
+                        progressFilter.setVisibility(View.GONE);
+                        rvFilter.setVisibility(View.VISIBLE);
 
-                    filterTvResults.addAll(response.body().getResult());
-                    filterTvAdapter.notifyItemRangeInserted(oldCount, filterTvResults.size());
-                } else if(filterTvResults.isEmpty()){
-                    progressFilter.setVisibility(View.GONE);
-                    noFilterResult.setVisibility(View.VISIBLE);
-                } else {
-                    progressFilter.setVisibility(View.GONE);
+                        filterTvResults.addAll(response.body().getResult());
+                        filterTvAdapter.notifyItemRangeInserted(oldCount, filterTvResults.size());
+                    } else {
+                        progressFilter.setVisibility(View.GONE);
+                        noFilterResult.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 progressFilter.setVisibility(View.GONE);
-                Toast.makeText(FilterActivity.this, "Fail to Fetch Data !!!",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(FilterActivity.this, t.getMessage() + " cause : "
+                                + t.getCause(), Toast.LENGTH_SHORT).show();
             }
         });
     }

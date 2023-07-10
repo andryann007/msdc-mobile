@@ -95,7 +95,7 @@ public class MovieUpcomingFragment extends Fragment {
     }
 
     private void getUpcomingMovies(int page){
-        int limit = 15;
+        final int limit = 15;
 
         Call<MovieResponse> call = apiService.getUpcomingMovies(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<MovieResponse>(){
@@ -103,22 +103,25 @@ public class MovieUpcomingFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    loadingMovieUpcoming.setVisibility(View.GONE);
-                    rvMovieUpcoming.setVisibility(View.VISIBLE);
+                    if(!response.body().getResult().isEmpty()){
+                        loadingMovieUpcoming.setVisibility(View.GONE);
+                        rvMovieUpcoming.setVisibility(View.VISIBLE);
 
-                    int oldCount = movieUpcomingResults.size();
-                    movieUpcomingResults.addAll(response.body().getResult());
-                    movieUpcomingAdapter.notifyItemRangeInserted(oldCount, movieUpcomingResults.size());
-                } else if(movieUpcomingResults.isEmpty()){
-                    loadingMovieUpcoming.setVisibility(View.GONE);
-                    textNoResult.setVisibility(View.VISIBLE);
+                        int oldCount = movieUpcomingResults.size();
+                        movieUpcomingResults.addAll(response.body().getResult());
+                        movieUpcomingAdapter.notifyItemRangeInserted(oldCount, movieUpcomingResults.size());
+                    } else {
+                        loadingMovieUpcoming.setVisibility(View.GONE);
+                        textNoResult.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 loadingMovieUpcoming.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Upcoming Movie !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : " + t.getCause(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

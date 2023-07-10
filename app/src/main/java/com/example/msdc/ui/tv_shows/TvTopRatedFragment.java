@@ -103,22 +103,25 @@ public class TvTopRatedFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    loadingTvTopRated.setVisibility(View.GONE);
-                    rvTvTopRated.setVisibility(View.VISIBLE);
+                    if(!response.body().getResult().isEmpty()){
+                        loadingTvTopRated.setVisibility(View.GONE);
+                        rvTvTopRated.setVisibility(View.VISIBLE);
 
-                    int oldCount = tvTopRatedResults.size();
-                    tvTopRatedResults.addAll(response.body().getResult());
-                    tvTopRatedAdapter.notifyItemRangeInserted(oldCount, tvTopRatedResults.size());
-                } else if(tvTopRatedResults.isEmpty()){
-                    loadingTvTopRated.setVisibility(View.GONE);
-                    textNoResult.setVisibility(View.VISIBLE);
+                        int oldCount = tvTopRatedResults.size();
+                        tvTopRatedResults.addAll(response.body().getResult());
+                        tvTopRatedAdapter.notifyItemRangeInserted(oldCount, tvTopRatedResults.size());
+                    } else {
+                        loadingTvTopRated.setVisibility(View.GONE);
+                        textNoResult.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 loadingTvTopRated.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Top Rated TV Shows !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : " + t.getCause(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

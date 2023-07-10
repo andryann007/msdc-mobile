@@ -94,7 +94,7 @@ public class MoviePopularFragment extends Fragment {
     }
 
     private void getPopularMovies(int page){
-        int limit = 15;
+        final int limit = 15;
 
         Call<MovieResponse> call = apiService.getPopularMovies(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<MovieResponse>(){
@@ -102,22 +102,25 @@ public class MoviePopularFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    loadingMoviePopular.setVisibility(View.GONE);
-                    rvMoviePopular.setVisibility(View.VISIBLE);
+                    if(!response.body().getResult().isEmpty()){
+                        loadingMoviePopular.setVisibility(View.GONE);
+                        rvMoviePopular.setVisibility(View.VISIBLE);
 
-                    int oldCount = moviePopularResults.size();
-                    moviePopularResults.addAll(response.body().getResult());
-                    moviePopularAdapter.notifyItemRangeInserted(oldCount, moviePopularResults.size());
-                } else {
-                    loadingMoviePopular.setVisibility(View.GONE);
-                    textNoResult.setVisibility(View.VISIBLE);
+                        int oldCount = moviePopularResults.size();
+                        moviePopularResults.addAll(response.body().getResult());
+                        moviePopularAdapter.notifyItemRangeInserted(oldCount, moviePopularResults.size());
+                    } else {
+                        loadingMoviePopular.setVisibility(View.GONE);
+                        textNoResult.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 loadingMoviePopular.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Popular Movie !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : " + t.getCause(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

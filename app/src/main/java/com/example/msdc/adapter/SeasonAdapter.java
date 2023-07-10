@@ -44,7 +44,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
     public static class SeasonViewHolder extends RecyclerView.ViewHolder{
         private final ProgressBar loadingImgEpisodePath;
         private final RoundedImageView imgEpisodePath;
-        private final TextView textTitle, textRuntime, textOverview;
+        private final TextView textTitle, textReleaseDate, textRuntime, textOverview;
 
         public SeasonViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,6 +52,7 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
             loadingImgEpisodePath = itemView.findViewById(R.id.loadingTvEpisodePath);
             imgEpisodePath = itemView.findViewById(R.id.tvEpisodePath);
             textTitle = itemView.findViewById(R.id.textTvEpisodeNumberAndName);
+            textReleaseDate = itemView.findViewById(R.id.textTvReleaseDate);
             textRuntime = itemView.findViewById(R.id.textTvEpisodeRuntime);
             textOverview = itemView.findViewById(R.id.textTvEpisodeOverview);
         }
@@ -74,11 +75,18 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
                 setEpisodeTitle(textTitle, season, episode, title);
             }
 
+            String releaseDate = episodeResult.getAirDate();
+            if(!releaseDate.isEmpty()){
+                setEpisodeReleaseDate(textReleaseDate, releaseDate);
+            } else {
+                setNoResult(textReleaseDate, "Not Release Yet !!!");
+            }
+
             int runTime = episodeResult.getRuntime();
             if(runTime != 0){
                 setEpisodeRuntime(textRuntime, runTime);
             } else {
-                setNoResult(textRuntime, "No Runtime Yet !!!");
+                setNoResult(textRuntime, "No Duration Yet !!!");
             }
 
             String overview = episodeResult.getOverview();
@@ -95,8 +103,13 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
                 + " : " + title + "</b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 
+    private static void setEpisodeReleaseDate(TextView tv, String releaseDate){
+        tv.setText(HtmlCompat.fromHtml("Release Date : <b>" + releaseDate + "</b>",
+                HtmlCompat.FROM_HTML_MODE_LEGACY));
+    }
+
     private static void setEpisodeRuntime(TextView tv, int runTime){
-        tv.setText(HtmlCompat.fromHtml("Runtime : <b>" + runTime + "</b> minutes",
+        tv.setText(HtmlCompat.fromHtml("Duration : <b>" + runTime + " minutes</b>",
                 HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 

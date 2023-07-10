@@ -95,29 +95,32 @@ public class TvAiringTodayFragment extends Fragment {
     }
 
     private void getOnAiringTV(int page){
-        int limit = 15;
+        final int limit = 15;
 
         Call<TVResponse> call = apiService.getTvAiringToday(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<TVResponse>(){
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    loadingTvAiringToday.setVisibility(View.GONE);
-                    rvTvAiringToday.setVisibility(View.VISIBLE);
+                    if(!response.body().getResult().isEmpty()){
+                        loadingTvAiringToday.setVisibility(View.GONE);
+                        rvTvAiringToday.setVisibility(View.VISIBLE);
 
-                    int oldCount = tvAiringTodayResults.size();
-                    tvAiringTodayResults.addAll(response.body().getResult());
-                    tvAiringTodayAdapter.notifyItemRangeInserted(oldCount, tvAiringTodayResults.size());
-                } else if(tvAiringTodayResults.isEmpty()){
-                    loadingTvAiringToday.setVisibility(View.GONE);
-                    textNoResult.setVisibility(View.VISIBLE);
+                        int oldCount = tvAiringTodayResults.size();
+                        tvAiringTodayResults.addAll(response.body().getResult());
+                        tvAiringTodayAdapter.notifyItemRangeInserted(oldCount, tvAiringTodayResults.size());
+                    } else {
+                        loadingTvAiringToday.setVisibility(View.GONE);
+                        textNoResult.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 loadingTvAiringToday.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Airing TV Shows !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : " + t.getCause(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

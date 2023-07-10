@@ -95,7 +95,7 @@ public class MovieTopRatedFragment extends Fragment {
     }
 
     private void getTopRatedMovies(int page){
-        int limit = 15;
+        final int limit = 15;
 
         Call<MovieResponse> call = apiService.getTopRatedMovies(MY_API_KEY, LANGUAGE, page, limit);
         call.enqueue(new Callback<MovieResponse>(){
@@ -103,22 +103,25 @@ public class MovieTopRatedFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    loadingMovieTopRated.setVisibility(View.GONE);
-                    rvMovieTopRated.setVisibility(View.VISIBLE);
+                    if(!response.body().getResult().isEmpty()){
+                        loadingMovieTopRated.setVisibility(View.GONE);
+                        rvMovieTopRated.setVisibility(View.VISIBLE);
 
-                    int oldCount = movieTopRatedResults.size();
-                    movieTopRatedResults.addAll(response.body().getResult());
-                    movieTopRatedAdapter.notifyItemRangeInserted(oldCount, movieTopRatedResults.size());
-                } else if(movieTopRatedResults.isEmpty()){
-                    loadingMovieTopRated.setVisibility(View.GONE);
-                    textNoResult.setVisibility(View.VISIBLE);
+                        int oldCount = movieTopRatedResults.size();
+                        movieTopRatedResults.addAll(response.body().getResult());
+                        movieTopRatedAdapter.notifyItemRangeInserted(oldCount, movieTopRatedResults.size());
+                    } else {
+                        loadingMovieTopRated.setVisibility(View.GONE);
+                        textNoResult.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 loadingMovieTopRated.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Top Rated Movie !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : " + t.getCause(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

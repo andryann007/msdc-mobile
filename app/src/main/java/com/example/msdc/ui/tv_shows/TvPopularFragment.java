@@ -102,22 +102,25 @@ public class TvPopularFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    loadingTvPopular.setVisibility(View.GONE);
-                    rvTvPopular.setVisibility(View.VISIBLE);
+                    if(!response.body().getResult().isEmpty()){
+                        loadingTvPopular.setVisibility(View.GONE);
+                        rvTvPopular.setVisibility(View.VISIBLE);
 
-                    int oldCount = tvPopularResults.size();
-                    tvPopularResults.addAll(response.body().getResult());
-                    tvPopularAdapter.notifyItemRangeInserted(oldCount, tvPopularResults.size());
-                } else if(tvPopularResults.isEmpty()){
-                    loadingTvPopular.setVisibility(View.GONE);
-                    textNoResult.setVisibility(View.VISIBLE);
+                        int oldCount = tvPopularResults.size();
+                        tvPopularResults.addAll(response.body().getResult());
+                        tvPopularAdapter.notifyItemRangeInserted(oldCount, tvPopularResults.size());
+                    } else {
+                        loadingTvPopular.setVisibility(View.GONE);
+                        textNoResult.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<TVResponse> call, @NonNull Throwable t) {
                 loadingTvPopular.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Failed To Fetch Popular TV Shows !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), t.getMessage() + " cause : " + t.getCause(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
