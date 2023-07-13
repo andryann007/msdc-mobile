@@ -115,7 +115,7 @@ public class FilterActivity extends AppCompatActivity {
 
             setFilterText(filterResult, filterType.toUpperCase());
             setRegionText(filterRegion, regionName);
-            setReleaseYear(filterYear, year);
+            setReleaseYear(filterYear, String.valueOf(year));
             setSortTypeText(sortBy, sortName);
 
             filterToolbar.setTitle("Filter Movies Results :");
@@ -152,7 +152,7 @@ public class FilterActivity extends AppCompatActivity {
 
             setFilterText(filterResult, filterType.toUpperCase());
             setRegionText(filterRegion, regionName);
-            setReleaseYear(filterYear, year);
+            setReleaseYear(filterYear, String.valueOf(year));
             setSortTypeText(sortBy, sortName);
 
             filterToolbar.setTitle("Filter TV Shows Results :");
@@ -184,7 +184,7 @@ public class FilterActivity extends AppCompatActivity {
 
             setFilterText(filterResult, "Filter Movie Genre");
             setRegionText(filterRegion, "-");
-            setReleaseYear(filterYear, 0);
+            setReleaseYear(filterYear, "-");
             setSortTypeText(sortBy, sortName);
 
             filterToolbar.setTitle("Filter Movie Genre Results :");
@@ -216,7 +216,7 @@ public class FilterActivity extends AppCompatActivity {
 
             setFilterText(filterResult, "Filter TV Shows Genre");
             setRegionText(filterRegion, "-");
-            setReleaseYear(filterYear, 0);
+            setReleaseYear(filterYear, "-");
             setSortTypeText(sortBy, sortName);
 
             filterToolbar.setTitle("Filter TV Shows Genre Results :");
@@ -248,7 +248,7 @@ public class FilterActivity extends AppCompatActivity {
 
             setFilterText(filterResult, "Filter Movie Keyword");
             setRegionText(filterRegion, "-");
-            setReleaseYear(filterYear, 0);
+            setReleaseYear(filterYear, "-");
             setSortTypeText(sortBy, sortName);
 
             filterToolbar.setTitle("Filter Movie Keyword Results :");
@@ -278,7 +278,7 @@ public class FilterActivity extends AppCompatActivity {
             setSortName(sortType);
 
             setFilterText(filterResult, "Filter Movie Year");
-            setReleaseYear(filterYear, year);
+            setReleaseYear(filterYear, String.valueOf(year));
             setRegionText(filterRegion, "-");
             setSortTypeText(sortBy, sortName);
 
@@ -310,7 +310,7 @@ public class FilterActivity extends AppCompatActivity {
             setSortName(sortType);
 
             setFilterText(filterResult, "Filter Movie Region");
-            setReleaseYear(filterYear, 0);
+            setReleaseYear(filterYear, "-");
             setRegionText(filterRegion, regionName);
             setSortTypeText(sortBy, sortName);
 
@@ -343,7 +343,7 @@ public class FilterActivity extends AppCompatActivity {
             setSortName(sortType);
 
             setFilterText(filterResult, "Filter Movie Genre & Year");
-            setReleaseYear(filterYear, year);
+            setReleaseYear(filterYear, String.valueOf(year));
             setRegionText(filterRegion, "-");
             setSortTypeText(sortBy, sortName);
 
@@ -378,7 +378,7 @@ public class FilterActivity extends AppCompatActivity {
 
             setFilterText(filterResult, "Filter Movie Genre & Region");
             setRegionText(filterRegion, regionName);
-            setReleaseYear(filterYear, 0);
+            setReleaseYear(filterYear, "-");
             setSortTypeText(sortBy, sortName);
 
             setTvGenreText(filterGenre, genreName);
@@ -410,7 +410,7 @@ public class FilterActivity extends AppCompatActivity {
             setSortName(sortType);
 
             setFilterText(filterResult, "Filter Movie Year & Region");
-            setReleaseYear(filterYear, year);
+            setReleaseYear(filterYear, String.valueOf(year));
             setRegionText(filterRegion, regionName);
             setSortTypeText(sortBy, sortName);
 
@@ -443,7 +443,7 @@ public class FilterActivity extends AppCompatActivity {
 
             setFilterText(filterResult, "Filter TV Shows Keyword");
             setRegionText(filterRegion, "-");
-            setReleaseYear(filterYear, 0);
+            setReleaseYear(filterYear, "-");
             setSortTypeText(sortBy, sortName);
 
             filterToolbar.setTitle("Filter TV Shows Keyword Results :");
@@ -473,7 +473,7 @@ public class FilterActivity extends AppCompatActivity {
             setSortName(sortType);
 
             setFilterText(filterResult, "Filter TV Shows Year");
-            setReleaseYear(filterYear, year);
+            setReleaseYear(filterYear, String.valueOf(year));
             setRegionText(filterRegion, "-");
             setSortTypeText(sortBy, sortName);
 
@@ -505,7 +505,7 @@ public class FilterActivity extends AppCompatActivity {
             setSortName(sortType);
 
             setFilterText(filterResult, "Filter TV Shows Region");
-            setReleaseYear(filterYear, 0);
+            setReleaseYear(filterYear, "-");
             setRegionText(filterRegion, regionName);
             setSortTypeText(sortBy, sortName);
 
@@ -538,7 +538,7 @@ public class FilterActivity extends AppCompatActivity {
             setSortName(sortType);
 
             setFilterText(filterResult, "Filter TV Shows Genre & Year");
-            setReleaseYear(filterYear, year);
+            setReleaseYear(filterYear, String.valueOf(year));
             setRegionText(filterRegion, "-");
             setSortTypeText(sortBy, sortName);
 
@@ -573,7 +573,7 @@ public class FilterActivity extends AppCompatActivity {
 
             setFilterText(filterResult, "Filter TV Shows Genre & Region");
             setRegionText(filterRegion, regionName);
-            setReleaseYear(filterYear, 0);
+            setReleaseYear(filterYear, "-");
             setSortTypeText(sortBy, sortName);
 
             setTvGenreText(filterGenre, genreName);
@@ -605,7 +605,7 @@ public class FilterActivity extends AppCompatActivity {
             setSortName(sortType);
 
             setFilterText(filterResult, "Filter TV Shows Year & Region");
-            setReleaseYear(filterYear, year);
+            setReleaseYear(filterYear, String.valueOf(year));
             setRegionText(filterRegion, regionName);
             setSortTypeText(sortBy, sortName);
 
@@ -638,7 +638,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterMovieResults.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -667,7 +667,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterMovieGenre.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -696,7 +696,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterMovieKeyword.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -725,7 +725,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterMovieYear.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -754,7 +754,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterMovieRegion.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -783,7 +783,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterMovieGenreAndYear.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -813,7 +813,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterMovieGenreAndRegion.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -843,7 +843,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterMovieYearAndRegion.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -872,7 +872,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterTvResults.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -901,7 +901,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterTvGenre.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -930,7 +930,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterTvKeyword.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -959,7 +959,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterTvYear.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -988,7 +988,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterTvRegion.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -1017,7 +1017,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterTvGenreAndYear.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -1047,7 +1047,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterTvGenreAndRegion.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -1077,7 +1077,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TVResponse> call, @NonNull Response<TVResponse> response) {
                 if(response.body() != null){
-                    if(!response.body().getResult().isEmpty()){
+                    if(!response.body().getResult().isEmpty() && response.body().getResult().size() > 0){
                         int oldCount = filterTvYearAndRegion.size();
                         progressFilter.setVisibility(View.GONE);
                         rvFilter.setVisibility(View.VISIBLE);
@@ -1120,7 +1120,7 @@ public class FilterActivity extends AppCompatActivity {
         tv.setText(HtmlCompat.fromHtml("TV Shows Keyword : <b>" + keyword + "</b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 
-    private void setReleaseYear(TextView tv, int year) {
+    private void setReleaseYear(TextView tv, String year) {
         tv.setText(HtmlCompat.fromHtml("Release Year : <b>" + year + "</b>", HtmlCompat.FROM_HTML_MODE_LEGACY));
     }
 

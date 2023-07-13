@@ -174,6 +174,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             dialogFilter.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
             Spinner spinnerFilterGenre = v.findViewById(R.id.spinnerFilterGenre);
+            Spinner spinnerFilterYear = v.findViewById(R.id.spinnerFilterYear);
+            Spinner spinnerFilterRegion = v.findViewById(R.id.spinnerFilterRegion);
+            Spinner spinnerSortBy = v.findViewById(R.id.spinnerSortBy);
 
             radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
                 if(checkedId == R.id.radioButtonMovie){
@@ -184,6 +187,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     filterMovieGenreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerFilterGenre.setAdapter(filterMovieGenreAdapter);
+
+                    ArrayAdapter<String> filterYearAdapter = new ArrayAdapter<>(this,
+                            android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.yearList));
+                    filterYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerFilterYear.setAdapter(filterYearAdapter);
+
+                    ArrayAdapter<String> filterRegionAdapter = new ArrayAdapter<>(this,
+                            android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.regionList));
+                    filterRegionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerFilterRegion.setAdapter(filterRegionAdapter);
+
+                    ArrayAdapter<String> sortByAdapter = new ArrayAdapter<>(this,
+                            android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.sortList));
+                    sortByAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerSortBy.setAdapter(sortByAdapter);
                 } else if(checkedId == R.id.radioButtonTV){
                     filterType = "tv";
                     ArrayAdapter<String> filterTvGenreAdapter = new ArrayAdapter<>(this,
@@ -192,34 +210,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     filterTvGenreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerFilterGenre.setAdapter(filterTvGenreAdapter);
-                } else {
-                    filterType = "movie";
-                    ArrayAdapter<String> filterMovieGenreAdapter = new ArrayAdapter<>(this,
-                            android.R.layout.simple_spinner_dropdown_item,
-                            getResources().getStringArray(R.array.movieGenreList));
 
-                    filterMovieGenreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerFilterGenre.setAdapter(filterMovieGenreAdapter);
+                    ArrayAdapter<String> filterYearAdapter = new ArrayAdapter<>(this,
+                            android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.yearList));
+                    filterYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerFilterYear.setAdapter(filterYearAdapter);
+
+                    ArrayAdapter<String> filterRegionAdapter = new ArrayAdapter<>(this,
+                            android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.regionList));
+                    filterRegionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerFilterRegion.setAdapter(filterRegionAdapter);
+
+                    ArrayAdapter<String> sortByAdapter = new ArrayAdapter<>(this,
+                            android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.sortList));
+                    sortByAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerSortBy.setAdapter(sortByAdapter);
                 }
             });
-
-            Spinner spinnerFilterYear = v.findViewById(R.id.spinnerFilterYear);
-            ArrayAdapter<String> filterYearAdapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.yearList));
-            filterYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerFilterYear.setAdapter(filterYearAdapter);
-
-            Spinner spinnerFilterRegion = v.findViewById(R.id.spinnerFilterRegion);
-            ArrayAdapter<String> filterRegionAdapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.regionList));
-            filterRegionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerFilterRegion.setAdapter(filterRegionAdapter);
-
-            Spinner spinnerSortBy = v.findViewById(R.id.spinnerSortBy);
-            ArrayAdapter<String> sortByAdapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.sortList));
-            sortByAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerSortBy.setAdapter(sortByAdapter);
 
             spinnerFilterGenre.setOnItemSelectedListener(this);
             spinnerFilterRegion.setOnItemSelectedListener(this);
@@ -235,6 +242,51 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent i = new Intent(MainActivity.this, FilterActivity.class);
 
         if(filterType.equalsIgnoreCase("movie")){
+            if(genre != 0 && year == 0 && region.isEmpty()){
+                i.putExtra("type", "filter_movie_genre");
+                i.putExtra("genre", genre);
+                i.putExtra("sortBy", sortBy);
+                startActivity(i);
+            }
+
+            if(genre == 0 && year != 0 && region.isEmpty()){
+                i.putExtra("type", "filter_movie_year");
+                i.putExtra("year", year);
+                i.putExtra("sortBy", sortBy);
+                startActivity(i);
+            }
+
+            if(genre == 0 && year == 0 && !region.isEmpty()){
+                i.putExtra("type", "filter_movie_region");
+                i.putExtra("region", region);
+                i.putExtra("sortBy", sortBy);
+                startActivity(i);
+            }
+
+            if(genre != 0 && year != 0 && region.isEmpty()){
+                i.putExtra("type", "filter_movie_genre_and_year");
+                i.putExtra("genre", genre);
+                i.putExtra("year", year);
+                i.putExtra("sortBy", sortBy);
+                startActivity(i);
+            }
+
+            if(genre != 0 && year == 0 && !region.isEmpty()){
+                i.putExtra("type", "filter_movie_genre_and_region");
+                i.putExtra("genre", genre);
+                i.putExtra("region", region);
+                i.putExtra("sortBy", sortBy);
+                startActivity(i);
+            }
+
+            if(genre == 0 && year != 0 && !region.isEmpty()){
+                i.putExtra("type", "filter_movie_year_and_region");
+                i.putExtra("year", year);
+                i.putExtra("region", region);
+                i.putExtra("sortBy", sortBy);
+                startActivity(i);
+            }
+
             if(genre != 0 && year != 0 && !region.isEmpty()){
                 i.putExtra("type", "movie");
                 i.putExtra("genre", genre);
@@ -242,40 +294,57 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 i.putExtra("region", region);
                 i.putExtra("sortBy", sortBy);
                 startActivity(i);
-            } else if(genre != 0){
-                i.putExtra("genre", genre);
-                i.putExtra("sortBy", sortBy);
+            }
 
-                if(year != 0){
-                    i.putExtra("year", year);
-                    i.putExtra("type", "filter_movie_genre_and_year");
-                } else if(!region.isEmpty()){
-                    i.putExtra("region", region);
-                    i.putExtra("type", "filter_movie_genre_and_region");
-                } else {
-                    i.putExtra("type", "filter_movie_genre");
-                }
-                startActivity(i);
-            } else if(year != 0){
-                i.putExtra("year", year);
-                i.putExtra("sortBy", sortBy);
-
-                if(!region.isEmpty()){
-                    i.putExtra("region", region);
-                    i.putExtra("type", "filter_movie_year_and_region");
-                } else {
-                    i.putExtra("type", "filter_movie_year");
-                }
-                startActivity(i);
-            } else if(!region.isEmpty()){
-                i.putExtra("region", region);
-                i.putExtra("sortBy", sortBy);
-                i.putExtra("type", "filter_movie_region");
-                startActivity(i);
-            } else {
+            if(genre == 0 && year == 0 && region.isEmpty()){
                 Toast.makeText(MainActivity.this, "No Filter Type !!!", Toast.LENGTH_SHORT).show();
             }
         } else if(filterType.equalsIgnoreCase("tv")){
+            if(genre != 0 && year == 0 && region.isEmpty()){
+                i.putExtra("type", "filter_tv_genre");
+                i.putExtra("genre", genre);
+                i.putExtra("sortBy", sortBy);
+                startActivity(i);
+            }
+
+            if(genre == 0 && year != 0 && region.isEmpty()){
+                i.putExtra("type", "filter_tv_year");
+                i.putExtra("year", year);
+                i.putExtra("sortBy", sortBy);
+                startActivity(i);
+            }
+
+            if(genre == 0 && year == 0 && !region.isEmpty()){
+                i.putExtra("type", "filter_tv_region");
+                i.putExtra("region", region);
+                i.putExtra("sortBy", sortBy);
+                startActivity(i);
+            }
+
+            if(genre !=0 && year !=0 && region.isEmpty()){
+                i.putExtra("type", "filter_tv_genre_and_year");
+                i.putExtra("genre", genre);
+                i.putExtra("year", year);
+                i.putExtra("sortBy", sortBy);
+                startActivity(i);
+            }
+
+            if(genre !=0 && year == 0 && !region.isEmpty()){
+                i.putExtra("type", "filter_tv_genre_and_region");
+                i.putExtra("genre", genre);
+                i.putExtra("region", region);
+                i.putExtra("sortBy", sortBy);
+                startActivity(i);
+            }
+
+            if(genre ==0 && year !=0 && !region.isEmpty()){
+                i.putExtra("type", "filter_tv_year_and_region");
+                i.putExtra("year", year);
+                i.putExtra("region", region);
+                i.putExtra("sortBy", sortBy);
+                startActivity(i);
+            }
+
             if(genre != 0 && year != 0 && !region.isEmpty()){
                 i.putExtra("type", "tv");
                 i.putExtra("genre", genre);
@@ -283,37 +352,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 i.putExtra("region", region);
                 i.putExtra("sortBy", sortBy);
                 startActivity(i);
-            } else if(genre != 0){
-                i.putExtra("genre", genre);
-                i.putExtra("sortBy", sortBy);
+            }
 
-                if(year != 0){
-                    i.putExtra("year", year);
-                    i.putExtra("type", "filter_tv_genre_and_year");
-                } else if(!region.isEmpty()){
-                    i.putExtra("region", region);
-                    i.putExtra("type", "filter_tv_genre_and_region");
-                } else {
-                    i.putExtra("type", "filter_tv_genre");
-                }
-                startActivity(i);
-            } else if(year != 0){
-                i.putExtra("year", year);
-                i.putExtra("sortBy", sortBy);
-
-                if(!region.isEmpty()){
-                    i.putExtra("region", region);
-                    i.putExtra("type", "filter_tv_year_and_region");
-                } else {
-                    i.putExtra("type", "filter_tv_year");
-                }
-                startActivity(i);
-            } else if(!region.isEmpty()){
-                i.putExtra("region", region);
-                i.putExtra("sortBy", sortBy);
-                i.putExtra("type", "filter_tv_region");
-                startActivity(i);
-            } else {
+            if(genre == 0 && year == 0 && region.isEmpty()){
                 Toast.makeText(MainActivity.this, "No Filter Type !!!", Toast.LENGTH_SHORT).show();
             }
         }
@@ -551,10 +592,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case "not selected" :
                 genre = 0;
                 break;
-
-            default:
-                genre = 0;
-                break;
         }
 
         switch(yearSelected){
@@ -737,10 +774,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case "not selected" :
                 year = 0;
                 break;
-
-            default:
-                year = 0;
-                break;
         }
 
         switch(regionSelected){
@@ -801,10 +834,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case("not selected") :
-                region = "";
-                break;
-
-            default:
                 region = "";
                 break;
         }
