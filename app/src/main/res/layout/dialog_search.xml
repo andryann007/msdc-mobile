@@ -90,8 +90,9 @@
             <EditText
                 android:id="@+id/inputSearch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_layout"
+                android:backgroundTint="@color/white"
                 android:drawableStart="@drawable/ic_search_black"
                 android:drawablePadding="10dp"
                 android:gravity="start|center_vertical"

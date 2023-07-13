@@ -13,58 +13,56 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.msdc.api.MovieResult;
 import com.example.msdc.R;
 import com.example.msdc.activities.DetailActivity;
+import com.example.msdc.api.MovieResult;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
-public class MovieSearchAdapter extends RecyclerView.Adapter<MovieSearchAdapter.MovieViewHolder> {
+public class MovieVerticalAdapter extends RecyclerView.Adapter<MovieVerticalAdapter.MovieViewHolder>{
     private final List<MovieResult> movieResults;
     private final Context context;
 
-    public MovieSearchAdapter(List<MovieResult> movieResults, Context context){
-        this.movieResults = movieResults;
+    public MovieVerticalAdapter(List<MovieResult> movieResults, Context context){
+        this.movieResults =movieResults;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public MovieSearchAdapter.MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MovieViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.container_item_search, parent, false));
+    public MovieVerticalAdapter.MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+        return new MovieVerticalAdapter.MovieViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.container_item_vertical, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieSearchAdapter.MovieViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MovieVerticalAdapter.MovieViewHolder holder, int position){
         holder.bindItem(movieResults.get(position), context);
     }
 
     @Override
-    public int getItemCount() {
-        return movieResults.size();
-    }
+    public int getItemCount(){ return movieResults.size();}
 
     static class MovieViewHolder extends RecyclerView.ViewHolder{
-        private final ProgressBar loadingSearchItemImage;
+        private final ProgressBar loadingVerticalItemImage;
         private final RoundedImageView imageItemPoster;
         private final TextView textItemName;
 
         MovieViewHolder(@NonNull View itemView){
             super(itemView);
 
-            loadingSearchItemImage = itemView.findViewById(R.id.loadingSearchItemImage);
+            loadingVerticalItemImage = itemView.findViewById(R.id.loadingVerticalItemImage);
             imageItemPoster = itemView.findViewById(R.id.imageItemPoster);
             textItemName = itemView.findViewById(R.id.textItemName);
         }
 
         void bindItem(MovieResult movieResult, Context context){
             if(!TextUtils.isEmpty(movieResult.getPosterPath())){
-                loadingSearchItemImage.setVisibility(View.GONE);
-                ImageAdapter.setSearchImageBaseURL(imageItemPoster, movieResult.getPosterPath());
+                loadingVerticalItemImage.setVisibility(View.GONE);
+                ImageAdapter.setPosterURL(imageItemPoster, movieResult.getPosterPath());
             } else {
-                loadingSearchItemImage.setVisibility(View.GONE);
+                loadingVerticalItemImage.setVisibility(View.GONE);
                 imageItemPoster.setImageResource(R.drawable.ic_no_image);
                 imageItemPoster.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }

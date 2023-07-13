@@ -14,67 +14,64 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.msdc.R;
-import com.example.msdc.api.TVResult;
 import com.example.msdc.activities.DetailActivity;
+import com.example.msdc.api.TVResult;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
-
-public class TVSearchAdapter extends RecyclerView.Adapter<TVSearchAdapter.TvViewHolder> {
-    private final List<TVResult> TVResults;
+public class TVVerticalAdapter extends RecyclerView.Adapter<TVVerticalAdapter.TvViewHolder>{
+    private final List<TVResult> tvResults;
     private final Context context;
 
-    public TVSearchAdapter(List<TVResult> TVResults, Context context){
-        this.TVResults = TVResults;
+    public TVVerticalAdapter(List<TVResult> tvResults, Context context){
+        this.tvResults = tvResults;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public TVSearchAdapter.TvViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new TvViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.container_item_search, parent, false));
+    public TVVerticalAdapter.TvViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+        return new TVVerticalAdapter.TvViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.container_item_vertical, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TVSearchAdapter.TvViewHolder holder, int position) {
-        holder.bindItem(TVResults.get(position), context);
+    public void onBindViewHolder(@NonNull TVVerticalAdapter.TvViewHolder holder, int position){
+        holder.bindItem(tvResults.get(position), context);
     }
 
     @Override
-    public int getItemCount() {
-        return TVResults.size();
-    }
+    public int getItemCount(){ return tvResults.size();}
 
     static class TvViewHolder extends RecyclerView.ViewHolder{
-        private final ProgressBar loadingSearchItemImage;
+        private final ProgressBar loadingVerticalItemImage;
         private final RoundedImageView imageItemPoster;
         private final TextView textItemName;
 
         TvViewHolder(@NonNull View itemView){
             super(itemView);
 
-            loadingSearchItemImage = itemView.findViewById(R.id.loadingSearchItemImage);
+            loadingVerticalItemImage = itemView.findViewById(R.id.loadingVerticalItemImage);
             imageItemPoster = itemView.findViewById(R.id.imageItemPoster);
             textItemName = itemView.findViewById(R.id.textItemName);
         }
 
-        void bindItem(TVResult TVResult, Context context){
-            if(!TextUtils.isEmpty(TVResult.getPosterPath())){
-                loadingSearchItemImage.setVisibility(View.GONE);
-                ImageAdapter.setSearchImageBaseURL(imageItemPoster, TVResult.getPosterPath());
+        void bindItem(TVResult tvResult, Context context){
+            if(!TextUtils.isEmpty(tvResult.getPosterPath())){
+                loadingVerticalItemImage.setVisibility(View.GONE);
+                ImageAdapter.setPosterURL(imageItemPoster, tvResult.getPosterPath());
             } else {
-                loadingSearchItemImage.setVisibility(View.GONE);
+                loadingVerticalItemImage.setVisibility(View.GONE);
                 imageItemPoster.setImageResource(R.drawable.ic_no_image);
                 imageItemPoster.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
-            textItemName.setText(TVResult.getName());
+            textItemName.setText(tvResult.getName());
 
             itemView.setOnClickListener(v -> {
                 Intent i = new Intent(context, DetailActivity.class);
                 i.putExtra("type", "tv");
-                i.putExtra("series_id", TVResult.getId());
+                i.putExtra("series_id", tvResult.getId());
                 context.startActivity(i);
             });
         }

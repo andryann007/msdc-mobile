@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.msdc.R;
-import com.example.msdc.adapter.MovieGridAdapter;
+import com.example.msdc.adapter.MovieVerticalAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
 import com.example.msdc.api.MovieResponse;
@@ -31,7 +31,7 @@ import retrofit2.Retrofit;
 
 public class MovieNowPlayingFragment extends Fragment {
     private ApiService apiService;
-    private MovieGridAdapter movieNowPlayingAdapter;
+    private MovieVerticalAdapter movieNowPlayingAdapter;
     private final List<MovieResult> movieNowPlayingResults = new ArrayList<>();
 
     private ProgressBar loadingMovieNowPlaying;
@@ -70,7 +70,7 @@ public class MovieNowPlayingFragment extends Fragment {
         loadingMovieNowPlaying = view.findViewById(R.id.loadingMovieNowPlayingList);
         textNoResult = view.findViewById(R.id.textNoMovieNowPlayingResult);
 
-        movieNowPlayingAdapter = new MovieGridAdapter(movieNowPlayingResults, getContext());
+        movieNowPlayingAdapter = new MovieVerticalAdapter(movieNowPlayingResults, getContext());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvMovieNowPlaying.setLayoutManager(gridLayoutManager);

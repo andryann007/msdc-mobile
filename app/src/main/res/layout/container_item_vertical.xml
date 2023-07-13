@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
+    android:layout_width="112.5dp"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="5dp"
     android:background="@drawable/bg_item"
     android:layout_gravity="center_horizontal">
 
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/imageItemPoster"
-        android:layout_width="92.4dp"
-        android:layout_height="138.6dp"
-        android:background="@drawable/bg_layout"
-        android:scaleType="fitXY"
-        app:riv_corner_radius="5dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imageItemPoster"
+            android:layout_width="112.5dp"
+            android:layout_height="160dp"
+            android:background="@drawable/bg_layout"
+            android:scaleType="fitXY"
+            app:riv_corner_radius="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ProgressBar
+            android:id="@+id/loadingVerticalItemImage"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/imageItemPoster"
+            app:layout_constraintStart_toStartOf="@+id/imageItemPoster"
+            app:layout_constraintEnd_toEndOf="@+id/imageItemPoster"
+            app:layout_constraintBottom_toBottomOf="@+id/imageItemPoster"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textItemName"
-        android:layout_width="92.4dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:paddingHorizontal="5dp"
+        android:layout_marginHorizontal="5dp"
         android:alpha="0.6"
         android:gravity="start|center_vertical"
         android:maxLines="1"
         android:textColor="@color/black"
         android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/imageItemPoster"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:textStyle="bold"/>
 
-    <ProgressBar
-        android:id="@+id/loadingVerticalItemImage"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/imageItemPoster"
-        app:layout_constraintStart_toStartOf="@+id/imageItemPoster"
-        app:layout_constraintEnd_toEndOf="@+id/imageItemPoster"
-        app:layout_constraintBottom_toBottomOf="@+id/imageItemPoster"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

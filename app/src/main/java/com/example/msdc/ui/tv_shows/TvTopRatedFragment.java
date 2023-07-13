@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.msdc.R;
-import com.example.msdc.adapter.TVGridAdapter;
+import com.example.msdc.adapter.TVVerticalAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
 import com.example.msdc.api.TVResponse;
@@ -31,7 +31,7 @@ import retrofit2.Retrofit;
 
 public class TvTopRatedFragment extends Fragment {
     private ApiService apiService;
-    private TVGridAdapter tvTopRatedAdapter;
+    private TVVerticalAdapter tvTopRatedAdapter;
     private final List<TVResult> tvTopRatedResults = new ArrayList<>();
 
     private RecyclerView rvTvTopRated;
@@ -70,7 +70,7 @@ public class TvTopRatedFragment extends Fragment {
         loadingTvTopRated = view.findViewById(R.id.loadingTvTopRatedList);
         textNoResult = view.findViewById(R.id.textNoTvTopRatedResult);
 
-        tvTopRatedAdapter = new TVGridAdapter(tvTopRatedResults, getContext());
+        tvTopRatedAdapter = new TVVerticalAdapter(tvTopRatedResults, getContext());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvTvTopRated.setLayoutManager(gridLayoutManager);

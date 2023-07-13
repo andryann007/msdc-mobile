@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.msdc.R;
-import com.example.msdc.adapter.TVGridAdapter;
+import com.example.msdc.adapter.TVVerticalAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
 import com.example.msdc.api.TVResponse;
@@ -31,7 +31,7 @@ import retrofit2.Retrofit;
 
 public class TvOnAirFragment extends Fragment {
     private ApiService apiService;
-    private TVGridAdapter tvOnAirAdapter;
+    private TVVerticalAdapter tvOnAirAdapter;
     private final List<TVResult> tvOnAirResults = new ArrayList<>();
 
     private RecyclerView rvTvOnAir;
@@ -70,7 +70,7 @@ public class TvOnAirFragment extends Fragment {
         loadingTvOnAir = view.findViewById(R.id.loadingTvOnAirList);
         textNoResult = view.findViewById(R.id.textNoTvOnAirResult);
 
-        tvOnAirAdapter = new TVGridAdapter(tvOnAirResults, getContext());
+        tvOnAirAdapter = new TVVerticalAdapter(tvOnAirResults, getContext());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvTvOnAir.setLayoutManager(gridLayoutManager);

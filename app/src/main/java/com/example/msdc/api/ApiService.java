@@ -53,9 +53,46 @@ public interface ApiService {
     @GET("discover/movie")
     Call<MovieResponse> filterMovie(@Query("api_key") String apiKey, @Query("language") String language,
                                       @Query("page") int page, @Query("limit") int limit,
-                                      @Query("with_genres") String genreId, @Query("year") int year,
+                                      @Query("with_genres") int genreId, @Query("year") int year,
                                       @Query("region") String region, @Query("sort_by") String sortBy);
 
+    @GET("discover/movie")
+    Call<MovieResponse> filterMovieGenre(@Query("api_key") String apiKey, @Query("language") String language,
+                                    @Query("page") int page, @Query("limit") int limit,
+                                    @Query("with_genres") int genreId, @Query("sort_by") String sortBy);
+
+    @GET("discover/movie")
+    Call<MovieResponse> filterMovieKeyword(@Query("api_key") String apiKey, @Query("language") String language,
+                                         @Query("page") int page, @Query("limit") int limit,
+                                         @Query("with_keywords") int keywordId, @Query("sort_by") String sortBy);
+
+    @GET("discover/movie")
+    Call<MovieResponse> filterMovieYear(@Query("api_key") String apiKey, @Query("language") String language,
+                                         @Query("page") int page, @Query("limit") int limit,
+                                         @Query("year") int year, @Query("sort_by") String sortBy);
+
+    @GET("discover/movie")
+    Call<MovieResponse> filterMovieRegion(@Query("api_key") String apiKey, @Query("language") String language,
+                                          @Query("page") int page, @Query("limit") int limit,
+                                          @Query("region") String region, @Query("sort_by") String sortBy);
+
+    @GET("discover/movie")
+    Call<MovieResponse> filterMovieGenreAndYear(@Query("api_key") String apiKey, @Query("language") String language,
+                                         @Query("page") int page, @Query("limit") int limit,
+                                         @Query("with_genres") int genreId, @Query("year") int year,
+                                                @Query("sort_by") String sortBy);
+
+    @GET("discover/movie")
+    Call<MovieResponse> filterMovieGenreAndRegion(@Query("api_key") String apiKey, @Query("language") String language,
+                                                @Query("page") int page, @Query("limit") int limit,
+                                                @Query("with_genres") int genreId, @Query("region") String region,
+                                                  @Query("sort_by") String sortBy);
+
+    @GET("discover/movie")
+    Call<MovieResponse> filterMovieYearAndRegion(@Query("api_key") String apiKey, @Query("language") String language,
+                                                 @Query("page") int page, @Query("limit") int limit,
+                                                 @Query("year") int year, @Query("region") String region,
+                                                 @Query("sort_by") String sortBy);
     @GET("tv/airing_today")
     Call<TVResponse> getTvAiringToday(@Query("api_key") String apiKey, @Query("language") String language,
                                       @Query("page") int page,  @Query("limit") int limit);
@@ -101,16 +138,51 @@ public interface ApiService {
     @GET("discover/tv")
     Call<TVResponse> filterTv(@Query("api_key") String apiKey, @Query("language") String language,
                               @Query("page") int page, @Query("limit") int limit,
-                              @Query("with_genres") String genreId, @Query("year") int year,
+                              @Query("with_genres") int genreId, @Query("year") int year,
                               @Query("region") String region, @Query("sort_by") String sortBy);
+
+    @GET("discover/tv")
+    Call<TVResponse> filterTvGenre(@Query("api_key") String apiKey, @Query("language") String language,
+                              @Query("page") int page, @Query("limit") int limit,
+                              @Query("with_genres") int genreId, @Query("sort_by") String sortBy);
+
+    @GET("discover/tv")
+    Call<TVResponse> filterTvKeyword(@Query("api_key") String apiKey, @Query("language") String language,
+                                   @Query("page") int page, @Query("limit") int limit,
+                                   @Query("with_keywords") int keywordId, @Query("sort_by") String sortBy);
+
+    @GET("discover/tv")
+    Call<TVResponse> filterTvYear(@Query("api_key") String apiKey, @Query("language") String language,
+                                   @Query("page") int page, @Query("limit") int limit,
+                                  @Query("year") int year, @Query("sort_by") String sortBy);
+
+    @GET("discover/tv")
+    Call<TVResponse> filterTvRegion(@Query("api_key") String apiKey, @Query("language") String language,
+                                   @Query("page") int page, @Query("limit") int limit,
+                                    @Query("region") String region, @Query("sort_by") String sortBy);
+
+    @GET("discover/tv")
+    Call<TVResponse> filterTvGenreAndYear(@Query("api_key") String apiKey, @Query("language") String language,
+                                   @Query("page") int page, @Query("limit") int limit,
+                                   @Query("with_genres") int genreId, @Query("year") int year,
+                                          @Query("sort_by") String sortBy);
+
+    @GET("discover/tv")
+    Call<TVResponse> filterTvGenreAndRegion(@Query("api_key") String apiKey, @Query("language") String language,
+                                          @Query("page") int page, @Query("limit") int limit,
+                                          @Query("with_genres") int genreId, @Query("region") String region,
+                                          @Query("sort_by") String sortBy);
+
+    @GET("discover/tv")
+    Call<TVResponse> filterTvYearAndRegion(@Query("api_key") String apiKey, @Query("language") String language,
+                                          @Query("page") int page, @Query("limit") int limit,
+                                           @Query("year") int year, @Query("region") String region,
+                                          @Query("sort_by") String sortBy);
 
     @GET("trending/{media_type}/{time_window}")
     Call<PersonResponse> getTrendingPerson(@Path("media_type") String mediaType,
                                            @Path("time_window") String timeWindow,
                                            @Query("api_key") String apiKey);
-
-    @GET("person/{person_id}")
-    Call<PersonResponse> getPersonDetails(@Path("person_id") int id, @Query("api_key") String apiKey);
 
     @GET("tv/{series_id}/recommendations")
     Call<TVResponse> getTVRecommendations(@Path("series_id") int id, @Query("api_key") String apiKey);

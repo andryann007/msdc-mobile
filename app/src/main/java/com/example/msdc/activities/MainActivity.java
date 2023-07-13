@@ -52,9 +52,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -73,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView textName, textEmail;
 
     private String filterType = null;
-    private String genre = null;
-    private String year = null;
+    private int genre = 0;
+    private int year = 0;
     private String region = null;
     private String sortBy = null;
 
@@ -207,13 +204,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
 
             Spinner spinnerFilterYear = v.findViewById(R.id.spinnerFilterYear);
-            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-            List<String> years = new ArrayList<>();
-            for(int i=1980; i<=currentYear; i++){
-                years.add(Integer.toString(i));
-            }
             ArrayAdapter<String> filterYearAdapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_spinner_dropdown_item, years);
+                    android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.yearList));
             filterYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerFilterYear.setAdapter(filterYearAdapter);
 
@@ -239,27 +231,91 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void doFilter(String filterType, String genre, String year, String region, String sortBy) {
+    private void doFilter(String filterType, int genre, int year, String region, String sortBy) {
         Intent i = new Intent(MainActivity.this, FilterActivity.class);
 
-        switch(filterType){
-            case "movie" :
+        if(filterType.equalsIgnoreCase("movie")){
+            if(genre != 0 && year != 0 && !region.isEmpty()){
                 i.putExtra("type", "movie");
                 i.putExtra("genre", genre);
                 i.putExtra("year", year);
                 i.putExtra("region", region);
                 i.putExtra("sortBy", sortBy);
                 startActivity(i);
-                break;
+            } else if(genre != 0){
+                i.putExtra("genre", genre);
+                i.putExtra("sortBy", sortBy);
 
-            case "tv" :
+                if(year != 0){
+                    i.putExtra("year", year);
+                    i.putExtra("type", "filter_movie_genre_and_year");
+                } else if(!region.isEmpty()){
+                    i.putExtra("region", region);
+                    i.putExtra("type", "filter_movie_genre_and_region");
+                } else {
+                    i.putExtra("type", "filter_movie_genre");
+                }
+                startActivity(i);
+            } else if(year != 0){
+                i.putExtra("year", year);
+                i.putExtra("sortBy", sortBy);
+
+                if(!region.isEmpty()){
+                    i.putExtra("region", region);
+                    i.putExtra("type", "filter_movie_year_and_region");
+                } else {
+                    i.putExtra("type", "filter_movie_year");
+                }
+                startActivity(i);
+            } else if(!region.isEmpty()){
+                i.putExtra("region", region);
+                i.putExtra("sortBy", sortBy);
+                i.putExtra("type", "filter_movie_region");
+                startActivity(i);
+            } else {
+                Toast.makeText(MainActivity.this, "No Filter Type !!!", Toast.LENGTH_SHORT).show();
+            }
+        } else if(filterType.equalsIgnoreCase("tv")){
+            if(genre != 0 && year != 0 && !region.isEmpty()){
                 i.putExtra("type", "tv");
                 i.putExtra("genre", genre);
                 i.putExtra("year", year);
                 i.putExtra("region", region);
                 i.putExtra("sortBy", sortBy);
                 startActivity(i);
-                break;
+            } else if(genre != 0){
+                i.putExtra("genre", genre);
+                i.putExtra("sortBy", sortBy);
+
+                if(year != 0){
+                    i.putExtra("year", year);
+                    i.putExtra("type", "filter_tv_genre_and_year");
+                } else if(!region.isEmpty()){
+                    i.putExtra("region", region);
+                    i.putExtra("type", "filter_tv_genre_and_region");
+                } else {
+                    i.putExtra("type", "filter_tv_genre");
+                }
+                startActivity(i);
+            } else if(year != 0){
+                i.putExtra("year", year);
+                i.putExtra("sortBy", sortBy);
+
+                if(!region.isEmpty()){
+                    i.putExtra("region", region);
+                    i.putExtra("type", "filter_tv_year_and_region");
+                } else {
+                    i.putExtra("type", "filter_tv_year");
+                }
+                startActivity(i);
+            } else if(!region.isEmpty()){
+                i.putExtra("region", region);
+                i.putExtra("sortBy", sortBy);
+                i.putExtra("type", "filter_tv_region");
+                startActivity(i);
+            } else {
+                Toast.makeText(MainActivity.this, "No Filter Type !!!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -379,303 +435,311 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String genreSelected = parent.getItemAtPosition(position).toString().toLowerCase();
-        String yearSelected = parent.getItemAtPosition(position).toString();
+        String yearSelected = parent.getItemAtPosition(position).toString().toLowerCase();
         String regionSelected = parent.getItemAtPosition(position).toString().toLowerCase();
         String sortSelected = parent.getItemAtPosition(position).toString().toLowerCase();
 
         switch(genreSelected){
             case "action" :
-                genre = "28";
+                genre = 28;
                 break;
 
             case "adventure" :
-                genre = "12";
+                genre = 12;
                 break;
 
             case "animation" :
-                genre = "16";
+                genre = 16;
                 break;
 
             case "comedy" :
-                genre = "35";
+                genre = 35;
                 break;
 
             case "crime" :
-                genre = "80";
+                genre = 80;
                 break;
 
             case "documentary" :
-                genre = "99";
+                genre = 99;
                 break;
 
             case "drama" :
-                genre = "18";
+                genre = 18;
                 break;
 
             case "family" :
-                genre = "10751";
+                genre = 10751;
                 break;
 
             case "fantasy" :
-                genre = "14";
+                genre = 14;
                 break;
 
             case "history" :
-                genre = "36";
+                genre = 36;
                 break;
 
             case "horror" :
-                genre = "27";
+                genre = 27;
                 break;
 
             case "music" :
-                genre = "10402";
+                genre = 10402;
                 break;
 
             case "mystery" :
-                genre = "9648";
+                genre = 9648;
                 break;
 
             case "romance" :
-                genre = "10749";
+                genre = 10749;
                 break;
 
             case "science fiction" :
-                genre = "878";
+                genre = 878;
                 break;
 
             case "tv movie" :
-                genre = "10770";
+                genre = 10770;
                 break;
 
             case "thriller" :
-                genre = "53";
+                genre = 53;
                 break;
 
             case "war" :
-                genre = "10752";
+                genre = 10752;
                 break;
 
             case "western" :
-                genre = "37";
+                genre = 37;
                 break;
 
             case "action adventure" :
-                genre = "10759";
+                genre = 10759;
                 break;
 
             case "kids" :
-                genre = "10762";
+                genre = 10762;
                 break;
 
             case "news" :
-                genre = "10763";
+                genre = 10763;
                 break;
 
             case "reality" :
-                genre = "10764";
+                genre = 10764;
                 break;
 
             case "sci-fi and fantasy" :
-                genre = "10765";
+                genre = 10765;
                 break;
 
             case "soap" :
-                genre = "10766";
+                genre = 10766;
                 break;
 
             case "talk" :
-                genre = "10767";
+                genre = 10767;
                 break;
 
             case "war and politics" :
-                genre = "10768";
+                genre = 10768;
+                break;
+
+            case "not selected" :
+                genre = 0;
+                break;
+
+            default:
+                genre = 0;
                 break;
         }
 
         switch(yearSelected){
             case "1980" :
-                year = "1980";
+                year = 1980;
                 break;
 
             case "1981" :
-                year = "1981";
+                year = 1981;
                 break;
 
             case "1982" :
-                year = "1982";
+                year = 1982;
                 break;
 
             case "1983" :
-                year = "1983";
+                year = 1983;
                 break;
 
             case "1984" :
-                year = "1984";
+                year = 1984;
                 break;
 
             case "1985" :
-                year = "1985";
+                year = 1985;
                 break;
 
             case "1986" :
-                year = "1986";
+                year = 1986;
                 break;
 
             case "1987" :
-                year = "1987";
+                year = 1987;
                 break;
 
             case "1988" :
-                year = "1988";
+                year = 1988;
                 break;
 
             case "1989" :
-                year = "1989";
+                year = 1989;
                 break;
 
             case "1990" :
-                year = "1990";
+                year = 1990;
                 break;
 
             case "1991" :
-                year = "1991";
+                year = 1991;
                 break;
 
             case "1992" :
-                year = "1992";
+                year = 1992;
                 break;
 
             case "1993" :
-                year = "1993";
+                year = 1993;
                 break;
 
             case "1994" :
-                year = "1994";
+                year = 1994;
                 break;
 
             case "1995" :
-                year = "1995";
+                year = 1995;
                 break;
 
             case "1996" :
-                year = "1996";
+                year = 1996;
                 break;
 
             case "1997" :
-                year = "1997";
+                year = 1997;
                 break;
 
             case "1998" :
-                year = "1998";
+                year = 1998;
                 break;
 
             case "1999" :
-                year = "1999";
+                year = 1999;
                 break;
 
             case "2000" :
-                year = "2000";
+                year = 2000;
                 break;
 
             case "2001" :
-                year = "2001";
+                year = 2001;
                 break;
 
             case "2002" :
-                year = "2002";
+                year = 2002;
                 break;
 
             case "2003" :
-                year = "2003";
+                year = 2003;
                 break;
 
             case "2004" :
-                year = "2004";
+                year = 2004;
                 break;
 
             case "2005" :
-                year = "2005";
+                year = 2005;
                 break;
 
             case "2006" :
-                year = "2006";
+                year = 2006;
                 break;
 
             case "2007" :
-                year = "2007";
+                year = 2007;
                 break;
 
             case "2008" :
-                year = "2008";
+                year = 2008;
                 break;
 
             case "2009" :
-                year = "2009";
+                year = 2009;
                 break;
 
             case "2010" :
-                year = "2010";
+                year = 2010;
                 break;
 
             case "2011" :
-                year = "2011";
+                year = 2011;
                 break;
 
             case "2012" :
-                year = "2012";
+                year = 2012;
                 break;
 
             case "2013" :
-                year = "2013";
+                year = 2013;
                 break;
 
             case "2014" :
-                year = "2014";
+                year = 2014;
                 break;
 
             case "2015" :
-                year = "2015";
+                year = 2015;
                 break;
 
             case "2016" :
-                year = "2016";
+                year = 2016;
                 break;
 
             case "2017" :
-                year = "2017";
+                year = 2017;
                 break;
 
             case "2018" :
-                year = "2018";
+                year = 2018;
                 break;
 
             case "2019" :
-                year = "2019";
+                year = 2019;
                 break;
 
             case "2020" :
-                year = "2020";
+                year = 2020;
                 break;
 
             case "2021" :
-                year = "2021";
+                year = 2021;
                 break;
 
             case "2022" :
-                year = "2022";
+                year = 2022;
                 break;
 
             case "2023" :
-                year = "2023";
+                year = 2023;
                 break;
 
-            case "2024" :
-                year = "2024";
+            case "not selected" :
+                year = 0;
                 break;
 
-            case "2025" :
-                year = "2025";
+            default:
+                year = 0;
                 break;
         }
 
@@ -734,6 +798,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case("united states") :
                 region = "US";
+                break;
+
+            case("not selected") :
+                region = "";
+                break;
+
+            default:
+                region = "";
                 break;
         }
 

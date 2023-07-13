@@ -8,11 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.text.HtmlCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.example.msdc.adapter.MovieSearchAdapter;
-import com.example.msdc.adapter.TVSearchAdapter;
+import com.example.msdc.adapter.MovieVerticalAdapter;
+import com.example.msdc.adapter.TVVerticalAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
 import com.example.msdc.api.MovieResponse;
@@ -31,8 +31,8 @@ import retrofit2.Response;
 public class SearchActivity extends AppCompatActivity {
     private final List<MovieResult> movieResults = new ArrayList<>();
     private final List<TVResult> tvResults = new ArrayList<>();
-    private MovieSearchAdapter movieSearchAdapter;
-    private TVSearchAdapter tvSearchAdapter;
+    private MovieVerticalAdapter movieSearchAdapter;
+    private TVVerticalAdapter tvSearchAdapter;
     private ApiService apiService;
     private int page = 1;
     private final int limit = 15;
@@ -46,11 +46,10 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         Toolbar toolbar = binding.toolbar;
 
-        binding.rvSearch.setLayoutManager(new StaggeredGridLayoutManager(3, RecyclerView.VERTICAL));
-        binding.loadingSearch.setVisibility(View.VISIBLE);
+        binding.rvSearch.setLayoutManager(new GridLayoutManager(SearchActivity.this, 3));
 
-        movieSearchAdapter = new MovieSearchAdapter(movieResults, this);
-        tvSearchAdapter = new TVSearchAdapter(tvResults, this);
+        movieSearchAdapter = new MovieVerticalAdapter(movieResults, this);
+        tvSearchAdapter = new TVVerticalAdapter(tvResults, this);
 
         apiService = ApiClient.getClient().create(ApiService.class);
         query = getIntent().getStringExtra("searchFor");
@@ -105,6 +104,7 @@ public class SearchActivity extends AppCompatActivity {
                 if(response.body() != null){
                     if(!response.body().getResult().isEmpty()){
                         binding.loadingSearch.setVisibility(View.GONE);
+                        binding.rvSearch.setVisibility(View.VISIBLE);
 
                         int oldCount = movieResults.size();
                         movieResults.addAll(response.body().getResult());
@@ -133,6 +133,7 @@ public class SearchActivity extends AppCompatActivity {
                 if(response.body() != null){
                     if(!response.body().getResult().isEmpty()){
                         binding.loadingSearch.setVisibility(View.GONE);
+                        binding.rvSearch.setVisibility(View.VISIBLE);
 
                         int oldCount = tvResults.size();
                         tvResults.addAll(response.body().getResult());

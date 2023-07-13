@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.msdc.R;
-import com.example.msdc.adapter.MovieGridAdapter;
+import com.example.msdc.adapter.MovieVerticalAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
 import com.example.msdc.api.MovieResponse;
@@ -31,7 +31,7 @@ import retrofit2.Retrofit;
 
 public class MoviePopularFragment extends Fragment {
     private ApiService apiService;
-    private MovieGridAdapter moviePopularAdapter;
+    private MovieVerticalAdapter moviePopularAdapter;
     private final List<MovieResult> moviePopularResults = new ArrayList<>();
 
     private ProgressBar loadingMoviePopular;
@@ -69,7 +69,7 @@ public class MoviePopularFragment extends Fragment {
         loadingMoviePopular = view.findViewById(R.id.loadingMoviePopularList);
         textNoResult = view.findViewById(R.id.textNoMoviePopularResult);
 
-        moviePopularAdapter = new MovieGridAdapter(moviePopularResults, getContext());
+        moviePopularAdapter = new MovieVerticalAdapter(moviePopularResults, getContext());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvMoviePopular.setLayoutManager(gridLayoutManager);

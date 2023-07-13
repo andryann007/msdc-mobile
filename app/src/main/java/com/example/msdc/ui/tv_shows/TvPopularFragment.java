@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.msdc.R;
-import com.example.msdc.adapter.TVGridAdapter;
+import com.example.msdc.adapter.TVVerticalAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
 import com.example.msdc.api.TVResponse;
@@ -31,7 +31,7 @@ import retrofit2.Retrofit;
 
 public class TvPopularFragment extends Fragment {
     private ApiService apiService;
-    private TVGridAdapter tvPopularAdapter;
+    private TVVerticalAdapter tvPopularAdapter;
     private final List<TVResult> tvPopularResults = new ArrayList<>();
 
     private RecyclerView rvTvPopular;
@@ -69,7 +69,7 @@ public class TvPopularFragment extends Fragment {
         loadingTvPopular = view.findViewById(R.id.loadingTvPopularList);
         textNoResult = view.findViewById(R.id.textNoTvPopularResult);
 
-        tvPopularAdapter = new TVGridAdapter(tvPopularResults, getContext());
+        tvPopularAdapter = new TVVerticalAdapter(tvPopularResults, getContext());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvTvPopular.setLayoutManager(gridLayoutManager);

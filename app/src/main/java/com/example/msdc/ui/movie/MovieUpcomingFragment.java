@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.msdc.R;
-import com.example.msdc.adapter.MovieGridAdapter;
+import com.example.msdc.adapter.MovieVerticalAdapter;
 import com.example.msdc.api.ApiClient;
 import com.example.msdc.api.ApiService;
 import com.example.msdc.api.MovieResponse;
@@ -31,7 +31,7 @@ import retrofit2.Retrofit;
 
 public class MovieUpcomingFragment extends Fragment {
     private ApiService apiService;
-    private MovieGridAdapter movieUpcomingAdapter;
+    private MovieVerticalAdapter movieUpcomingAdapter;
     private final List<MovieResult> movieUpcomingResults = new ArrayList<>();
 
     private RecyclerView rvMovieUpcoming;
@@ -70,7 +70,7 @@ public class MovieUpcomingFragment extends Fragment {
         loadingMovieUpcoming = view.findViewById(R.id.loadingMovieUpcomingList);
         textNoResult = view.findViewById(R.id.textNoMovieUpcomingResult);
 
-        movieUpcomingAdapter = new MovieGridAdapter(movieUpcomingResults, getContext());
+        movieUpcomingAdapter = new MovieVerticalAdapter(movieUpcomingResults, getContext());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
 
         rvMovieUpcoming.setLayoutManager(gridLayoutManager);
