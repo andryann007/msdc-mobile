@@ -838,7 +838,13 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                     searchType = radioButtonTV.getText().toString();
                 }
             });
-            btnSearch.setOnClickListener(view -> doSearch(inputSearch.getText().toString()));
+
+            dialogSearch.show();
+
+            btnSearch.setOnClickListener(v12 -> {
+                doSearch(inputSearch.getText().toString());
+                dialogSearch.hide();
+            });
 
             inputSearch.setOnEditorActionListener((v1, actionId, event) -> {
                 if(actionId == EditorInfo.IME_ACTION_GO){
@@ -846,7 +852,6 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
                 }
                 return false;
             });
-            dialogSearch.show();
         }
     }
 
@@ -938,8 +943,12 @@ public class DetailActivity extends AppCompatActivity implements AdapterView.OnI
             spinnerFilterYear.setOnItemSelectedListener(this);
             spinnerSortBy.setOnItemSelectedListener(this);
 
-            btnFilter.setOnClickListener(view -> doFilter(filterType, genre, year, region, sortBy));
             dialogFilter.show();
+
+            btnFilter.setOnClickListener(v1 -> {
+                doFilter(filterType, genre, year, region, sortBy);
+                dialogFilter.hide();
+            });
         }
     }
 

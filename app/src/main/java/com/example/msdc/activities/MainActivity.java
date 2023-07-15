@@ -133,7 +133,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     searchType = radioButtonTV.getText().toString();
                 }
             });
-            btnSearch.setOnClickListener(view -> doSearch(inputSearch.getText().toString()));
+
+            dialogSearch.show();
+
+            btnSearch.setOnClickListener(v12 -> {
+                doSearch(inputSearch.getText().toString());
+                dialogSearch.hide();
+            });
 
             inputSearch.setOnEditorActionListener((v1, actionId, event) -> {
                 if(actionId == EditorInfo.IME_ACTION_GO){
@@ -141,7 +147,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 return false;
             });
-            dialogSearch.show();
         }
     }
 
@@ -233,8 +238,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             spinnerFilterYear.setOnItemSelectedListener(this);
             spinnerSortBy.setOnItemSelectedListener(this);
 
-            btnFilter.setOnClickListener(view -> doFilter(filterType, genre, year, region, sortBy));
             dialogFilter.show();
+
+            btnFilter.setOnClickListener(v1 -> {
+                doFilter(filterType, genre, year, region, sortBy);
+                dialogFilter.hide();
+            });
         }
     }
 
