@@ -1,192 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="@android:color/background_dark">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:alpha="0.9"
+    app:cardCornerRadius="5dp"
+    style="@style/CardView.Light">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/containerMoviePopular"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/textMoviePopular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:text="@string/most_popular_movies"
-            android:fontFamily="sans-serif"
-            android:textColor="@android:color/background_light"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMoviePopular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textMoviePopular"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp"
-            android:orientation="horizontal"
-            android:scrollbars="horizontal"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textMoviePopular"
-            tools:listitem="@layout/container_item"
-            android:visibility="gone"/>
-
-        <ProgressBar
-            android:id="@+id/loadingMoviePopular"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/textMoviePopular"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/containerMovieNowPlaying"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/textMovieNowPlaying"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:text="@string/now_playing_movies"
-            android:fontFamily="sans-serif"
-            android:textColor="@android:color/background_light"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMovieNowPlaying"
+        android:orientation="vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerMoviePopular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textMovieNowPlaying"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp"
-            android:orientation="horizontal"
-            android:scrollbars="horizontal"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textMovieNowPlaying"
-            tools:listitem="@layout/container_item"
-            android:visibility="gone"/>
+            android:layout_marginTop="5dp">
 
-        <ProgressBar
-            android:id="@+id/loadingMovieNowPlaying"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/textMovieNowPlaying"
-            app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:id="@+id/textMoviePopular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/most_popular_movies"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMoviePopular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textMoviePopular"
+                android:layout_marginVertical="5dp"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textMoviePopular"
+                tools:listitem="@layout/container_item"
+                android:visibility="gone"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/containerUpcomingMovie"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+            <ProgressBar
+                android:id="@+id/loadingMoviePopular"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/textMoviePopular"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@android:style/Widget.ProgressBar"/>
 
-        <TextView
-            android:id="@+id/textUpcomingMovie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:text="@string/upcoming_movies"
-            android:fontFamily="sans-serif"
-            android:textColor="@android:color/background_light"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvUpcomingMovie"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerMovieNowPlaying"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textUpcomingMovie"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp"
-            android:scrollbars="horizontal"
-            android:orientation="horizontal"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textUpcomingMovie"
-            tools:listitem="@layout/container_item"
-            android:visibility="gone"/>
+            android:layout_marginTop="10dp">
 
-        <ProgressBar
-            android:id="@+id/loadingUpcomingMovie"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/textUpcomingMovie"
-            app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:id="@+id/textMovieNowPlaying"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/now_playing_movies"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMovieNowPlaying"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textMovieNowPlaying"
+                android:layout_marginVertical="5dp"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textMovieNowPlaying"
+                tools:listitem="@layout/container_item"
+                android:visibility="gone"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/containerMovieTopRated"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+            <ProgressBar
+                android:id="@+id/loadingMovieNowPlaying"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/textMovieNowPlaying"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@android:style/Widget.ProgressBar"/>
 
-        <TextView
-            android:id="@+id/textMovieTopRated"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:text="@string/top_rated_movies"
-            android:fontFamily="sans-serif"
-            android:textColor="@android:color/background_light"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMovieTopRated"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerUpcomingMovie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textMovieTopRated"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp"
-            android:scrollbars="horizontal"
-            android:orientation="horizontal"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textMovieTopRated"
-            tools:listitem="@layout/container_item"
-            android:visibility="gone"/>
+            android:layout_marginTop="10dp">
 
-        <ProgressBar
-            android:id="@+id/loadingMovieTopRated"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/textMovieTopRated"
-            app:layout_constraintStart_toStartOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textUpcomingMovie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/upcoming_movies"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"/>
 
-</LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvUpcomingMovie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textUpcomingMovie"
+                android:layout_marginVertical="5dp"
+                android:scrollbars="horizontal"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textUpcomingMovie"
+                tools:listitem="@layout/container_item"
+                android:visibility="gone"/>
+
+            <ProgressBar
+                android:id="@+id/loadingUpcomingMovie"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/textUpcomingMovie"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@android:style/Widget.ProgressBar"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerMovieTopRated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp">
+
+            <TextView
+                android:id="@+id/textMovieTopRated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/top_rated_movies"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMovieTopRated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textMovieTopRated"
+                android:layout_marginVertical="5dp"
+                android:scrollbars="horizontal"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textMovieTopRated"
+                tools:listitem="@layout/container_item"
+                android:visibility="gone"/>
+
+            <ProgressBar
+                android:id="@+id/loadingMovieTopRated"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/textMovieTopRated"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@android:style/Widget.ProgressBar"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -1,41 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/bg_layout"
-    android:gravity="center">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="5dp"
+    style="@style/CardView.Dark">
 
     <LinearLayout
         android:id="@+id/containerSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="5dp"
-        android:background="@drawable/bg_text_title">
+        android:layout_margin="8dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
             android:text="@string/search_movie_or_tvshows"
             android:textAlignment="center"
             android:fontFamily="sans-serif"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textSize="18sp"
+            style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"/>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:background="@color/white"
+            style="@style/Widget.Material3.MaterialDivider.Heavy"/>
 
         <TextView
             android:id="@+id/textSearchType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="8dp"
             android:text="@string/select_search_type"
             android:fontFamily="sans-serif"
             android:textColor="@color/white"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"/>
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -46,25 +55,25 @@
             android:orientation="horizontal"
             android:gravity="center_horizontal">
 
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radioButtonMovie"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/movies"
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                style="@style/TextAppearance.Material3.LabelMedium"/>
 
-            <RadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radioButtonTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/tv_shows"
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                style="@style/TextAppearance.Material3.LabelMedium"/>
 
         </RadioGroup>
 
@@ -72,49 +81,53 @@
             android:id="@+id/textSearchInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="5dp"
             android:text="@string/input_search_query"
             android:fontFamily="sans-serif"
             android:textColor="@color/white"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputQuery"
+            app:startIconDrawable="@drawable/ic_search_black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="5dp"
-            app:hintEnabled="false">
+            android:layout_marginVertical="5dp">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputSearch"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/bg_layout"
-                android:backgroundTint="@color/white"
-                android:drawableStart="@drawable/ic_search_black"
-                android:drawablePadding="10dp"
-                android:gravity="start|center_vertical"
+                android:layout_height="match_parent"
                 android:hint="@string/input_query"
                 android:inputType="text"
                 android:fontFamily="sans-serif"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:autofillHints="false"/>
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                style="@style/ThemeOverlay.Material3.TextInputEditText"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/white"
+            style="@style/Widget.Material3.MaterialDivider.Heavy"/>
+
         <Button
             android:id="@+id/btnSearch"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="8dp"
+            android:layout_gravity="end"
             android:background="@drawable/bg_layout"
             android:text="@string/search_data"
             android:textColor="@color/white"/>
 
     </LinearLayout>
 
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

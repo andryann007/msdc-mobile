@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:layout_alignParentTop="true"
-        android:background="@color/black"
+        android:background="@color/blue"
         app:logo="@drawable/ic_back"
         app:title="@string/app_name"
         app:titleMarginStart="32dp"
@@ -33,11 +33,12 @@
             android:visibility="gone" />
     </FrameLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
+        android:scrollbarStyle="outsideInset"
         android:visibility="gone">
 
         <RelativeLayout
@@ -51,439 +52,456 @@
                 android:alpha="0.5"
                 app:riv_corner_radius="3dp"
                 android:background="@android:color/transparent"
-                android:scaleType="fitCenter"/>
+                android:scaleType="centerCrop"/>
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/imagePoster"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="92dp"
-                android:layout_height="138dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="40dp"
-                app:riv_corner_radius="5dp"
-                android:background="@color/black"/>
+                app:cardCornerRadius="5dp"
+                style="@style/CardView.Dark">
 
-            <LinearLayout
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/imagePoster"
+                    android:layout_width="match_parent"
+                    android:layout_height="138dp"
+                    android:scaleType="centerCrop"
+                    android:background="@color/white"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/descriptionContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_below="@+id/imageBackdrop"
-                android:orientation="vertical">
+                android:alpha="0.9"
+                app:cardCornerRadius="5dp"
+                style="@style/CardView.Dark">
 
                 <LinearLayout
-                    android:id="@+id/layoutMainDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textTitleReleaseDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textRunTime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="sans-serif"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"/>
-
-                    <TextView
-                        android:id="@+id/textVoteAverage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:fontFamily="sans-serif"
-                        android:drawablePadding="5dp"
-                        android:includeFontPadding="false"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:drawableStartCompat="@drawable/ic_star" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutOtherDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_margin="5dp">
+                    android:padding="8dp">
 
-                    <TextView
-                        android:id="@+id/titleOverview"
+                    <LinearLayout
+                        android:id="@+id/layoutMainDetails"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textTitleReleaseDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            android:fontFamily="sans-serif"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                        <TextView
+                            android:id="@+id/textRunTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:padding="8dp"
+                            android:fontFamily="sans-serif"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                        <TextView
+                            android:id="@+id/textVoteAverage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:padding="8dp"
+                            android:fontFamily="sans-serif"
+                            android:drawablePadding="5dp"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:drawableStartCompat="@drawable/ic_star"
+                            style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:layout_marginVertical="8dp"
+                        android:background="@color/white"
+                        style="@style/Widget.Material3.MaterialDivider.Heavy"/>
+
+                    <LinearLayout
+                        android:id="@+id/layoutOtherDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif"
-                        android:includeFontPadding="false"
-                        android:text="@string/overview"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/textOverview"
+                        <TextView
+                            android:id="@+id/titleOverview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:padding="8dp"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/overview"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                        <TextView
+                            android:id="@+id/textOverview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:padding="8dp"
+                            android:alpha="0.6"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            style="@style/TextAppearance.Material3.LabelMedium"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutLanguageStatus"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:alpha="0.6"
-                        android:fontFamily="sans-serif"
-                        android:includeFontPadding="false"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
-                    <TextView
-                        android:id="@+id/textRating"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="sans-serif"
-                        android:includeFontPadding="false"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/textLanguage"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:padding="8dp"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            style="@style/TextAppearance.Material3.LabelMedium"/>
 
-                <LinearLayout
-                    android:id="@+id/layoutLanguageStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:id="@+id/textLanguage"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif"
-                        android:includeFontPadding="false"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/textStatus"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif"
-                        android:includeFontPadding="false"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutBudgetRevenue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                        <TextView
+                            android:id="@+id/textStatus"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:padding="8dp"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            style="@style/TextAppearance.Material3.LabelMedium"/>
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/textBudgetOrSeasons"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:padding="8dp"
                         android:fontFamily="sans-serif"
-                        android:includeFontPadding="false"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        style="@style/TextAppearance.Material3.LabelMedium"/>
 
                     <TextView
                         android:id="@+id/textRevenueOrEpisodes"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:padding="8dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                    <LinearLayout
+                        android:id="@+id/layoutPopularityVoteCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/textPopularity"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:padding="8dp"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                        <TextView
+                            android:id="@+id/textVoteCount"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:padding="8dp"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textTagline"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_marginTop="2dp"
+                        android:padding="8dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                    <TextView
+                        android:id="@+id/textHomePage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="2dp"
+                        android:padding="8dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                    <TextView
+                        android:id="@+id/textGenreList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="8dp"
+                        android:text="@string/text_genres"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvGenreList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:overScrollMode="never"
+                        android:scrollbars="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/container_genre"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/textKeywordList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="8dp"
+                        android:text="@string/text_keywords"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvKeywordList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:overScrollMode="never"
+                        android:scrollbars="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/container_keyword"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/textImageList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="8dp"
+                        android:text="@string/text_images_gallery"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvImagesList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:orientation="horizontal"
+                        android:overScrollMode="never"
+                        android:scrollbars="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/container_image"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/textMovieCreditCast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="8dp"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/text_movie_credit_cast"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvCreditCast"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:orientation="horizontal"
+                        android:overScrollMode="never"
+                        android:scrollbars="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/container_credit"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/textMovieCreditCrew"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="8dp"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/text_movie_credit_crew"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvCreditCrew"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:orientation="horizontal"
+                        android:overScrollMode="never"
+                        android:scrollbars="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/container_credit"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/textMovieRecommendations"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="8dp"
                         android:fontFamily="sans-serif"
                         android:includeFontPadding="false"
+                        android:text="@string/movie_recommendations"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvMovieRecommendations"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:orientation="horizontal"
+                        android:overScrollMode="never"
+                        android:scrollbars="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/container_item"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/textMovieSimilar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="8dp"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/similar_movies"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvMovieSimilar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:orientation="horizontal"
+                        android:overScrollMode="never"
+                        android:scrollbars="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/container_item"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/textTvSeasonAndEpisodeList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="8dp"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/tv_episode_list"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        style="@style/TextAppearance.Material3.LabelMedium"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvTvSeasonAndEpisodeList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:orientation="horizontal"
+                        android:overScrollMode="never"
+                        android:scrollbars="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/container_tv_episodes"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/layoutPopularityVoteCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:id="@+id/textPopularity"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif"
-                        android:includeFontPadding="false"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/textVoteCount"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif"
-                        android:includeFontPadding="false"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textTagline"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:fontFamily="sans-serif"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/textHomePage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:fontFamily="sans-serif"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/textGenreList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:text="@string/text_genres"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvGenreList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal"
-                    android:overScrollMode="never"
-                    android:scrollbars="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/container_genre"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/textKeywordList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:text="@string/text_keywords"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvKeywordList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal"
-                    android:overScrollMode="never"
-                    android:scrollbars="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/container_keyword"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/textImageList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/text_images_gallery"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvImagesList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal"
-                    android:overScrollMode="never"
-                    android:scrollbars="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/container_image"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/textMovieCreditCast"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:fontFamily="sans-serif"
-                    android:includeFontPadding="false"
-                    android:text="@string/text_movie_credit_cast"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvCreditCast"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:overScrollMode="never"
-                    android:scrollbars="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/container_credit"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/textMovieCreditCrew"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:fontFamily="sans-serif"
-                    android:includeFontPadding="false"
-                    android:text="@string/text_movie_credit_crew"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvCreditCrew"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:overScrollMode="never"
-                    android:scrollbars="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/container_credit"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/textMovieRecommendations"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:fontFamily="sans-serif"
-                    android:includeFontPadding="false"
-                    android:text="@string/movie_recommendations"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvMovieRecommendations"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:overScrollMode="never"
-                    android:scrollbars="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/container_item"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/textMovieSimilar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:fontFamily="sans-serif"
-                    android:includeFontPadding="false"
-                    android:text="@string/similar_movies"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvMovieSimilar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:overScrollMode="never"
-                    android:scrollbars="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/container_item"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/textTvSeasonAndEpisodeList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:fontFamily="sans-serif"
-                    android:includeFontPadding="false"
-                    android:text="Episodes List :"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvTvSeasonAndEpisodeList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:overScrollMode="never"
-                    android:scrollbars="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/container_tv_episodes"
-                    android:visibility="gone"/>
-
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </RelativeLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/loadingDetails"
-        style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        style="@android:style/Widget.ProgressBar"/>
 
 </RelativeLayout>

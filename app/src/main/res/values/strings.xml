@@ -59,7 +59,7 @@
     <string name="my_favorite_tv_shows">My Favorite TV Shows</string>
     <string name="search">Search</string>
     <string name="image_star_rating">Image of Star Rating</string>
-    <string name="overview">Overview</string>
+    <string name="overview">Overview :</string>
     <string name="trending_person_desc">Trending Person In This Week</string>
     <string name="trending_tv_shows_desc">Trending TV Shows In This Week</string>
     <string name="trending_movies_desc">Trending Movies In This Week</string>
@@ -97,6 +97,9 @@
     <string name="text_on_air_tv_shows">On Air TV Shows</string>
     <string name="text_popular_tv_shows">Popular TV Shows</string>
     <string name="text_top_rated_tv_shows">Top Rated TV Shows</string>
+    <string name="sort_spinner">Sort Spinner</string>
+    <string name="tv_episode_list">Episodes List :</string>
+    <string name="tv_search_result">Search Result :</string>
 
     <string-array name="movieGenreList">
         <item>Not Selected</item>
