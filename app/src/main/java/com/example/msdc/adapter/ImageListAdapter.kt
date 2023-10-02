@@ -40,7 +40,7 @@ class ImageListAdapter(private val imageResults: ArrayList<ImageResult>) :
         fun bindItem(imageResult: ImageResult) {
             if (!TextUtils.isEmpty(imageResult.filePath)) {
                 loadingImagesList.visibility = View.GONE
-                ImageAdapter.setBackdropURL(imagePath, imageResult.filePath)
+                ImageAdapter.setPosterHD(imagePath, imageResult.filePath)
             } else {
                 loadingImagesList.visibility = View.GONE
                 imagePath.setImageResource(R.drawable.ic_no_image)
